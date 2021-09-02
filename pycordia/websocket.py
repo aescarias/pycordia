@@ -8,6 +8,7 @@
 import asyncio
 import json
 import platform
+from pycordia.errors import GatewayError
 
 import aiohttp
 from aiohttp.client_ws import ClientWebSocketResponse
@@ -75,9 +76,10 @@ class DiscordWebSocket:
         while True:
             data = await sock.receive()
             
-            if data.type == WSMsgType.CLOSED:
+            if data.type == WSMsgType.CLOSE:
+                code, msg = data.data, data.extra
                 await sock.close(code=1001)
-                break
+                raise GatewayError(code, msg)
             elif data.type == WSMsgType.TEXT:
                 js = data.json()
                 event_data = js["d"]
@@ -86,7 +88,7 @@ class DiscordWebSocket:
 
                 if js["op"] == self.opcodes["HELLO"]:
                     self.heartbeat_interval = event_data["heartbeat_interval"]
-                    ident = self.get_identify()
+                    ident = self.get_identify()                    
                     await sock.send_json(ident)
                 elif js["op"] == self.opcodes["DISPATCH"]:
                     if js["t"] == "READY":
@@ -102,5 +104,3 @@ class DiscordWebSocket:
                 asyncio.create_task(self.__listen_socket(sock)),
                 asyncio.create_task(self.__keep_alive(sock))
             )
-
-

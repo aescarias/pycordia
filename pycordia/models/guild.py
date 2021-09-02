@@ -27,4 +27,4 @@ class Role:
         self.managed:Union[bool, None] = data.get("managed")
         self.mentionable: Union[bool, None] = data.get("mentionable")
 
-        self.tags: Union[RoleTags, None] = data.get("tags")
+        self.tags = data.get("tags")

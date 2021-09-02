@@ -1,7 +1,7 @@
-from dataclasses import dataclass
 import typing
 from .models.guild import Member
 from .models.user import User
+
 
 class ReadyEvent:
     def __init__(self, data: dict):
@@ -23,15 +23,18 @@ class ReadyEvent:
 
         self.partial_application: dict = data["application"]
 
+
 class MessageDeleteEvent:
-    """Event called when message(s) deleted individually or in bulk"""
+    """Event called when message(s) deleted individually or in bulk
+        
+    Attributes
+        message_ids: The IDs of the message
+        channel_id: The ID of the channel
+        guild_id: The ID of the guild
+        bulk: Whether the deletion was performed in bulk
+    """     
     def __init__(self, data: dict, bulk: bool):
-        """Attributes
-            message_ids: The IDs of the message
-            channel_id: The ID of the channel
-            guild_id: The ID of the guild
-            bulk: Whether the deletion was performed in bulk
-        """       
+  
         if bulk:
             self.message_ids = data["ids"]
         else:
@@ -40,6 +43,7 @@ class MessageDeleteEvent:
         self.channel_id = data["channel_id"]
         self.guild_id = data.get("guild_id")
         self.bulk = bulk
+
 
 class TypingStartEvent:
     """Event called when an user starts typing a message"""
