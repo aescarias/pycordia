@@ -16,10 +16,13 @@ async def on_message_create(event: models.Message):
         return
 
     if event.content and (".ping" in event.content):
-        embed = models.Embed.create(description=":ping_pong: Pong!")
-        embed.color = 0xFF123A
+        embed1 = models.Embed.create(description=":ping_pong: Pong!")
+        embed1.color = 0xFF123A
 
-        await models.Message.create(embeds=[embed]).send(client, event.channel_id)
+        embed2 = models.Embed.create(description=":gear: Doing stuff!")
+        embed2.color = 0x1FA2E8
+
+        await models.Message.create(embeds=[embed1, embed2]).send(client, event.channel_id)
         print("Sent it?")
 
 client.run(os.getenv("DISCORD_TOKEN"))

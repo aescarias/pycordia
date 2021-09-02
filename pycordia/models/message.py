@@ -234,12 +234,13 @@ class Message:
         async with aiohttp.ClientSession() as session:
             url = f"https://discord.com/api/v9/channels/{self.channel_id or channel_id}/messages"
 
-            await session.post(url, headers={"Authorization": f"Bot {client.ws.bot_token}"}, json={
+            resp = await session.post(url, headers={"Authorization": f"Bot {client.ws.bot_token}"}, json={
                 "content": self.content,
                 "tts": self.tts,
                 "allowed_mentions": allowed_mentions,
                 "embeds": [emb.to_dict() for emb in (self.embeds or [])]
             })
+            print(await resp.json())
 
     async def delete(self, client):
         async with aiohttp.ClientSession() as session:
