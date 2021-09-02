@@ -11,7 +11,6 @@ import enum
 
 from . import events, models, websocket
 
-
 class Intents(enum.Enum):
     guilds = 1 << 0
     guild_members = 1 << 1

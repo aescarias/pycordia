@@ -13,7 +13,6 @@ import aiohttp
 from aiohttp.client_ws import ClientWebSocketResponse
 from aiohttp.http_websocket import WSMsgType
 
-
 class DiscordWebSocket:
     """A WebSockets client for the Discord Gateway API"""
     opcodes = {
