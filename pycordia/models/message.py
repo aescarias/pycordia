@@ -1,20 +1,15 @@
-
 from typing import List, Union
-import typing
 import aiohttp
-import asyncio
 import enum
 from . import embed
 from .user import User
-from .guild import Member
+from .guild import Member, Role
 
 # class TextChannel:
 #     pass
 
 # class GuildMember:
 #     pass
-
-
 
 class MessageActivity:
     """A message activity object"""
@@ -29,7 +24,6 @@ class MessageActivity:
         self.activity_type = None if (data.get("type") is None) else Activity(data.get("type"))
         
         self.party_id: Union[str, None] = data.get("party_id")
-
 
 class Application:
     def __init__(self, data: dict):
@@ -49,37 +43,17 @@ class Application:
         self.cover_image_hash: Union[str, None] = data.get("cover_image")
         self.flags: Union[int, None] = data.get("flags")
 
-
 class RoleTags:
     def __init__(self, data: dict):
         self.bot_id = data.get("bot_id")
         self.integration_id = data.get("integration_id")
         self.premium_subscriber = data.get("premium_subscriber")
 
-
-class Role:
-    def __init__(self, data: dict):
-        self.role_id: Union[str, None] = data.get("id")
-        self.role_name: Union[str, None] = data.get("name")
-        
-        self.color: Union[int, None] = data.get("color")
-        self.colour = self.color
-
-        self.hoist: Union[bool, None] = data.get("hoist")
-        self.position: Union[int, None] = data.get("position")
-        self.permissions: Union[str, None] = data.get("permissions")
-        self.managed:Union[bool, None] = data.get("managed")
-        self.mentionable: Union[bool, None] = data.get("mentionable")
-
-        self.tags: Union[RoleTags, None] = data.get("tags")
-
-
 class Reaction:
     def __init__(self, data: dict):
         self.count: Union[int, None] = data.get("count")
         self.was_me: Union[bool, None] = data.get("me")
         self.emoji: Emoji = Emoji(data.get("emoji", {}))
-
 
 class Emoji:
     def __init__(self, data: dict):
@@ -92,13 +66,11 @@ class Emoji:
         self.animated = data.get("animated")
         self.available = data.get("available")
 
-
 class StickerItem:
     def __init__(self, data: dict):
         self.sticker_id = data.get("id")
         self.name = data.get("name")
         self.format_type = data.get("type")
-
 
 class ChannelMention:
     def __init__(self, data: dict):
@@ -106,7 +78,6 @@ class ChannelMention:
         self.guild_id: Union[str, None] = data.get("guild_id")
         self.channel_type: Union[str, None] = data.get("type")
         self.channel_name: Union[str, None] = data.get("name")
-
 
 class Attachment:
     def __init__(self, data: dict):
@@ -174,7 +145,6 @@ class MessageReference:
             "guild_id": self.guild_id,
             "fail_if_not_exists": self.fail_if_not_exists
         }
-
 
 class Message:
     def __init__(self, data: dict):
