@@ -3,7 +3,6 @@ import typing
 from .models.guild import Member
 from .models.user import User
 
-
 class ReadyEvent:
     def __init__(self, data: dict):
         """Event called when the client is ready.
@@ -23,7 +22,6 @@ class ReadyEvent:
         self.shard: tuple = data.get("shard", ())
 
         self.partial_application: dict = data["application"]
-
 
 class MessageDeleteEvent:
     """Event called when message(s) deleted individually or in bulk"""

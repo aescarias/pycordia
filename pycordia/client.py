@@ -11,7 +11,6 @@ import enum
 
 from . import events, models, websocket
 
-
 class Intents(enum.Enum):
     guilds = 1 << 0
     guild_members = 1 << 1
@@ -41,7 +40,6 @@ class Intents(enum.Enum):
         for value in intent_list:
             result |= value.value
         return result
-
 
 class Client:
     """A WebSockets client for the Discord Gateway API"""
