@@ -35,6 +35,7 @@ client.run(os.getenv("DISCORD_TOKEN"))
 
 - `on_ready`: `events.ReadyEvent`
 - `on_message_create`: `models.Message`
+- `on_typing_start`: `events.TypingStartEvent`
 
 For all other events as of now, you'll receive raw JSON data which you'll have to handle yourself.
 
