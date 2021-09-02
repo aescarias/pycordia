@@ -154,10 +154,14 @@ class MessageReference:
     def __init__(self, ref_data: dict, msg_data: dict):
         self.__msg_data = msg_data
 
-        self.message_id: Union[str, None] = ref_data.get("message_id")
-        self.channel_id: Union[str, None] = ref_data.get("channel_id")
-        self.guild_id: Union[str, None] = ref_data.get("guild_id")
-        self.fail_if_not_exists: Union[bool, None] = ref_data.get("fail_if_not_exists")
+        if ref_data:
+            self.message_id: Union[str, None] = ref_data.get("message_id")
+            self.channel_id: Union[str, None] = ref_data.get("channel_id")
+            self.guild_id: Union[str, None] = ref_data.get("guild_id")
+            self.fail_if_not_exists: Union[bool, None] = ref_data.get("fail_if_not_exists")
+        else:
+            self.message_id = self.channel_id = \
+                self.guild_id = self.fail_if_not_exists = None
 
     @property
     def message(self):
@@ -226,14 +230,14 @@ class Message:
             "attachments": attachments
         })
 
-    async def send(self, client, *, allowed_mentions: dict = None):
+    async def send(self, client, channel_id: str = None, *, allowed_mentions: dict = None):
         async with aiohttp.ClientSession() as session:
-            url = f"https://discord.com/api/v9/channels/{self.channel_id}/messages"
+            url = f"https://discord.com/api/v9/channels/{self.channel_id or channel_id}/messages"
 
             await session.post(url, headers={"Authorization": f"Bot {client.ws.bot_token}"}, json={
                 "content": self.content,
                 "tts": self.tts,
-                "allowedd_mentions": allowed_mentions,
+                "allowed_mentions": allowed_mentions,
                 "embeds": [emb.to_dict() for emb in (self.embeds or [])]
             })
 
