@@ -18,15 +18,15 @@ async def on_ready(event: events.ReadyEvent):
     print(f"{event.user} ready to do stuff!", client.intents)
 
 @client.event
-async def on_message_create(event: models.Message):
-    if event.author.bot:
+async def on_message_create(msg: models.Message):
+    if msg.author.bot:
         return
-    
-    if event.content and ".ping" in event.content:
+
+    if msg.content and (".ping" in msg.content):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
-        await models.Message.create(embeds=[embed]).send(client)
+        await models.Message.create(embeds=[embed]).send(client, msg.channel_id)
 
 client.run(os.getenv("DISCORD_TOKEN"))
 ```
@@ -35,6 +35,7 @@ client.run(os.getenv("DISCORD_TOKEN"))
 
 - `on_ready`: `events.ReadyEvent`
 - `on_message_create`: `models.Message`
+- `on_typing_start`: `events.TypingStartEvent`
 
 For all other events as of now, you'll receive raw JSON data which you'll have to handle yourself.
 
