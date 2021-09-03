@@ -13,6 +13,8 @@ import aiohttp
 from aiohttp.client_ws import ClientWebSocketResponse
 from aiohttp.http_websocket import WSMsgType
 
+import pycordia
+
 
 class DiscordWebSocket:
     """A WebSockets client for the Discord Gateway API"""
@@ -37,12 +39,11 @@ class DiscordWebSocket:
         self.heartbeat_interval = None
         """The interval to wait before calling the gateway again, in milliseconds"""
         self.sequence = None
-        self.gateway_url = "wss://gateway.discord.gg/?v=9&encoding=json"
+        self.gateway_url = f"{pycordia.ws_url}/?v=9&encoding=json"
         self.client = client
 
         self.session_id = None
         self.intents = intents
-
 
     def get_identify(self):
         return {
@@ -103,5 +104,3 @@ class DiscordWebSocket:
                 asyncio.create_task(self.__listen_socket(sock)),
                 asyncio.create_task(self.__keep_alive(sock))
             )
-
-

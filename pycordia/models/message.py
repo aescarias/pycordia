@@ -30,6 +30,9 @@ class MessageActivity:
         
         self.party_id: Union[str, None] = data.get("party_id")
 
+    def __repr__(self):
+        return f"<pycordia.models.MessageActivity - id={self.party_id} activity={self.activity_type}>"
+
 
 class Application:
     def __init__(self, data: dict):
@@ -49,12 +52,18 @@ class Application:
         self.cover_image_hash: Union[str, None] = data.get("cover_image")
         self.flags: Union[int, None] = data.get("flags")
 
+    def __repr__(self):
+        return f"<pycordia.models.Application - id={self.app_id} name={self.name}>"
+
 
 class RoleTags:
     def __init__(self, data: dict):
         self.bot_id = data.get("bot_id")
         self.integration_id = data.get("integration_id")
         self.premium_subscriber = data.get("premium_subscriber")
+
+    def __repr__(self):
+        return f"<pycordia.models.RoleTags - id={self.bot_id}>"
 
 
 class Role:
@@ -73,6 +82,9 @@ class Role:
 
         self.tags: Union[RoleTags, None] = data.get("tags")
 
+    def __repr__(self):
+        return f"<pycordia.models.Role - id={self.role_id} name={self.role_name}>"
+
 
 class Reaction:
     def __init__(self, data: dict):
@@ -80,6 +92,8 @@ class Reaction:
         self.was_me: Union[bool, None] = data.get("me")
         self.emoji: Emoji = Emoji(data.get("emoji", {}))
 
+    def __repr__(self):
+        return f"<pycordia.models.Reaction - emoji={self.emoji.name} count={self.count}>"
 
 class Emoji:
     def __init__(self, data: dict):
@@ -92,12 +106,17 @@ class Emoji:
         self.animated = data.get("animated")
         self.available = data.get("available")
 
+    def __repr__(self):
+        return f"<pycordia.models.Emoji - id={self.emoji_id} name={self.name}>"
 
 class StickerItem:
     def __init__(self, data: dict):
         self.sticker_id = data.get("id")
         self.name = data.get("name")
         self.format_type = data.get("type")
+
+    def __repr__(self):
+        return f"<pycordia.models.StickerItem - id={self.sticker_id} name={self.name}>"
 
 
 class ChannelMention:
@@ -106,6 +125,9 @@ class ChannelMention:
         self.guild_id: Union[str, None] = data.get("guild_id")
         self.channel_type: Union[str, None] = data.get("type")
         self.channel_name: Union[str, None] = data.get("name")
+
+    def __repr__(self):
+        return f"<pycordia.models.ChannelMention - id={self.channel_id} name={self.channel_name}>"
 
 
 class Attachment:

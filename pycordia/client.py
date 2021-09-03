@@ -9,7 +9,10 @@ import asyncio
 import aiohttp
 import enum
 
+import typing
+
 from . import events, models, websocket
+import pycordia
 
 
 class Intents(enum.Enum):
@@ -47,14 +50,19 @@ class Client:
     """A WebSockets client for the Discord Gateway API"""
 
     def event(self, fun):
-        self.events[fun.__name__] = fun        
+        self.events[fun.__name__] = fun
+
         def wrapper():
             fun()
-        return wrapper    
+
+        return wrapper
 
     def __init__(self, intents):
         self.events = {}
+        self.__bot_token: str = ""
         self.intents = intents
+
+        self.user_cache: typing.Dict[str, models.User] = {}
 
     async def __create_ws(self, bot_token):
         self.ws = websocket.DiscordWebSocket(self, bot_token, self.intents)
@@ -68,11 +76,11 @@ class Client:
             func = self.events[func_name]
 
             if event_name.lower() == "ready":
-                await func( events.ReadyEvent(event_data) )
+                await func(events.ReadyEvent(event_data))
             elif event_name.lower() == "typing_start":
-                await func( events.TypingStartEvent(event_data) )
+                await func(events.TypingStartEvent(event_data))
             elif event_name.lower() == "message_create":
-                await func( models.Message(event_data) )
+                await func(models.Message(event_data))
             elif event_name.lower() in ("message_delete", "message_delete_bulk"):
                 await func(
                     events.MessageDeleteEvent(
@@ -80,10 +88,45 @@ class Client:
                     ) 
                 )
             else:
-                await func( event_data )
-            
+                await func(event_data)
 
     def run(self, bot_token):
+        self.__bot_token = bot_token
         asyncio.get_event_loop().run_until_complete(self.__create_ws(bot_token))
 
+    @property
+    async def guilds(self) -> typing.List[models.PartialGuild]:
+        # Else, fetch it from the discord api
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                    f"{pycordia.api_url}/users/@me/guilds",
+                    headers={
+                        "Authorization": f"Bot {self.__bot_token}"
+                    }
+            ) as resp:
 
+                if not resp.ok:
+                    content = await resp.text()
+                    raise Exception(content)
+
+                guilds = await resp.json()
+                guilds = list(map(models.PartialGuild, guilds))
+
+                return guilds
+
+    @property
+    async def user(self) -> models.User:
+        # Else, fetch it from the discord api
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                    f"{pycordia.api_url}/users/@me",
+                    headers={
+                        "Authorization": f"Bot {self.__bot_token}"
+                    }
+            ) as resp:
+
+                if not resp.ok:
+                    content = await resp.text()
+                    raise Exception(content)
+
+                return models.User(await resp.json())
