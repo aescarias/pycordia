@@ -173,5 +173,5 @@ class Embed:
         }
 
     def __repr__(self):
-        return f"Embed(title='{self.title}', description={self.description})"
+        return f"<pycordia.models.Embed - title='{self.title}' description={self.description}>"
 
