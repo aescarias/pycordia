@@ -25,18 +25,28 @@ async def on_message_create(event: models.Message):
         print(f"Sent a message - {embed.description}")
 
     elif event.content.startswith(".user"):
-        user = await models.User.user_from_id(client, event.content.split()[1])
+        if len(event.content.split()) == 2:                
+            user = await models.User.user_from_id(client, event.content.split()[1])
 
-        embed = models.Embed.create(
-            title=user.username + "#" + user.discriminator,
-            description=f"{user.mention}\nID - {user.user_id}\nBot - {bool(user.bot)}",
-            color=user.accent_color,
-        )
-
-        await models.Message.create(embeds=[embed]).send(client, event.channel_id)
-
+            if user:
+                embed = models.Embed.create(
+                    title=user.username + "#" + user.discriminator,
+                    description=f"{user.mention}\nID - {user.user_id}\nBot - {bool(user.bot)}",
+                    color=user.accent_color,
+                )
+            else:
+                embed = models.Embed.create(
+                    description="Please specify a valid user ID.",
+                    color=0xFF123A
+                )               
+            await models.Message.create(embeds=[embed]).send(client, event.channel_id)
+        else:
+            embed = models.Embed.create(
+                description="Please specify a user ID.",
+                color=0xFF123A
+            )
+            await models.Message.create(embeds=[embed]).send(client, event.channel_id)
     elif event.content.startswith(".servers"):
-
         guilds = await client.guilds
         newline = "\n"
         guilds = newline.join(

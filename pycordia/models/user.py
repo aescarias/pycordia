@@ -46,13 +46,12 @@ class User:
             async with session.get(
                 f"{pycordia.api_url}/users/{user_id}",
                 headers={
-                    "Authorization": f"Bot {client.__bot_token}"
+                    "Authorization": f"Bot {client._Client__bot_token}"
                 }
             ) as resp:
 
                 if not resp.ok:
-                    content = await resp.text()
-                    raise Exception(content)
+                    return
 
                 json = await resp.json()
                 user = User(json)
