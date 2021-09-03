@@ -14,7 +14,6 @@ import typing
 from . import events, models, websocket
 import pycordia
 
-
 class Intents(enum.Enum):
     guilds = 1 << 0
     guild_members = 1 << 1
@@ -34,17 +33,21 @@ class Intents(enum.Enum):
 
     @classmethod
     def all(cls):
-        """Enables all registered intents"""
+        """Enables all registered intents, including privileged ones"""
         return cls.merge_intents(cls)
     
     @classmethod
     def merge_intents(cls, intent_list):
-        """Convert a list of intents into a number"""
+        """Convert a list of intents into a number
+
+        ---        
+        Parameters:
+            intent_list: A list of intents
+        """
         result = 0
         for value in intent_list:
             result |= value.value
         return result
-
 
 class Client:
     """A WebSockets client for the Discord Gateway API"""

@@ -30,7 +30,7 @@ async def on_message_create(event: models.Message):
         embed = models.Embed.create(
             title=user.username + "#" + user.discriminator,
             description=f"{user.mention}\nID - {user.user_id}\nBot - {bool(user.bot)}",
-            color=user.accent_color
+            color=user.accent_color,
         )
 
         await models.Message.create(embeds=[embed]).send(client, event.channel_id)
@@ -55,9 +55,10 @@ async def on_message_create(event: models.Message):
         embed = models.Embed.create(
             title=user.username + "#" + user.discriminator,
             description=f"{user.mention}\nID - {user.user_id}\nBot - {bool(user.bot)}",
-            color=user.accent_color
+            color=user.accent_color,
         )
 
         await models.Message.create(embeds=[embed]).send(client, event.channel_id)
+
 
 client.run(os.getenv("DISCORD_TOKEN"))
