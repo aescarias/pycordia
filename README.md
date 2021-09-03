@@ -2,6 +2,31 @@
 
 A work-in-progress Discord API wrapper for Python with a simple gateway and some common events implemented.
 
+## Installation
+
+As of now, you have to install Pycordia from source.
+
+First, clone this repository either through Git or Github.
+
+Next, proceed to run the `setup.py` file as in:
+
+```sh
+$ python3 setup.py sdist
+running sdist
+running egg_info
+```
+
+(if on Windows and have confirmed that `python --version` is greater than 3.7, use `python`)
+
+Run the created `.tar.gz` file in the new `dist` directory created from `setup.py`
+
+```sh
+$ cd dist & python3 -m pip install pycordia-....tar.gz
+...
+```
+
+(do as noted above if you're on Windows, if you can directly run PIP, use it)
+
 ## :ping_pong: Example of a simple Ping-Pong Bot
 
 ```py
