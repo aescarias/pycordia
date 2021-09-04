@@ -4,8 +4,10 @@ A work-in-progress Discord API wrapper for Python with a simple gateway and some
 
 ## :gear: Installation
 
-> :warning: Note!
+> :warning: **Note!**
+> 
 > As of now and while this package is in early development, you'll have to install Pycordia from source.
+> 
 > We don't recommend you use Pycordia in a production environment, however, feel free to test out any characteristics of the package.
 
 Pycordia has been well tested on version 3.8, however, 3.7 and above are supported.
