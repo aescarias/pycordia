@@ -80,9 +80,11 @@ class DiscordWebSocket:
             data = await sock.receive()
 
             if data.type == WSMsgType.CLOSE:
+
                 code, msg = data.data, data.extra
                 await sock.close(code=1001)
                 raise GatewayError(code, msg)
+
             elif data.type == WSMsgType.TEXT:
                 js = data.json()
                 event_data = js["d"]

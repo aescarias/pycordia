@@ -14,6 +14,7 @@ import typing
 from . import events, models, websocket
 import pycordia
 
+
 class Intents(enum.Enum):
     guilds = 1 << 0
     guild_members = 1 << 1
@@ -49,6 +50,7 @@ class Intents(enum.Enum):
             result |= value.value
         return result
 
+
 class Client:
     """A WebSockets client for the Discord Gateway API"""
 
@@ -60,12 +62,14 @@ class Client:
 
         return wrapper
 
-    def __init__(self, intents):
+    def __init__(self, intents, cache_size: int = 1000):
         self.events = {}
         self.__bot_token: str = ""
         self.intents = intents
 
+        self.cache_size = int(cache_size)
         self.user_cache: typing.Dict[str, models.User] = {}
+        self.message_cache: typing.Dict[str, models.Message] = {}
 
     async def __create_ws(self, bot_token):
         self.ws = websocket.DiscordWebSocket(self, bot_token, self.intents)
@@ -80,16 +84,42 @@ class Client:
 
             if event_name.lower() == "ready":
                 await func(events.ReadyEvent(event_data))
+
+            # ---- User Related Events ----
+
             elif event_name.lower() == "typing_start":
                 await func(events.TypingStartEvent(event_data))
+
+            # ---- Message Related Events ----
+
             elif event_name.lower() == "message_create":
-                await func(models.Message(event_data))
+                message = models.Message(event_data)
+                self.message_cache[message.message_id] = message
+                await func(message)
+
             elif event_name.lower() in ("message_delete", "message_delete_bulk"):
                 await func(
                     events.MessageDeleteEvent(
                         event_data, event_name.lower() == "message_delete_bulk"
-                    ) 
+                    )
                 )
+
+            elif event_name.lower() == "message_update":
+                after = models.Message(event_data)
+                before = self.message_cache.get(after.message_id, None)
+
+                self.message_cache[after.message_id] = after
+
+                if before:
+                    await func(before, after)
+
+            # ---- Channel Related Events ----
+
+            elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
+                await func(models.ChannelMention)
+
+            # ---- Unimplemented ----
+
             else:
                 await func(event_data)
 
@@ -119,7 +149,7 @@ class Client:
 
     @property
     async def user(self) -> models.User:
-        # Else, fetch it from the discord api
+        "Get user info for the bot"
         async with aiohttp.ClientSession() as session:
             async with session.get(
                     f"{pycordia.api_url}/users/@me",
@@ -133,3 +163,8 @@ class Client:
                     raise Exception(content)
 
                 return models.User(await resp.json())
+
+    # TODO: Modify current user
+    # TODO: Create DM
+    # TODO: Leave Guild
+    # TODO: Get User Connections

@@ -122,17 +122,6 @@ class StickerItem:
         return f"<pycordia.models.StickerItem - id={self.sticker_id} name={self.name}>"
 
 
-class ChannelMention:
-    def __init__(self, data: dict):
-        self.channel_id: Union[str, None] = data.get("id")
-        self.guild_id: Union[str, None] = data.get("guild_id")
-        self.channel_type: Union[str, None] = data.get("type")
-        self.channel_name: Union[str, None] = data.get("name")
-
-    def __repr__(self):
-        return f"<pycordia.models.ChannelMention - id={self.channel_id} name={self.channel_name}>"
-
-
 class Attachment:
     def __init__(self, data: dict):
         """An attachment for a message
