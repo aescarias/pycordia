@@ -50,10 +50,10 @@ async def on_ready(event: events.ReadyEvent):
 
 @client.event
 async def on_message_create(msg: models.Message):
-    if msg.author.bot:
+    if msg.author.bot or not msg.content:
         return
 
-    if msg.content and (".ping" in msg.content):
+    if msg.content.startswith(".ping"):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
