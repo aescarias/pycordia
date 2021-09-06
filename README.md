@@ -2,6 +2,9 @@
 
 A work-in-progress Discord API wrapper for Python with a simple gateway and some common events implemented.
 
+> As of now, this package is under early development so functionalities are bound to change drastically.
+> Feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
+
 ## :gear: Installation
 
 > :warning: **Note!**
