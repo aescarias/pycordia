@@ -108,9 +108,15 @@ class Client:
                 after = models.Message(event_data)
                 before = self.message_cache.get(after.message_id, None)
 
+                # Update the message cache
+                if len(self.user_cache.keys()) >= self.cache_size:
+                    first_message = list(self.message_cache.keys())[0]
+                    del self.message_cache[first_message]
                 self.message_cache[after.message_id] = after
 
                 if before:
+                    # There's no way to get the message before editing
+                    # if its not in the internal cache
                     await func(before, after)
 
             # ---- Channel Related Events ----
