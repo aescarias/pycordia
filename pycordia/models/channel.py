@@ -6,17 +6,6 @@ import pycordia
 from . import User
 
 
-class ChannelMention:
-    def __init__(self, data: dict):
-        self.channel_id: Union[str, None] = data.get("id")
-        self.guild_id: Union[str, None] = data.get("guild_id")
-        self.channel_type: Union[str, None] = data.get("type")
-        self.channel_name: Union[str, None] = data.get("name")
-
-    def __repr__(self):
-        return f"<pycordia.models.ChannelMention - id={self.channel_id} name={self.channel_name}>"
-
-
 class Channel:
     def __init__(self, data: dict):
         self.name: str = data.get("name")
@@ -60,6 +49,10 @@ class Channel:
     def __repr__(self):
         return f"#{self.name}"
 
+    @property
+    def mention(self):
+        return f"<#{self.id}>"
+
     @classmethod
     async def from_id(cls, client, channel_id: str):
         """Get a channel object given the id"""
@@ -78,3 +71,17 @@ class Channel:
                 return Channel(await resp.json())
 
     # TODO: All methods other than get_from_id() :)
+
+
+class ChannelMention:
+    def __init__(self, data: dict):
+        self.channel_id: Union[str, None] = data.get("id")
+        self.guild_id: Union[str, None] = data.get("guild_id")
+        self.channel_type: Union[str, None] = data.get("type")
+        self.channel_name: Union[str, None] = data.get("name")
+
+    def __repr__(self):
+        return f"<pycordia.models.ChannelMention - id={self.channel_id} name={self.channel_name}>"
+
+    async def get_channel(self, client):
+        return await Channel.from_id(client, self.channel_id)

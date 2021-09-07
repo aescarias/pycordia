@@ -14,6 +14,23 @@ async def on_ready(event: events.ReadyEvent):
 
 
 @client.event
+async def on_channel_create(channel: models.Channel):
+    """Be the first to send a message in any channel!"""
+    await models.Message.create(
+        content=f"First to send a message in {channel.mention}!"
+    ).send(client, channel.id)
+
+
+@client.event
+async def on_channel_update(channel: models.Channel):
+    """Notify people when a channel was updated"""
+    await models.Message.create(
+        content="Whoops! It looks like someone updated this channel!\n"
+                + "Why don't you take a look at the audit logs to view the changes?"
+    ).send(client, channel.id)
+
+
+@client.event
 async def on_message_update(before: models.Message, after: models.Message):
     """Log edited messages, for moderation purposes"""
     await models.Message.create(

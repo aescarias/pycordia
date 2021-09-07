@@ -128,7 +128,7 @@ class Client:
             # ---- Channel Related Events ----
 
             elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
-                await func(models.ChannelMention)
+                await func(models.Channel(event_data))
 
             # ---- Unimplemented ----
 
