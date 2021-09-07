@@ -2,9 +2,18 @@
 
 A work-in-progress Discord API wrapper for Python with a simple gateway and some common events implemented.
 
-## Installation
+> As of now, this package is under early development so functionalities are bound to change drastically.
+> Feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
 
-As of now, you have to install Pycordia from source.
+## :gear: Installation
+
+> :warning: **Note!**
+> 
+> As of now and while this package is in early development, you'll have to install Pycordia from source.
+> 
+> We don't recommend you use Pycordia in a production environment, however, feel free to test out any characteristics of the package.
+
+Pycordia has been well tested on version 3.8, however, 3.7 and above are supported.
 
 First, clone this repository either through Git or Github.
 
@@ -44,10 +53,10 @@ async def on_ready(event: events.ReadyEvent):
 
 @client.event
 async def on_message_create(msg: models.Message):
-    if msg.author.bot:
+    if msg.author.bot or not msg.content:
         return
 
-    if msg.content and (".ping" in msg.content):
+    if msg.content.startswith(".ping"):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
@@ -61,15 +70,16 @@ client.run(os.getenv("DISCORD_TOKEN"))
 - `on_ready`: `events.ReadyEvent`
 - `on_message_create`: `models.Message`
 - `on_typing_start`: `events.TypingStartEvent`
+- `on_message_delete`, `on_message_delete_bulk`: `events.MessageDeleteEvent`
 
 For all other events as of now, you'll receive raw JSON data which you'll have to handle yourself.
 
-## Things to do
+## :bookmark: Things to do
 
 - Improve currently available models
 - Add slash commands
 - Add all other event wrappers
 
-## Contribute
+## :book: Contribute
 
 Feel free to contribute any bug fixes, new features, or general improvements to the Pycordia project.
