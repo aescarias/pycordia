@@ -3,7 +3,6 @@ from typing import Dict, List, Union, Any
 import aiohttp
 
 import pycordia
-from . import User
 
 
 class Channel:
@@ -28,7 +27,7 @@ class Channel:
         self.rtc_region: Union[str, None] = data.get("rtc_region")
 
         self.slowmode_count: Union[int, None] = data.get("rate_limit_per_user")
-        self.recipients: List[User] = data.get("recipients")
+        self.recipients: List = data.get("recipients")
         self.icon: Union[str, None] = data.get("icon")
 
         self.owner_id: Union[str, None] = data.get("owner_id")

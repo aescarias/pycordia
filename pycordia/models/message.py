@@ -4,6 +4,7 @@ import enum
 from . import embed
 from .user import User
 from .guild import Member, Role
+from .channel import ChannelMention
 
 # class TextChannel:
 #     pass

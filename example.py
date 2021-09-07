@@ -14,31 +14,6 @@ async def on_ready(event: events.ReadyEvent):
 
 
 @client.event
-async def on_channel_create(channel: models.Channel):
-    """Be the first to send a message in any channel!"""
-    await models.Message.create(
-        content=f"First to send a message in {channel.mention}!"
-    ).send(client, channel.id)
-
-
-@client.event
-async def on_channel_update(channel: models.Channel):
-    """Notify people when a channel was updated"""
-    await models.Message.create(
-        content="Whoops! It looks like someone updated this channel!\n"
-                + "Why don't you take a look at the audit logs to view the changes?"
-    ).send(client, channel.id)
-
-
-@client.event
-async def on_message_update(before: models.Message, after: models.Message):
-    """Log edited messages, for moderation purposes"""
-    await models.Message.create(
-        content=f"Edited Message!\nBefore: {before.content}\nAfter: {after.content}"
-    ).send(client, before.channel_id)
-
-
-@client.event
 async def on_message_create(event: models.Message):
     """Listen to message create event"""
 
@@ -54,46 +29,8 @@ async def on_message_create(event: models.Message):
         await models.Message.create(embeds=[embed]).send(client, event.channel_id)
         print(f"Sent a message - {embed.description}")
 
-    # Get information about a user
-    elif event.content.startswith(".user"):
-        if len(event.content.split()) == 2:                
-            user = await models.User.user_from_id(client, event.content.split()[1])
-
-            if user:
-                embed = models.Embed.create(
-                    title=user.username + "#" + user.discriminator,
-                    description=f"{user.mention}\nID - {user.user_id}\nBot - {bool(user.bot)}",
-                    color=user.accent_color,
-                )
-            else:
-                embed = models.Embed.create(
-                    description="Please specify a valid user ID.",
-                    color=0xFF123A
-                )               
-            await models.Message.create(embeds=[embed]).send(client, event.channel_id)
-        else:
-            embed = models.Embed.create(
-                description="Please specify a user ID.",
-                color=0xFF123A
-            )
-            await models.Message.create(embeds=[embed]).send(client, event.channel_id)
-
-    # Get server information
-    elif event.content.startswith(".servers"):
-        guilds = await client.guilds
-        newline = "\n"
-        guilds = newline.join(
-            [
-                f"Name - {guild.name}\nId - {guild.id}\nFeatures - {newline.join(guild.features) or None}"
-                for guild in guilds
-            ]
-        )
-
-        await models.Message.create(content=str(guilds)).send(client, event.channel_id)
-
     # Get information about the bot
     elif event.content.startswith(".botinfo"):
-
         user = await client.user
 
         embed = models.Embed.create(

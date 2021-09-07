@@ -5,8 +5,8 @@
 #   Handles bot creation
 
 
-import asyncio
 import aiohttp
+import asyncio
 import enum
 
 import typing
@@ -112,6 +112,7 @@ class Client:
 
             elif event_name.lower() == "message_update":
                 after = models.Message(event_data)
+                print(self.message_cache, after.message_id)
                 before = self.message_cache.get(after.message_id, None)
 
                 # Update the message cache

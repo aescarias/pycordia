@@ -1,6 +1,5 @@
 import typing
-from .models.guild import Member
-from .models.user import User
+from .models import Member, User
 
 
 class ReadyEvent:
