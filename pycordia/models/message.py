@@ -197,8 +197,9 @@ class MessageReference:
 
 
 class Message:
-    def __init__(self, data: dict):
+    def __init__(self, client, data: dict):
         self.__data = data
+        self.__client = client
 
         self.message_id: Union[str, None] = data.get("id")
         self.channel_id: Union[str, None] = data.get("channel_id")
@@ -246,7 +247,7 @@ class Message:
 
     @classmethod
     def create(
-        cls,
+        cls, client,
         *,
         content: str = "",
         reply_to: MessageReference = None,
@@ -258,7 +259,7 @@ class Message:
         else:
             reply = None
 
-        return Message(
+        return Message(client,
             {
                 "content": content,
                 "message_reference": reply,
@@ -268,14 +269,14 @@ class Message:
         )
 
     async def send(
-        self, client, channel_id: str = None, *, allowed_mentions: dict = None
+        self, channel_id: str = None, *, allowed_mentions: dict = None
     ):
         async with aiohttp.ClientSession() as session:
             url = f"https://discord.com/api/v9/channels/{self.channel_id or channel_id}/messages"
 
             resp = await session.post(
                 url,
-                headers={"Authorization": f"Bot {client.ws.bot_token}"},
+                headers={"Authorization": f"Bot {self.__client.ws.bot_token}"},
                 json={
                     "content": self.content,
                     "tts": self.tts,
@@ -285,9 +286,9 @@ class Message:
             )
             print(await resp.json())
 
-    async def delete(self, client):
+    async def delete(self):
         async with aiohttp.ClientSession() as session:
             url = f"https://discord.com/api/v9/channels/{self.channel_id}/messages/{self.message_id}"
             await session.delete(
-                url, headers={"Authorization": f"Bot {client.ws.bot_token}"}
+                url, headers={"Authorization": f"Bot {self.__client.ws.bot_token}"}
             )

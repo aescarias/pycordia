@@ -5,7 +5,7 @@ import os
 
 dotenv.load_dotenv()
 client = pycordia.Client(intents=pycordia.Intents.all())
-LOGS_CHANNEL: str = ""  # Change this to a suitable channel's ID
+LOGS_CHANNEL: str = "883852079700000789"  # Change this to a suitable channel's ID
 
 
 @client.event
@@ -17,25 +17,25 @@ async def on_ready(event: events.ReadyEvent):
 @client.event
 async def on_channel_create(channel: models.Channel):
     """Be the first to send a message in any channel!"""
-    await models.Message.create(
-        content=f"First to send a message in {channel.mention}!"
-    ).send(client, channel.id)
+    await models.Message.create(client,
+        content=f"First to send a message in {channel.mention}!",
+    ).send(channel.id)
 
 
 @client.event
 async def on_channel_update(channel: models.Channel):
     """Notify people when a channel was updated"""
-    await models.Message.create(
+    await models.Message.create(client,
         content=f"Whoops! It looks like someone updated {channel.mention}!\n"
                 + "Why don't you take a look at the audit logs to view the changes?"
-    ).send(client, LOGS_CHANNEL)
+    ).send(LOGS_CHANNEL)
 
 
 @client.event
 async def on_channel_delete(channel: models.Channel):
-    await models.Message.create(
+    await models.Message.create(client,
         content=f"A channel was deleted! - {channel}"
-    ).send(client, LOGS_CHANNEL)
+    ).send(LOGS_CHANNEL)
 
 
 @client.event
@@ -57,9 +57,9 @@ async def on_message_update(before: models.Message, after: models.Message):
         description=f"**Before**: {before.content}\n**After**: {after.content}",
         color=0xFFAAAA
     )
-    await models.Message.create(
+    await models.Message.create(client,
         embeds=[embed]
-    ).send(client, LOGS_CHANNEL)
+    ).send(LOGS_CHANNEL)
 
 
 @client.event
@@ -77,9 +77,9 @@ async def on_message_delete(message: pycordia.events.MessageDeleteEvent):
         color=0xAA12DD
     )
 
-    await models.Message.create(
+    await models.Message.create(client, 
         embeds=[embed]
-    ).send(client, LOGS_CHANNEL)
+    ).send(LOGS_CHANNEL)
 
 
 client.run(os.getenv("DISCORD_TOKEN"))

@@ -6,7 +6,9 @@ import pycordia
 
 
 class Channel:
-    def __init__(self, data: dict):
+    def __init__(self, client, data: dict):
+        self.__client = client
+
         self.name: str = data.get("name")
         self.topic: str = data.get("topic")
         self.id: str = data.get("id")
@@ -73,7 +75,9 @@ class Channel:
 
 
 class ChannelMention:
-    def __init__(self, data: dict):
+    def __init__(self, client, data: dict):
+        self.__client = client
+
         self.channel_id: Union[str, None] = data.get("id")
         self.guild_id: Union[str, None] = data.get("guild_id")
         self.channel_type: Union[str, None] = data.get("type")
@@ -82,5 +86,5 @@ class ChannelMention:
     def __repr__(self):
         return f"<pycordia.models.ChannelMention - id={self.channel_id} name={self.channel_name}>"
 
-    async def get_channel(self, client):
-        return await Channel.from_id(client, self.channel_id)
+    async def get_channel(self):
+        return await Channel.from_id(self.__client, self.channel_id)

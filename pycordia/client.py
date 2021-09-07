@@ -93,7 +93,7 @@ class Client:
             # ---- Message Related Events ----
 
             elif event_name.lower() == "message_create":
-                message = models.Message(event_data)
+                message = models.Message(self, event_data)
 
                 if len(self.message_cache.keys()) >= self.cache_size:
                     first_message = list(self.message_cache.keys())[0]
@@ -111,7 +111,7 @@ class Client:
                 )
 
             elif event_name.lower() == "message_update":
-                after = models.Message(event_data)
+                after = models.Message(self, event_data)
                 print(self.message_cache, after.message_id)
                 before = self.message_cache.get(after.message_id, None)
 
@@ -129,7 +129,7 @@ class Client:
             # ---- Channel Related Events ----
 
             elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
-                await func(models.Channel(event_data))
+                await func(models.Channel(self, event_data))
 
             # ---- Unimplemented ----
 
