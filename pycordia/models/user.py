@@ -56,7 +56,10 @@ class User:
                 json = await resp.json()
                 user = User(json)
 
-                if len(client.user_cache.keys()) < 1000:
-                    client.user_cache[user.user_id] = user
+                if len(client.user_cache.keys()) >= client.cache_size:
+                    first_user = list(client.user_cache.keys())[0]
+                    del client.user_cache[first_user]
+
+                client.user_cache[user.user_id] = user
 
                 return user

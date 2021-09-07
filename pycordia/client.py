@@ -5,14 +5,15 @@
 #   Handles bot creation
 
 
-import asyncio
 import aiohttp
+import asyncio
 import enum
 
 import typing
 
 from . import events, models, websocket
 import pycordia
+
 
 class Intents(enum.Enum):
     guilds = 1 << 0
@@ -49,6 +50,7 @@ class Intents(enum.Enum):
             result |= value.value
         return result
 
+
 class Client:
     """A WebSockets client for the Discord Gateway API"""
 
@@ -60,12 +62,14 @@ class Client:
 
         return wrapper
 
-    def __init__(self, intents):
+    def __init__(self, intents, cache_size: int = 1000):
         self.events = {}
         self.__bot_token: str = ""
         self.intents = intents
 
+        self.cache_size = int(cache_size)
         self.user_cache: typing.Dict[str, models.User] = {}
+        self.message_cache: typing.Dict[str, models.Message] = {}
 
     async def __create_ws(self, bot_token):
         self.ws = websocket.DiscordWebSocket(self, bot_token, self.intents)
@@ -80,16 +84,55 @@ class Client:
 
             if event_name.lower() == "ready":
                 await func(events.ReadyEvent(event_data))
+
+            # ---- User Related Events ----
+
             elif event_name.lower() == "typing_start":
                 await func(events.TypingStartEvent(event_data))
+
+            # ---- Message Related Events ----
+
             elif event_name.lower() == "message_create":
-                await func(models.Message(event_data))
+                message = models.Message(event_data)
+
+                if len(self.message_cache.keys()) >= self.cache_size:
+                    first_message = list(self.message_cache.keys())[0]
+                    del self.message_cache[first_message]
+
+                self.message_cache[message.message_id] = message
+
+                await func(message)
+
             elif event_name.lower() in ("message_delete", "message_delete_bulk"):
                 await func(
                     events.MessageDeleteEvent(
                         event_data, event_name.lower() == "message_delete_bulk"
-                    ) 
+                    )
                 )
+
+            elif event_name.lower() == "message_update":
+                after = models.Message(event_data)
+                print(self.message_cache, after.message_id)
+                before = self.message_cache.get(after.message_id, None)
+
+                # Update the message cache
+                if len(self.message_cache.keys()) >= self.cache_size:
+                    first_message = list(self.message_cache.keys())[0]
+                    del self.message_cache[first_message]
+                self.message_cache[after.message_id] = after
+
+                if before:
+                    # There's no way to get the message before editing
+                    # if its not in the internal cache
+                    await func(before, after)
+
+            # ---- Channel Related Events ----
+
+            elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
+                await func(models.Channel(event_data))
+
+            # ---- Unimplemented ----
+
             else:
                 await func(event_data)
 
@@ -119,7 +162,7 @@ class Client:
 
     @property
     async def user(self) -> models.User:
-        # Else, fetch it from the discord api
+        "Get user info for the bot"
         async with aiohttp.ClientSession() as session:
             async with session.get(
                     f"{pycordia.api_url}/users/@me",
@@ -133,3 +176,8 @@ class Client:
                     raise Exception(content)
 
                 return models.User(await resp.json())
+
+    # TODO: Modify current user
+    # TODO: Create DM
+    # TODO: Leave Guild
+    # TODO: Get User Connections

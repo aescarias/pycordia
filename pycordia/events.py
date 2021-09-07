@@ -1,6 +1,5 @@
 import typing
-from .models.guild import Member
-from .models.user import User
+from .models import Member, User
 
 
 class ReadyEvent:
@@ -63,3 +62,4 @@ class TypingStartEvent:
         self.user_id = data["user_id"]
         self.channel_id = data["channel_id"]
         self.guild_id = data["guild_id"]
+
