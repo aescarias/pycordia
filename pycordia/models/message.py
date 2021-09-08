@@ -223,7 +223,7 @@ class Message:
             Role(role) for role in data.get("mention_roles", [])
         ]
         self.mention_channels: List[ChannelMention] = [
-            ChannelMention(cm) for cm in data.get("mention_channels", [])
+            ChannelMention(client, cm) for cm in data.get("mention_channels", [])
         ]
 
         self.attachments: List[Attachment] = data.get("attachments") or []
