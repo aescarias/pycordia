@@ -36,6 +36,7 @@ class DiscordWebSocket:
 
     def __init__(self, client, bot_token, intents):
         self.bot_token = bot_token
+        self.sock = None 
         """A valid Discord bot token"""
 
         self.heartbeat_interval = None
@@ -76,15 +77,16 @@ class DiscordWebSocket:
 
     async def __listen_socket(self, sock: ClientWebSocketResponse):
         """Start listening for websocket data"""
+        self.sock = sock
+
         while True:
             data = await sock.receive()
 
             if data.type == WSMsgType.CLOSE:
-
                 code, msg = data.data, data.extra
-                await sock.close(code=1001)
-                raise GatewayError(code, msg)
-
+                await sock.close()
+                if code not in (1000, 1001):
+                    raise GatewayError(code, msg)
             elif data.type == WSMsgType.TEXT:
                 js = data.json()
                 event_data = js["d"]

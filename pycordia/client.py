@@ -71,10 +71,11 @@ class Client:
         self.user_cache: typing.Dict[str, models.User] = {}
         self.message_cache: typing.Dict[str, models.Message] = {}
 
-    async def __create_ws(self, bot_token):
+    async def __create_ws(self, bot_token):        
         self.ws = websocket.DiscordWebSocket(self, bot_token, self.intents)
         await self.ws.listen()
-        
+
+
     async def call_event_handler(self, event_name: str, event_data):
         func_name = f"on_{event_name.lower()}"
 
@@ -86,12 +87,10 @@ class Client:
                 await func(events.ReadyEvent(event_data))
 
             # ---- User Related Events ----
-
             elif event_name.lower() == "typing_start":
                 await func(events.TypingStartEvent(event_data))
 
             # ---- Message Related Events ----
-
             elif event_name.lower() == "message_create":
                 message = models.Message(self, event_data)
 
@@ -127,18 +126,26 @@ class Client:
                     await func(before, after)
 
             # ---- Channel Related Events ----
-
             elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
                 await func(models.Channel(self, event_data))
 
             # ---- Unimplemented ----
-
             else:
                 await func(event_data)
 
     def run(self, bot_token):
         self.__bot_token = bot_token
-        asyncio.get_event_loop().run_until_complete(self.__create_ws(bot_token))
+
+        loop = asyncio.get_event_loop()
+        task = loop.create_task(self.__create_ws(bot_token))
+
+        try:
+            loop.run_until_complete(task)
+        except KeyboardInterrupt:
+            task.cancel()
+
+            if self.ws.sock:
+                loop.run_until_complete(self.ws.sock.close())
 
     @property
     async def guilds(self) -> typing.List[models.PartialGuild]:

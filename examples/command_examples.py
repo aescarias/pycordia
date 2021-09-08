@@ -1,3 +1,4 @@
+import asyncio
 from pycordia import events, models
 import pycordia
 import dotenv
@@ -5,7 +6,6 @@ import os
 
 dotenv.load_dotenv()
 client = pycordia.Client(intents=pycordia.Intents.all())
-
 
 @client.event
 async def on_ready(event: events.ReadyEvent):
@@ -26,8 +26,7 @@ async def on_message_create(event: models.Message):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
-        await models.Message.create(embeds=[embed]).send(client, event.channel_id)
-        print(f"Sent a message - {embed.description}")
+        await models.Message.create(client, embeds=[embed]).send(event.channel_id)
 
     # Get information about a user
     elif event.content.startswith(".user"):
@@ -45,13 +44,13 @@ async def on_message_create(event: models.Message):
                     description="Please specify a valid user ID.",
                     color=0xFF123A
                 )
-            await models.Message.create(embeds=[embed]).send(client, event.channel_id)
+            await models.Message.create(client, embeds=[embed]).send(event.channel_id)
         else:
             embed = models.Embed.create(
                 description="Please specify a user ID.",
                 color=0xFF123A
             )
-            await models.Message.create(embeds=[embed]).send(client, event.channel_id)
+            await models.Message.create(client, embeds=[embed]).send( event.channel_id)
 
     # Get server information
     elif event.content.startswith(".servers"):
@@ -64,7 +63,7 @@ async def on_message_create(event: models.Message):
             ]
         )
 
-        await models.Message.create(content=str(guilds)).send(client, event.channel_id)
+        await models.Message.create(client, content=str(guilds)).send(event.channel_id)
 
     # Get information about the bot
     elif event.content.startswith(".botinfo"):
@@ -76,7 +75,7 @@ async def on_message_create(event: models.Message):
             color=user.accent_color,
         )
 
-        await models.Message.create(embeds=[embed]).send(client, event.channel_id)
+        await models.Message.create(client, embeds=[embed]).send(event.channel_id)
 
 
 client.run(os.getenv("DISCORD_TOKEN"))

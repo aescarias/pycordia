@@ -1,10 +1,12 @@
 from typing import List, Union
+import typing
 import aiohttp
 import enum
 from . import embed
 from .user import User
 from .guild import Member, Role
 from .channel import ChannelMention
+from pycordia import models
 
 # class TextChannel:
 #     pass
@@ -168,7 +170,8 @@ class Interaction:
 
 
 class MessageReference:
-    def __init__(self, ref_data: dict, msg_data: dict):
+    def __init__(self, client, ref_data: dict, msg_data: dict):
+        self.__client = client
         self.__msg_data = msg_data
 
         if ref_data:
@@ -185,7 +188,7 @@ class MessageReference:
 
     @property
     def message(self):
-        return Message(self.__msg_data or {})
+        return Message(self.__client, self.__msg_data or {})
 
     def to_dict(self):
         return {
@@ -234,7 +237,7 @@ class Message:
 
         self.application: Application = Application(data.get("application", {}))
         self.application_id: Union[str, None] = data.get("application_id")
-        self.message_reference: MessageReference = MessageReference(
+        self.message_reference: MessageReference = MessageReference(self.__client,
             data.get("message_reference", {}), data.get("referenced_message", {})
         )
 
@@ -249,7 +252,7 @@ class Message:
     def create(
         cls, client,
         *,
-        content: str = "",
+        content: str = None,
         reply_to: MessageReference = None,
         embeds: List[embed.Embed] = None,
         attachments: List[Attachment] = None,
@@ -261,7 +264,7 @@ class Message:
 
         return Message(client,
             {
-                "content": content,
+                "content": content if content else "",
                 "message_reference": reply,
                 "embeds": embeds,
                 "attachments": attachments,
@@ -271,6 +274,7 @@ class Message:
     async def send(
         self, channel_id: str = None, *, allowed_mentions: dict = None
     ):
+        """Send a message to a channel ID, returns a Message object"""
         async with aiohttp.ClientSession() as session:
             url = f"https://discord.com/api/v9/channels/{self.channel_id or channel_id}/messages"
 
@@ -284,7 +288,11 @@ class Message:
                     "embeds": [emb.to_dict() for emb in (self.embeds or [])],
                 },
             )
-            print(await resp.json())
+            rs = await resp.json()
+            print(rs)
+            if resp.ok:
+                return Message(self.__client, rs)
+            
 
     async def delete(self):
         async with aiohttp.ClientSession() as session:
@@ -292,3 +300,19 @@ class Message:
             await session.delete(
                 url, headers={"Authorization": f"Bot {self.__client.ws.bot_token}"}
             )
+
+    # TODO: Implement attachments and files
+    async def edit(self, *, content: str = None, 
+        embeds: typing.List[models.Embed] = None,
+        allowed_mentions: dict = None
+    ):
+        async with aiohttp.ClientSession() as session:
+            url = f"https://discord.com/api/v9/channels/{self.channel_id}/messages/{self.message_id}"
+            await session.patch(
+                url, headers={"Authorization": f"Bot {self.__client.ws.bot_token}"},
+                json={
+                    "content": content if content else "",
+                    "embeds": [embed.to_dict() for embed in (embeds or [])],
+                    "allowed_mentions": allowed_mentions
+                }
+            )            

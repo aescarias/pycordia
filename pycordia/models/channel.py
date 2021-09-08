@@ -3,6 +3,7 @@ from typing import Dict, List, Union, Any
 import aiohttp
 
 import pycordia
+from pycordia import models
 
 
 class Channel:
@@ -69,10 +70,21 @@ class Channel:
                 if not resp.ok:
                     return
 
-                return Channel(await resp.json())
+                return Channel(client, await resp.json())
 
-    # TODO: All methods other than get_from_id() :)
+    # TODO: Make this method support cache
+    async def query_message(self, message_id):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                f"{pycordia.api_url}/channels/{self.id}/messages/{message_id}",
+                headers={
+                    "Authorization": f"Bot {self.__client._Client__bot_token}"
+                }
+            ) as resp:
+                if not resp.ok:
+                    return
 
+                return models.Message(self.__client, await resp.json())
 
 class ChannelMention:
     def __init__(self, client, data: dict):
