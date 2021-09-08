@@ -1,40 +1,42 @@
 # Pycordia
 
+> ⚠️ **Note!**
+> 
+> As of now, this package is under early development so functionalities are bound to change drastically.
+> 
+> We **don't** recommend you currently use Pycordia in a production environment.
+
 A work-in-progress Discord API wrapper for Python with a simple gateway and some common events implemented.
 
-> As of now, this package is under early development so functionalities are bound to change drastically.
-> Feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
+While there's currently no documentation available, use the examples for guidance. If you have any questions, feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
+
+Our examples (and future documentation) assume you're at a level of Python where you can comfortably work with Discord bots.
 
 ## :gear: Installation
+ 
+As of now and while this package is in early development, you'll have to install Pycordia from source.
+ 
+Pycordia has been well tested on Python 3.8, however, 3.7 and above are supported.
 
-> :warning: **Note!**
-> 
-> As of now and while this package is in early development, you'll have to install Pycordia from source.
-> 
-> We don't recommend you use Pycordia in a production environment, however, feel free to test out any characteristics of the package.
-
-Pycordia has been well tested on version 3.8, however, 3.7 and above are supported.
+---
 
 First, clone this repository either through Git or Github.
 
 Next, proceed to run the `setup.py` file as in:
-
 ```sh
-$ python3 setup.py sdist
-running sdist
-running egg_info
+$ python setup.py sdist     # Should work everywhere
+$ python3 setup.py sdist    # Should work on most *nix systems; use on MacOS
+$ py -3 setup.py sdist      # Should work on Windows
 ```
 
-(if on Windows and have confirmed that `python --version` is greater than 3.7, use `python`)
-
-Run the created `.tar.gz` file in the new `dist` directory created from `setup.py`
-
+`cd` into the new `dist` directory and run the created `.tar.gz` file.
 ```sh
-$ cd dist & python3 -m pip install pycordia-....tar.gz
-...
+$ pip install pycordia-<version>.tar.gz         # Should work everywhere
+$ pip3 install pycordia-<version>.tar.gz        # Should work on most *nix systems; use on MacOS
+$ python -m pip install pycordia-....tar.gz     # Alternative; should work everywhere
+$ python3 -m pip install pycordia-....tar.gz    # Alternative; use on MacOS
+$ py -3 -m pip install pycordia-....tar.gz      # Alternative; use on Windows
 ```
-
-(do as noted above if you're on Windows, if you can directly run PIP, use it)
 
 ## :ping_pong: Example of a simple Ping-Pong Bot
 
