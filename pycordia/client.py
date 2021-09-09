@@ -75,7 +75,6 @@ class Client:
         self.ws = websocket.DiscordWebSocket(self, bot_token, self.intents)
         await self.ws.listen()
 
-
     async def call_event_handler(self, event_name: str, event_data):
         func_name = f"on_{event_name.lower()}"
 

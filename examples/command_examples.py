@@ -77,5 +77,25 @@ async def on_message_create(event: models.Message):
 
         await models.Message.create(client, embeds=[embed]).send(event.channel_id)
 
+    elif event.content.startswith(".pin"):
+        split = event.content.split()
+        if len(split) > 1:
+            message_id = split[1]
+            msg = await models.Message.get_message(client, event.channel_id, message_id)
+            if msg:
+                await msg.pin()
+            else:
+                embed = models.Embed.create(
+                    description="Please specify a valid message ID. Make sure you're using this command in the correct channel.",
+                    color=0xFF123A
+                )
+                await models.Message.create(client, embeds=[embed]).send(event.channel_id)
+        else:
+            embed = models.Embed.create(
+                description="Please specify a message ID.",
+                color=0xFF123A
+            )
+            await models.Message.create(client, embeds=[embed]).send(event.channel_id)
+ 
 
 client.run(os.getenv("DISCORD_TOKEN"))

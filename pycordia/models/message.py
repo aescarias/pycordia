@@ -271,6 +271,20 @@ class Message:
             }
         )
 
+    @classmethod
+    async def get_message(cls, client, channel_id, message_id):
+        async with aiohttp.ClientSession() as session:
+            url = f"https://discord.com/api/v9/channels/{channel_id}/messages/{message_id}"
+
+            resp = await session.get(
+                url,
+                headers={"Authorization": f"Bot {client.ws.bot_token}"}
+            )
+            rs = await resp.json()
+
+            if resp.ok:
+                return Message(client, rs)
+
     async def send(
         self, channel_id: str = None, *, allowed_mentions: dict = None
     ):
@@ -316,3 +330,19 @@ class Message:
                     "allowed_mentions": allowed_mentions
                 }
             )            
+
+    async def pin(self):
+        async with aiohttp.ClientSession() as session:
+            url = f"https://discord.com/api/v9/channels/{self.channel_id}/pins/{self.message_id}"
+
+            await session.put(
+                url, headers={"Authorization": f"Bot {self.__client.ws.bot_token}"}
+            )
+    
+    async def unpin(self):
+        async with aiohttp.ClientSession() as session:
+            url = f"https://discord.com/api/v9/channels/{self.channel_id}/pins/{self.message_id}"
+
+            await session.delete(
+                url, headers={"Authorization": f"Bot {self.__client.ws.bot_token}"}
+            )        
