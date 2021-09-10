@@ -73,8 +73,10 @@ client.run(os.getenv("DISCORD_TOKEN"))
 - `on_message_create`: `models.Message`
 - `on_typing_start`: `events.TypingStartEvent`
 - `on_message_delete`, `on_message_delete_bulk`: `events.MessageDeleteEvent`
+- `on_message_update`: `models.Message`
+- `on_channel_create`, `on_channel_update`, `on_channel_delete`: `models.Channel`
 
-For all other events as of now, you'll receive raw JSON data which you'll have to handle yourself.
+For all other undocumented events, you'll receive raw JSON data which you'll have to handle yourself.
 
 ## :bookmark: Things to do
 
