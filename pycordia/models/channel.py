@@ -1,3 +1,4 @@
+import enum
 from typing import Dict, List, Union, Any
 
 import aiohttp
@@ -7,17 +8,30 @@ from pycordia import models
 
 
 class Channel:
+    class ChannelType(enum.Enum):
+        text = 0
+        dm = 1
+        voice = 2
+        group_dm = 3
+        category = 4
+        news = 5
+        store = 6
+        news_thread = 10
+        public_thread = 11
+        private_thread = 12
+        stage_voice = 13
+
     def __init__(self, client, data: dict):
         self.__client = client
 
         self.name: str = data.get("name")
         self.topic: str = data.get("topic")
         self.id: str = data.get("id")
-        self.type: int = data.get("type")
+        self.type: Channel.ChannelType = Channel.ChannelType(int(data.get("type", 0)))
 
         self.nsfw: bool = data.get("nsfw")
         self.guild_id: Union[str, None] = data.get("guild_id")
-        self.postion: int = data.get("position")
+        self.position: int = data.get("position")
 
         # TODO: Define overwrite model
         self.permission_overwrites: List[Dict] = data.get("permission_overwrites")

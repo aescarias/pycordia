@@ -1,5 +1,6 @@
 import typing
-from typing import Union
+import aiohttp
+from typing import List, Union, Optional
 from .user import User
 
 
@@ -16,7 +17,7 @@ class Member:
         self.permissions: Union[str, None] = data.get("permissions")
 
     def __repr__(self):
-        return f"<pycordia.models.GuildMember - id={self.user.user_id} username={self.user.username}>"
+        return f"<GuildMember id={self.user.user_id} username='{self.user.username}'>"
 
 
 class PartialGuild:
@@ -29,7 +30,7 @@ class PartialGuild:
         self.features: typing.List[str] = data.get("features", [])
 
     def __repr__(self):
-        return f"<pycordia.models.PartialGuild - id={self.id} name={self.name}>"
+        return f"<PartialGuild - id={self.id} name={self.name}>"
 
 
 class Role:
