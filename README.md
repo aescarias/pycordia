@@ -75,7 +75,7 @@ async def on_message_create(msg: models.Message):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
-        await models.Message.create(embeds=[embed]).send(client, msg.channel_id)
+        await models.Message.create(client, embeds=[embed]).send(msg.channel_id)
 
 client.run(os.getenv("DISCORD_TOKEN"))
 ```
