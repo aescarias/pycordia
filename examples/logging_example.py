@@ -38,18 +38,6 @@ async def on_channel_delete(channel: models.Channel):
         content=f"A channel was deleted! - {channel}"
     ).send(LOGS_CHANNEL)
 
-
-@client.event
-async def on_message_create(_: models.Message):
-    """
-        We need this event to listen to messages
-        Otherwise pycordia won't cache messages
-        and our `on_message_update` and `on_message_delete`
-        events won't be triggered
-    """
-    pass
-
-
 @client.event
 async def on_message_update(before: models.Message, after: models.Message):
     """Log edited messages, for moderation purposes"""
@@ -65,16 +53,9 @@ async def on_message_update(before: models.Message, after: models.Message):
 
 @client.event
 async def on_message_delete(message: pycordia.events.MessageDeleteEvent):
-
-    deleted_messages = []
-    for id_ in message.message_ids:
-        message = client.message_cache.get(id_)
-        if message:
-            deleted_messages.append(f"Author - {message.author}\nContent - {message.content}")
-
     embed = models.Embed.create(
         title="Message(s) Deleted!",
-        description="\n\n".join(deleted_messages),
+        description="\n\n".join([f"**{message.author}**:\n{message.content}" for message in message.cached_messages]),
         color=0xAA12DD
     )
 

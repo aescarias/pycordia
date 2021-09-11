@@ -77,8 +77,35 @@ class Client:
 
     async def call_event_handler(self, event_name: str, event_data):
         func_name = f"on_{event_name.lower()}"
-
+        
         print(event_name)
+        # --- Cached methods ---
+        if event_name.lower() == "message_create":
+            message = models.Message(self, event_data)
+
+            if len(self.message_cache.keys()) >= self.cache_size:
+                first_message = list(self.message_cache.keys())[0]
+                del self.message_cache[first_message]
+
+            self.message_cache[message.message_id] = message
+
+            if func_name in self.events:
+                await self.events[func_name](message)
+        elif event_name.lower() == "message_update":
+            after = models.Message(self, event_data)
+            print(self.message_cache, after.message_id)
+            before = self.message_cache.get(after.message_id, None)
+
+            # Update the message cache
+            if len(self.message_cache.keys()) >= self.cache_size:
+                first_message = list(self.message_cache.keys())[0]
+                del self.message_cache[first_message]
+            self.message_cache[after.message_id] = after
+
+            if func_name in self.events:
+                await self.events[func_name](before, after)
+
+        # --- Uncached methods ---
         if func_name in self.events:
             func = self.events[func_name]
 
@@ -90,40 +117,17 @@ class Client:
                 await func(events.TypingStartEvent(event_data))
 
             # ---- Message Related Events ----
-            elif event_name.lower() == "message_create":
-                message = models.Message(self, event_data)
-
-                if len(self.message_cache.keys()) >= self.cache_size:
-                    first_message = list(self.message_cache.keys())[0]
-                    del self.message_cache[first_message]
-
-                self.message_cache[message.message_id] = message
-
-                await func(message)
-
-            elif event_name.lower() in ("message_delete", "message_delete_bulk"):
+            elif event_name.lower() == "message_delete":
                 await func(
-                    events.MessageDeleteEvent(
-                        event_data, event_name.lower() == "message_delete_bulk"
-                    )
+                    events.MessageDeleteEvent(event_data, False, [self.message_cache[event_data["id"]]])
                 )
-
-            elif event_name.lower() == "message_update":
-                after = models.Message(self, event_data)
-                print(self.message_cache, after.message_id)
-                before = self.message_cache.get(after.message_id, None)
-
-                # Update the message cache
-                if len(self.message_cache.keys()) >= self.cache_size:
-                    first_message = list(self.message_cache.keys())[0]
-                    del self.message_cache[first_message]
-                self.message_cache[after.message_id] = after
-
-                if before:
-                    # There's no way to get the message before editing
-                    # if its not in the internal cache
-                    await func(before, after)
-
+            elif event_name.lower() == "message_delete_bulk":
+                ids = event_data.get("ids", [])
+                await func(
+                    events.MessageDeleteEvent(event_data, True, 
+                        list(filter(lambda key: key in ids, self.message_cache))
+                ))
+            
             # ---- Channel Related Events ----
             elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
                 await func(models.Channel(self, event_data))

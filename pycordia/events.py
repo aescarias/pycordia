@@ -1,6 +1,5 @@
 import typing
-from .models import Member, User
-
+from .models import Member, User, Message
 
 class ReadyEvent:
     def __init__(self, data: dict):
@@ -31,14 +30,16 @@ class MessageDeleteEvent:
         channel_id: The ID of the channel
         guild_id: The ID of the guild
         bulk: Whether the deletion was performed in bulk
+        cached_message: The message, if it was cached by Pycordia
     """     
-    def __init__(self, data: dict, bulk: bool):
+    def __init__(self, data: dict, bulk: bool, messages):
   
         if bulk:
             self.message_ids = data["ids"]
         else:
             self.message_ids = [data["id"]]
 
+        self.cached_messages: typing.List[Message] = messages
         self.channel_id = data["channel_id"]
         self.guild_id = data.get("guild_id")
         self.bulk = bulk
