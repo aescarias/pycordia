@@ -13,10 +13,23 @@ While there's currently no documentation available, use the examples for guidanc
 Our examples (and future documentation) assume you're at a level of Python where you can comfortably work with Discord bots.
 
 ## :gear: Installation
- 
-As of now and while this package is in early development, you'll have to install Pycordia from source.
- 
+
 Pycordia has been well tested on Python 3.8, however, 3.7 and above are supported.
+
+### Installing from PIP
+
+The easiest way to get Pycordia on your system is by installing it through `pip`.
+```sh
+$ pip install pycordia               # Should work everywhere
+$ pip3 install pycordia              # Should work on most *nix systems; use on MacOS
+$ python -m pip install pycordia     # Alternative; should work everywhere
+$ python3 -m pip install pycordia    # Alternative; use on MacOS
+$ py -3 -m pip install pycordia      # Alternative; use on Windows
+```
+
+### Installing from Source
+
+If you prefer installing Pycordia from source, proceed with the following:
 
 ---
 
@@ -62,7 +75,7 @@ async def on_message_create(msg: models.Message):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
-        await models.Message.create(embeds=[embed]).send(client, msg.channel_id)
+        await models.Message.create(client, embeds=[embed]).send(msg.channel_id)
 
 client.run(os.getenv("DISCORD_TOKEN"))
 ```
