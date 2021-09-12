@@ -1,4 +1,4 @@
-# Pycordia v0.1.0 - The Discord bot framework
+# Pycordia v0.1.1 - The Discord bot framework
 # Developed by Angel Carias and it's contributors. 2021.
 
 # client.py
@@ -90,7 +90,8 @@ class Client:
             self.message_cache[message.message_id] = message
 
             if func_name in self.events:
-                await self.events[func_name](message)
+                asyncio.gather(self.events[func_name](message))                
+                return
         elif event_name.lower() == "message_update":
             after = models.Message(self, event_data)
             print(self.message_cache, after.message_id)
@@ -103,38 +104,39 @@ class Client:
             self.message_cache[after.message_id] = after
 
             if func_name in self.events:
-                await self.events[func_name](before, after)
+                asyncio.gather(self.events[func_name](before, after))                
+                return
 
         # --- Uncached methods ---
         if func_name in self.events:
             func = self.events[func_name]
 
             if event_name.lower() == "ready":
-                await func(events.ReadyEvent(event_data))
+                asyncio.gather(func(events.ReadyEvent(event_data)))
 
             # ---- User Related Events ----
             elif event_name.lower() == "typing_start":
-                await func(events.TypingStartEvent(event_data))
+                asyncio.gather(func(events.TypingStartEvent(event_data)))
 
             # ---- Message Related Events ----
             elif event_name.lower() == "message_delete":
-                await func(
+                asyncio.gather(func(
                     events.MessageDeleteEvent(event_data, False, [self.message_cache[event_data["id"]]])
-                )
+                ))
             elif event_name.lower() == "message_delete_bulk":
                 ids = event_data.get("ids", [])
-                await func(
+                asyncio.gather(func(
                     events.MessageDeleteEvent(event_data, True, 
                         list(filter(lambda key: key in ids, self.message_cache))
-                ))
+                )))
             
             # ---- Channel Related Events ----
             elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
-                await func(models.Channel(self, event_data))
+                asyncio.gather(func(models.Channel(self, event_data)))
 
             # ---- Unimplemented ----
             else:
-                await func(event_data)
+                asyncio.gather(func(event_data))
 
     def run(self, bot_token):
         self.__bot_token = bot_token

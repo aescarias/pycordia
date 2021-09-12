@@ -64,7 +64,9 @@ async def on_message_create(event: models.Message):
         )
 
         await models.Message.create(client, content=str(guilds)).send(event.channel_id)
-
+    elif event.content.startswith(".makemewait"):
+        await models.Message.create(client, content="Aight").send(event.channel_id)
+        await asyncio.sleep(10)
     # Get information about the bot
     elif event.content.startswith(".botinfo"):
         user = await client.user

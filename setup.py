@@ -8,7 +8,7 @@ requirements = [
 with open('pycordia/__init__.py') as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
-with open('README.md') as f:
+with open('README.md', "r", encoding="utf-8-sig") as f:
     readme = f.read()
 
 setup(name='pycordia',
