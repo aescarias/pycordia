@@ -93,14 +93,18 @@ class Client:
                 asyncio.gather(self.events[func_name](message))                
                 return
         elif event_name.lower() == "message_update":
+
             after = models.Message(self, event_data)
+            
             print(self.message_cache, after.message_id)
+            
             before = self.message_cache.get(after.message_id, None)
 
             # Update the message cache
             if len(self.message_cache.keys()) >= self.cache_size:
                 first_message = list(self.message_cache.keys())[0]
                 del self.message_cache[first_message]
+            
             self.message_cache[after.message_id] = after
 
             if func_name in self.events:
@@ -139,6 +143,12 @@ class Client:
                 asyncio.gather(func(event_data))
 
     def run(self, bot_token):
+        """Log into discord, and start the event loop
+
+        ---        
+        Parameters:
+            bot_token: Discord token
+        """
         self.__bot_token = bot_token
 
         loop = asyncio.get_event_loop()
@@ -154,7 +164,8 @@ class Client:
 
     @property
     async def guilds(self) -> typing.List[models.PartialGuild]:
-        # Else, fetch it from the discord api
+        """List of guilds of which the bot is a member"""
+
         async with aiohttp.ClientSession() as session:
             async with session.get(
                     f"{pycordia.api_url}/users/@me/guilds",
@@ -174,7 +185,8 @@ class Client:
 
     @property
     async def user(self) -> models.User:
-        "Get user info for the bot"
+        """Bot's `pycordia.models.user.User` Object"""
+
         async with aiohttp.ClientSession() as session:
             async with session.get(
                     f"{pycordia.api_url}/users/@me",

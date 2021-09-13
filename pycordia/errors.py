@@ -4,7 +4,7 @@ class QueryError(Exception):
         self.message = message
         super().__init__(f"{message} (error code {code})")
 
-class GatewayError(QueryError):    
+class GatewayError(QueryError):
     pass
 
 class ComponentError(Exception):

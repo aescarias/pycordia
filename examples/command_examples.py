@@ -7,6 +7,7 @@ import os
 dotenv.load_dotenv()
 client = pycordia.Client(intents=pycordia.Intents.all())
 
+
 @client.event
 async def on_ready(event: events.ReadyEvent):
     """The bot is up and running! Yippee!"""

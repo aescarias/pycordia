@@ -15,3 +15,13 @@ __version__ = "0.1.1"
 cdn_url = "https://cdn.discordapp.com"
 ws_url = "wss://gateway.discord.gg"
 api_url = "https://discord.com/api"
+
+# PDoc Documentation Configurations
+
+__pdoc__ = {
+    "api": False,
+    "websocket": False,
+
+    "client.Client.event": False,
+    "client.Client.call_event_handler": False
+}
