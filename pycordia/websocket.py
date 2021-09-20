@@ -1,4 +1,4 @@
-# Pycordia v0.1.1 - The Discord bot framework
+# Pycordia v0.1.2 - The Discord bot framework
 # Developed by Angel Carias and it's contributors. 2021.
 
 # websocket.py
@@ -8,6 +8,7 @@
 import asyncio
 import json
 import platform
+import zlib
 from pycordia.errors import GatewayError
 
 import aiohttp
@@ -16,6 +17,7 @@ from aiohttp.http_websocket import WSMsgType
 
 import pycordia
 
+ZLIB_SUFFIX = b"\x00\x00\xff\xff"
 
 class DiscordWebSocket:
     """A WebSockets client for the Discord Gateway API"""
@@ -36,17 +38,20 @@ class DiscordWebSocket:
 
     def __init__(self, client, bot_token, intents):
         self.bot_token = bot_token
-        self.sock = None 
         """A valid Discord bot token"""
+
+        self.sock = None
 
         self.heartbeat_interval = None
         """The interval to wait before calling the gateway again, in milliseconds"""
         self.sequence = None
-        self.gateway_url = f"{pycordia.ws_url}/?v=9&encoding=json"
+        self.gateway_url = f"{pycordia.ws_url}/?v=9&encoding=json&compress=zlib-stream"
         self.client = client
 
         self.session_id = None
         self.intents = intents
+        """The provided intents as an integer"""
+
 
     def get_identify(self):
         """Returns an Opcode 2 (Identify) response"""
@@ -59,7 +64,7 @@ class DiscordWebSocket:
                     "$browser": "pycordia",
                     "$device": "pycordia",
                 },
-                "compress": False,
+                "compress": True,
                 "large_threshold": 250,
                 "intents": self.intents,
             },
@@ -80,9 +85,11 @@ class DiscordWebSocket:
     async def __listen_socket(self, sock: ClientWebSocketResponse):
         """Start listening for data from the gateway"""
         self.sock = sock
+        inflator = zlib.decompressobj()
 
         while True:
             data = await sock.receive()
+            payload = data.data
 
             # --- Handle close --- #
             if data.type == WSMsgType.CLOSE:
@@ -91,9 +98,20 @@ class DiscordWebSocket:
                 #  A non-100(0|1) code indicates an error
                 if code not in (1000, 1001):
                     raise GatewayError(code, msg)
-            # --- Handle text response --- #
-            elif data.type == WSMsgType.TEXT:
-                js = data.json()
+            # --- Handle binary response --- #
+            elif data.type == WSMsgType.BINARY:
+                # Decompress the binary into readable JSON data
+                buffer = bytearray()
+                buffer.extend(data.data)
+                # We have to account for both payload and transport
+                # compression
+                if buffer[-4:] == ZLIB_SUFFIX:
+                    payload = inflator.decompress(buffer)
+                else:
+                    payload = zlib.decompress(buffer)
+
+            if data.type in (WSMsgType.BINARY, WSMsgType.TEXT):
+                js = json.loads(payload)
                 event_data = js["d"]
 
                 self.sequence = js.get("s")
