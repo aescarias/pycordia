@@ -1,4 +1,4 @@
-# Pycordia v0.1.1 - The Discord bot framework
+# Pycordia v0.1.2 - The Discord bot framework
 # Developed by Angel Carias and it's contributors. 2021.
 
 # client.py
