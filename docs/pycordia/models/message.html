@@ -37,7 +37,7 @@
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Discord application model.</p></div>
 </dd>
 <dt id="pycordia.models.message.Attachment"><code class="flex name class">
 <span>class <span class="ident">Attachment</span></span>
@@ -45,22 +45,33 @@
 </code></dt>
 <dd>
 <div class="desc"><p>An attachment for a message</p>
-<h2 id="arguments">Arguments</h2>
-<p>attachment_id (int): The ID of the attachment
-filename (str): The attachment's filename
-content_type (str): The content type
-size (int):
-url (str):
-proxy_url (str):
-height (int):
-width (int):</p></div>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>attachment_id</code></strong> :&ensp;<code>int</code></dt>
+<dd>The ID of the attachment</dd>
+<dt><strong><code>filename</code></strong> :&ensp;<code>str</code></dt>
+<dd>The attachment's filename</dd>
+<dt><strong><code>content_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>The content type</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code></dt>
+<dd>File size</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>URL to the file</dd>
+<dt><strong><code>proxy_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Alternate URL to the file</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>int</code></dt>
+<dd>Height of attachment (only applies to images)</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>int</code></dt>
+<dd>Width of the attachment (only applies to images)</dd>
+</dl></div>
 <h3>Methods</h3>
 <dl>
 <dt id="pycordia.models.message.Attachment.to_dict"><code class="name flex">
 <span>def <span class="ident">to_dict</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Return raw dictionary of object
+Returns: dict</p></div>
 </dd>
 </dl>
 </dd>
@@ -69,21 +80,31 @@ width (int):</p></div>
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Emoji model, to represent server specific emojis.</p></div>
 </dd>
 <dt id="pycordia.models.message.Interaction"><code class="flex name class">
 <span>class <span class="ident">Interaction</span></span>
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Interaction model - represents discord interactions.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>interaction_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of the discord interaction</dd>
+<dt><strong><code>interaction_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>Type of the interaction (button, slash command, etc)</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the interaction</dd>
+</dl>
+<p>user (<code><a title="pycordia.models.user.User" href="user.html#pycordia.models.user.User">User</a></code>): Interaction's user</p></div>
 </dd>
 <dt id="pycordia.models.message.Message"><code class="flex name class">
 <span>class <span class="ident">Message</span></span>
 <span>(</span><span>client, data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Message model - represents a message sent in discord</p></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="pycordia.models.message.Message.create"><code class="name flex">
@@ -138,7 +159,13 @@ width (int):</p></div>
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>A message activity object</p></div>
+<div class="desc"><p>Message Activity class</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt>activity_type (<code><a title="pycordia.models.message.MessageActivity.ActivityTypes" href="#pycordia.models.message.MessageActivity.ActivityTypes">MessageActivity.ActivityTypes</a></code>): Type of activity</dt>
+<dt><strong><code>party_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of the party</dd>
+</dl></div>
 <h3>Class variables</h3>
 <dl>
 <dt id="pycordia.models.message.MessageActivity.ActivityTypes"><code class="name">var <span class="ident">ActivityTypes</span></code></dt>
@@ -157,7 +184,7 @@ width (int):</p></div>
 <dl>
 <dt id="pycordia.models.message.MessageReference.message"><code class="name">var <span class="ident">message</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Fetch the referenced message</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -175,14 +202,7 @@ width (int):</p></div>
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
-</dd>
-<dt id="pycordia.models.message.Role"><code class="flex name class">
-<span>class <span class="ident">Role</span></span>
-<span>(</span><span>data: dict)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
+<div class="desc"><p>Reaction model, to represent reactions on a message.</p></div>
 </dd>
 <dt id="pycordia.models.message.RoleTags"><code class="flex name class">
 <span>class <span class="ident">RoleTags</span></span>
@@ -196,7 +216,7 @@ width (int):</p></div>
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Sticker model, to represent discord stickers</p></div>
 </dd>
 </dl>
 </section>
@@ -256,9 +276,6 @@ width (int):</p></div>
 </li>
 <li>
 <h4><code><a title="pycordia.models.message.Reaction" href="#pycordia.models.message.Reaction">Reaction</a></code></h4>
-</li>
-<li>
-<h4><code><a title="pycordia.models.message.Role" href="#pycordia.models.message.Role">Role</a></code></h4>
 </li>
 <li>
 <h4><code><a title="pycordia.models.message.RoleTags" href="#pycordia.models.message.RoleTags">RoleTags</a></code></h4>

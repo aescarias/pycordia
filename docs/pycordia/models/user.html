@@ -37,25 +37,74 @@
 <span>(</span><span>json)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Model used for users</p></div>
+<div class="desc"><p>Model to mirror a Discord User</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>user_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of the user</dd>
+<dt><strong><code>username</code></strong> :&ensp;<code>str</code></dt>
+<dd>Username</dd>
+<dt><strong><code>discriminator</code></strong> :&ensp;<code>str</code></dt>
+<dd>User's discriminator - a # followed by 4 numbers</dd>
+<dt><strong><code>avatar_hash</code></strong> :&ensp;<code>str</code></dt>
+<dd>User's avatar hash</dd>
+<dt><strong><code>bot</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the user is a bot or not</dd>
+<dt><strong><code>system</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the user is an official Discord System User</dd>
+<dt><strong><code>mfa_enabled</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the user has 2FA enabled</dd>
+<dt><strong><code>banner</code></strong> :&ensp;<code>str</code></dt>
+<dd>User's banner hash</dd>
+<dt><strong><code>accent_color</code></strong> :&ensp;<code>int</code></dt>
+<dd>User's banner color, in hex, encoded as an int</dd>
+<dt><strong><code>locale</code></strong> :&ensp;<code>str</code></dt>
+<dd>User's chosen language</dd>
+<dt><strong><code>verified</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the user's email has been verified. Can only be accessed from the email scope, in OAuth2 applications</dd>
+<dt><strong><code>email</code></strong> :&ensp;<code>str</code></dt>
+<dd>User's email. Can only be accessed from the email scope, in OAuth2 applications</dd>
+<dt><strong><code>flags</code></strong> :&ensp;<code>int</code></dt>
+<dd>Flags on user's account</dd>
+<dt><strong><code>premium_type</code></strong> :&ensp;<code>int</code></dt>
+<dd>Nitro subscription type: 0 - None, 1 - Classic, 2 - Nitro</dd>
+<dt><strong><code>public_flags</code></strong> :&ensp;<code>int</code></dt>
+<dd>Public flags on a user's account</dd>
+</dl>
+<hr>
+<h2 id="operations">Operations</h2>
+<ul>
+<li>str(x): Returns the username + discriminator</li>
+<li>x == y: Checks if two users are the same</li>
+</ul></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="pycordia.models.user.User.user_from_id"><code class="name flex">
 <span>async def <span class="ident">user_from_id</span></span>(<span>client, user_id: str, use_cache: bool = True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Get user info, given the user id</p></div>
+<div class="desc"><p>Get user info, given the user id</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>client</code></strong> :&ensp;<code>Client</code></dt>
+<dd><code><a title="pycordia.client.Client" href="../client.html#pycordia.client.Client">Client</a></code> object to use while fetching</dd>
+<dt><strong><code>user_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of the user to fetch</dd>
+<dt><strong><code>use_cache</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to check in cache first, or not</dd>
+</dl>
+<p>Returns: A <code><a title="pycordia.models.user.User" href="#pycordia.models.user.User">User</a></code> object if the user is found, else None</p></div>
 </dd>
 </dl>
 <h3>Instance variables</h3>
 <dl>
-<dt id="pycordia.models.user.User.avatar_url"><code class="name">var <span class="ident">avatar_url</span></code></dt>
+<dt id="pycordia.models.user.User.avatar_url"><code class="name">var <span class="ident">avatar_url</span> : str</code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Get the avatar url of a user</p></div>
 </dd>
-<dt id="pycordia.models.user.User.mention"><code class="name">var <span class="ident">mention</span></code></dt>
+<dt id="pycordia.models.user.User.mention"><code class="name">var <span class="ident">mention</span> : str</code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Mention a user</p></div>
 </dd>
 </dl>
 </dd>

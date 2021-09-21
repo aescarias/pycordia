@@ -33,16 +33,16 @@ class Intents(enum.Enum):
     direct_message_typing = 1 << 14
 
     @classmethod
-    def all(cls):
+    def all(cls) -> int:
         """Enables all registered intents, including privileged ones"""
         return cls.merge_intents(cls)
     
     @classmethod
-    def merge_intents(cls, intent_list):
+    def merge_intents(cls, intent_list) -> int:
         """Convert a list of intents into a number
 
         ---        
-        Parameters:
+        Args:
             intent_list: A list of intents
         """
         result = 0
@@ -52,7 +52,16 @@ class Intents(enum.Enum):
 
 
 class Client:
-    """A WebSockets client for the Discord Gateway API"""
+    """
+    A WebSockets client for the Discord Gateway API
+
+    ---
+
+    Attributes:
+        cache_size (int): Maz size of user and message caches
+        message_cache (Dict[str, Message]): Client's message cache - a dictionary of string - `pycordia.models.message.Message` mappings
+        user_cache (Dict[str, Message]): Client's user cache - a dictionary of string - `pycordia.models.user.User` mappings
+    """
 
     def event(self, fun):
         self.events[fun.__name__] = fun
@@ -142,12 +151,12 @@ class Client:
             else:
                 asyncio.gather(func(event_data))
 
-    def run(self, bot_token):
+    def run(self, bot_token: str):
         """Log into discord, and start the event loop
 
         ---        
         Parameters:
-            bot_token: Discord token
+            bot_token (str): Discord token
         """
         self.__bot_token = bot_token
 
@@ -185,7 +194,7 @@ class Client:
 
     @property
     async def user(self) -> models.User:
-        """Bot's `pycordia.models.user.User` Object"""
+        """Bot's `pycordia.models.user.User` object"""
 
         async with aiohttp.ClientSession() as session:
             async with session.get(

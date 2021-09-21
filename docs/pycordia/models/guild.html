@@ -37,21 +37,91 @@
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Model to represent Discord guild user</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>user</code></strong> :&ensp;<code>User</code></dt>
+<dd>The <code><a title="pycordia.models.user.User" href="user.html#pycordia.models.user.User">User</a></code> instance of the member</dd>
+<dt><strong><code>nick</code></strong> :&ensp;<code>str</code></dt>
+<dd>Nickname of the user. Can be <code>None</code> if no nickname has been set</dd>
+<dt><strong><code>roles</code></strong> :&ensp;<code>List[<a title="pycordia.models.guild.Role" href="#pycordia.models.guild.Role">Role</a>]</code></dt>
+<dd>User's roles, as a list of <code><a title="pycordia.models.guild.Role" href="#pycordia.models.guild.Role">Role</a></code> objects</dd>
+<dt><strong><code>joined_at</code></strong> :&ensp;<code>str</code></dt>
+<dd>An ISO8601 timestamp of when the user joined</dd>
+<dt><strong><code>premium_since</code></strong> :&ensp;<code>str</code></dt>
+<dd>An ISO8601 timestamp of when the user started boosting the server</dd>
+<dt><strong><code>deaf</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the user has been deafened in a voice channel</dd>
+<dt><strong><code>mute</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the user has been muted in a voice channel</dd>
+<dt><strong><code>pending</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the user has not yet passed the guild's membership requirements</dd>
+<dt><strong><code>permissions</code></strong> :&ensp;<code>string</code></dt>
+<dd>total permissions of the member in the channel, including overwrites</dd>
+</dl>
+<hr>
+<h2 id="operations">Operations</h2>
+<ul>
+<li>x == y: Checks if two channels are the same.</li>
+<li>str(x): Return username with discriminator</li>
+</ul></div>
 </dd>
 <dt id="pycordia.models.guild.PartialGuild"><code class="flex name class">
 <span>class <span class="ident">PartialGuild</span></span>
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Represents a partial guild</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of the guild.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the guild.</dd>
+<dt><strong><code>icon</code></strong> :&ensp;<code>str</code></dt>
+<dd>URL to icon of the guild.</dd>
+<dt><strong><code>owner</code></strong> :&ensp;<code>bool</code></dt>
+<dd>-</dd>
+<dt><strong><code>permissions_integer</code></strong> :&ensp;<code>Any</code></dt>
+<dd>Permissions integer of the guild.</dd>
+<dt><strong><code>features</code></strong> :&ensp;<code>List[str]</code></dt>
+<dd>List of features available to the guild.</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.guild.Role"><code class="flex name class">
 <span>class <span class="ident">Role</span></span>
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Model to represent a guild's role.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>role_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of role</dd>
+<dt><strong><code>role_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of role</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>int</code></dt>
+<dd>Role color</dd>
+<dt><strong><code>colour</code></strong> :&ensp;<code>int</code></dt>
+<dd>Role colour</dd>
+<dt><strong><code>hoist</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the role is hoisted</dd>
+<dt><strong><code>position</code></strong> :&ensp;<code>int</code></dt>
+<dd>Role position in the hierarchy</dd>
+<dt><strong><code>permissions</code></strong> :&ensp;<code>str</code></dt>
+<dd>Permissions granted to the role</dd>
+<dt><strong><code>managed</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether the role is a managed role</dd>
+<dt><strong><code>mentionable</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether users can mention the role</dd>
+</dl>
+<hr>
+<h2 id="operations">Operations</h2>
+<ul>
+<li>x == y: Checks if two roles are the same</li>
+<li>x &gt; y: Checks if role <code>x</code> is higher up than role <code>y</code></li>
+<li>x &lt; y: Checks if role <code>y</code> is higher up than role <code>x</code></li>
+</ul></div>
 </dd>
 </dl>
 </section>

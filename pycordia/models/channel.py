@@ -13,9 +13,9 @@ class Channel:
 
     ---
 
-    Supported Operations:
-
-        str(x): Returns the channel name following a `#`
+    Operations:
+        - str(x): Returns the channel name following a `#`
+        - x == y: Checks if two channels are the same
     """
     class ChannelType(enum.Enum):
         text = 0
@@ -73,6 +73,9 @@ class Channel:
 
     def __repr__(self):
         return f"#{self.name}"
+    
+    def __eq__(self, channel) -> bool:
+        return self.guild_id == channel.guild_id and self.id == channel.id
 
     @property
     def mention(self) -> str:
@@ -135,11 +138,13 @@ class ChannelMention:
     """
     Represents a channel mention i.e. <#channel_id>
 
+    ---
+
     Attributes:
         channel_id (str): ID of the channel
         guild_id (str): ID of the channel's guild
         channel_type (str): Type of the channel
-        channel_name (str): Name of the channel
+        channel_name (str): Name of channel
     """
     def __init__(self, client, data: dict):
         """
@@ -154,7 +159,7 @@ class ChannelMention:
         self.channel_type: Union[str, None] = data.get("type")
         self.channel_name: Union[str, None] = data.get("name")
 
-    async def get_channel(self):
+    async def get_channel(self) -> Channel:
         """
         Fetch the corresponding channel object.
 

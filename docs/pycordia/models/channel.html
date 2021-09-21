@@ -37,7 +37,13 @@
 <span>(</span><span>client, data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Channel model to mirror a Discord Channel</p>
+<hr>
+<h2 id="operations">Operations</h2>
+<ul>
+<li>str(x): Returns the channel name following a <code>#</code></li>
+<li>x == y: Checks if two channels are the same</li>
+</ul></div>
 <h3>Class variables</h3>
 <dl>
 <dt id="pycordia.models.channel.Channel.ChannelType"><code class="name">var <span class="ident">ChannelType</span></code></dt>
@@ -51,23 +57,38 @@
 <span>async def <span class="ident">from_id</span></span>(<span>client, channel_id: str)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Get a channel object given the id</p></div>
+<div class="desc"><p>Fetch a channel object from it's ID.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>client</code></strong> :&ensp;<code><a title="pycordia.client.Client" href="../client.html#pycordia.client.Client">Client</a></code></dt>
+<dd>Object's Client instance</dd>
+<dt><strong><code>channel_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Channel's ID</dd>
+</dl>
+<p>Returns: <code><a title="pycordia.models.channel.Channel" href="#pycordia.models.channel.Channel">Channel</a></code></p></div>
 </dd>
 </dl>
 <h3>Instance variables</h3>
 <dl>
-<dt id="pycordia.models.channel.Channel.mention"><code class="name">var <span class="ident">mention</span></code></dt>
+<dt id="pycordia.models.channel.Channel.mention"><code class="name">var <span class="ident">mention</span> : str</code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Mention a channel</p>
+<p>Returns: str</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
 <dt id="pycordia.models.channel.Channel.query_message"><code class="name flex">
-<span>async def <span class="ident">query_message</span></span>(<span>self, message_id)</span>
+<span>async def <span class="ident">query_message</span></span>(<span>self, message_id: str)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Query a message from a channel</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>message_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of message to fetch</dd>
+</dl>
+<p>Returns: <code><a title="pycordia.models.message.Message" href="message.html#pycordia.models.message.Message">Message</a></code></p></div>
 </dd>
 </dl>
 </dd>
@@ -76,14 +97,34 @@
 <span>(</span><span>client, data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Represents a channel mention i.e. &lt;#channel_id&gt;</p>
+<hr>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>channel_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of the channel</dd>
+<dt><strong><code>guild_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>ID of the channel's guild</dd>
+<dt><strong><code>channel_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>Type of the channel</dd>
+<dt><strong><code>channel_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of channel</dd>
+</dl>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>client</code></strong> :&ensp;<code><a title="pycordia.client.Client" href="../client.html#pycordia.client.Client">Client</a></code></dt>
+<dd>Object's Client instance</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary containing raw data</dd>
+</dl></div>
 <h3>Methods</h3>
 <dl>
 <dt id="pycordia.models.channel.ChannelMention.get_channel"><code class="name flex">
-<span>async def <span class="ident">get_channel</span></span>(<span>self)</span>
+<span>async def <span class="ident">get_channel</span></span>(<span>self) ‑> <a title="pycordia.models.channel.Channel" href="#pycordia.models.channel.Channel">Channel</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Fetch the corresponding channel object.</p>
+<p>Returns: <code><a title="pycordia.models.channel.Channel" href="#pycordia.models.channel.Channel">Channel</a></code></p></div>
 </dd>
 </dl>
 </dd>

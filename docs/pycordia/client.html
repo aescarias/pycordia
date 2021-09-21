@@ -37,7 +37,17 @@
 <span>(</span><span>intents, cache_size: int = 1000)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>A WebSockets client for the Discord Gateway API</p></div>
+<div class="desc"><p>A WebSockets client for the Discord Gateway API</p>
+<hr>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>cache_size</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maz size of user and message caches</dd>
+<dt><strong><code>message_cache</code></strong> :&ensp;<code>Dict[str, Message]</code></dt>
+<dd>Client's message cache - a dictionary of string - <code><a title="pycordia.models.message.Message" href="models/message.html#pycordia.models.message.Message">Message</a></code> mappings</dd>
+<dt><strong><code>user_cache</code></strong> :&ensp;<code>Dict[str, Message]</code></dt>
+<dd>Client's user cache - a dictionary of string - <code><a title="pycordia.models.user.User" href="models/user.html#pycordia.models.user.User">User</a></code> mappings</dd>
+</dl></div>
 <h3>Instance variables</h3>
 <dl>
 <dt id="pycordia.client.Client.guilds"><code class="name">var <span class="ident">guilds</span> : List[<a title="pycordia.models.guild.PartialGuild" href="models/guild.html#pycordia.models.guild.PartialGuild">PartialGuild</a>]</code></dt>
@@ -46,19 +56,19 @@
 </dd>
 <dt id="pycordia.client.Client.user"><code class="name">var <span class="ident">user</span> : <a title="pycordia.models.user.User" href="models/user.html#pycordia.models.user.User">User</a></code></dt>
 <dd>
-<div class="desc"><p>Get user info for the bot</p></div>
+<div class="desc"><p>Bot's <code><a title="pycordia.models.user.User" href="models/user.html#pycordia.models.user.User">User</a></code> object</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
 <dt id="pycordia.client.Client.run"><code class="name flex">
-<span>def <span class="ident">run</span></span>(<span>self, bot_token)</span>
+<span>def <span class="ident">run</span></span>(<span>self, bot_token: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Log into discord, and start the event loop</p>
 <hr>
 <h2 id="parameters">Parameters</h2>
-<p>bot_token: Discord token</p></div>
+<p>bot_token (str): Discord token</p></div>
 </dd>
 </dl>
 </dd>
@@ -138,19 +148,22 @@
 <h3>Static methods</h3>
 <dl>
 <dt id="pycordia.client.Intents.all"><code class="name flex">
-<span>def <span class="ident">all</span></span>(<span>)</span>
+<span>def <span class="ident">all</span></span>(<span>) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Enables all registered intents, including privileged ones</p></div>
 </dd>
 <dt id="pycordia.client.Intents.merge_intents"><code class="name flex">
-<span>def <span class="ident">merge_intents</span></span>(<span>intent_list)</span>
+<span>def <span class="ident">merge_intents</span></span>(<span>intent_list) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Convert a list of intents into a number</p>
 <hr>
-<h2 id="parameters">Parameters</h2>
-<p>intent_list: A list of intents</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>intent_list</code></strong></dt>
+<dd>A list of intents</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>

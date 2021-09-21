@@ -37,53 +37,71 @@
 <span>(</span><span>data: dict)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>An embed object</p></div>
+<div class="desc"><p>Embed model to mirror a Discord embed.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>title</code></strong> :&ensp;<code>str</code></dt>
+<dd>Title of the embed</dd>
+<dt><strong><code>embed_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>An embed type (either 'rich', 'image', 'video', 'gifv', 'article', or 'link')</dd>
+<dt><strong><code>description</code></strong> :&ensp;<code>str</code></dt>
+<dd>Embed description</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>URL provided in embed</dd>
+<dt><strong><code>timestamp</code></strong> :&ensp;<code>str</code></dt>
+<dd>An ISO8601-compliant timestamp string</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>int</code></dt>
+<dd>The color for the embed, better represented as a hexadecimal value.</dd>
+<dt><strong><code>colour</code></strong> :&ensp;<code>int</code></dt>
+<dd>Embed colour</dd>
+<dt><strong><code>fields</code></strong> :&ensp;<code>list</code></dt>
+<dd>Embed fields</dd>
+</dl></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="pycordia.models.embed.Embed.create"><code class="name flex">
 <span>def <span class="ident">create</span></span>(<span>*, title: str = None, description: str = None, url: str = None, color: int = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create an Embed object</p></div>
+<div class="desc"><p>Create a new Embed object</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>title</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Title of the embed</dd>
+<dt><strong><code>description</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Embed description</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) URL provided in Embed</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Optional) Color of embed</dd>
+</dl></div>
 </dd>
 </dl>
 <h3>Instance variables</h3>
 <dl>
 <dt id="pycordia.models.embed.Embed.author"><code class="name">var <span class="ident">author</span></code></dt>
 <dd>
-<div class="desc"><p>The author of the embed</p></div>
-</dd>
-<dt id="pycordia.models.embed.Embed.color"><code class="name">var <span class="ident">color</span></code></dt>
-<dd>
-<div class="desc"><p>The color for the embed, better represented as a hexadecimal value.</p></div>
-</dd>
-<dt id="pycordia.models.embed.Embed.embed_type"><code class="name">var <span class="ident">embed_type</span></code></dt>
-<dd>
-<div class="desc"><p>An embed type (either 'rich', 'image', 'video', 'gifv', 'article', or 'link')</p></div>
+<div class="desc"><p>Author of embed</p></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.footer"><code class="name">var <span class="ident">footer</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Embed footer</p></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.image"><code class="name">var <span class="ident">image</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Embed image</p></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.provider"><code class="name">var <span class="ident">provider</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Embed Provider</p></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.thumbnail"><code class="name">var <span class="ident">thumbnail</span></code></dt>
 <dd>
-<div class="desc"></div>
-</dd>
-<dt id="pycordia.models.embed.Embed.timestamp"><code class="name">var <span class="ident">timestamp</span></code></dt>
-<dd>
-<div class="desc"><p>An ISO8601-compliant timestamp string</p></div>
+<div class="desc"><p>Embed thumbnail</p></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.video"><code class="name">var <span class="ident">video</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Embed video</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -92,75 +110,119 @@
 <span>def <span class="ident">add_field</span></span>(<span>self, name: str, value: str, inline: bool = True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Add a field object to the embed fields</p>
-<h2 id="arguments">Arguments</h2>
-<p>name (str): The name of the embed field
-value (str): The contents/value of the field
-inline (bool): Indicates whether the field is placed either inline or in a new row.
-True by default</p></div>
+<div class="desc"><p>dd a field object to the embed fields</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the embed field</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>str</code></dt>
+<dd>The contents/value of the field</dd>
+<dt><strong><code>inline</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Indicates whether the field is placed either inline or in a new row.
+True by default</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.set_author"><code class="name flex">
 <span>def <span class="ident">set_author</span></span>(<span>self, *, name: str, url: str, icon_url: str, proxy_url: str = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Arguments
-name (str): The name of the author
-url (str): An URL related to the author
-icon_url (str): An icon URL for the author
-proxy_url (str): A proxy URL for the author</p></div>
+<div class="desc"><p>Set the author of an embed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the author</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>An URL related to the author</dd>
+<dt><strong><code>icon_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>An icon URL for the author</dd>
+<dt><strong><code>proxy_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>A proxy URL for the author</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.set_footer"><code class="name flex">
 <span>def <span class="ident">set_footer</span></span>(<span>self, *, text: str, icon_url: str, proxy_url: str = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Arguments:
-text (str): The text for the footer
-icon_url (str): An URL for the footer
-proxy_url (str): An alternative URL for the footer</p></div>
+<div class="desc"><p>Set embed footer.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>The text for the footer</dd>
+<dt><strong><code>icon_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>An URL for the footer</dd>
+<dt><strong><code>proxy_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>An alternative URL for the footer</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.set_image"><code class="name flex">
 <span>def <span class="ident">set_image</span></span>(<span>self, url, *, proxy_url: str = None, height: int = None, width: int = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Arguments:
-url (str): The URL for the image
-proxy_url (str): An alternative URL for the image
-height (int): The height of the image
-width (int): The width of the image</p></div>
+<div class="desc"><p>Set embed image.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>The URL for the image</dd>
+<dt><strong><code>proxy_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>An alternative URL for the image</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>int</code></dt>
+<dd>The height of the image</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>int</code></dt>
+<dd>The width of the image</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.set_provider"><code class="name flex">
 <span>def <span class="ident">set_provider</span></span>(<span>self, *, name: str = None, url: str = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Arguments
-name (str): The name of the provider
-url (str): The URL of the provider</p></div>
+<div class="desc"><p>Set the provider of the embed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the provider</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>The URL of the provider</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.set_thumbnail"><code class="name flex">
 <span>def <span class="ident">set_thumbnail</span></span>(<span>self, url: str, *, proxy_url: str = None, height: int = None, width: int = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Arguments:
-url (str): The URL for the thumbnail
-proxy_url (str): An alternative URL for the thumbnail
-height (int): The height of the thumbnail
-width (int): The width of the thumbnail</p></div>
+<div class="desc"><p>Add a thumbnail to an embed object.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>The URL for the thumbnail</dd>
+<dt><strong><code>proxy_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>An alternative URL for the thumbnail</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>int</code></dt>
+<dd>The height of the thumbnail</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>int</code></dt>
+<dd>The width of the thumbnail</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.set_video"><code class="name flex">
 <span>def <span class="ident">set_video</span></span>(<span>self, url, *, proxy_url: str = None, height: int = None, width: int = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Arguments:
-url (str): The URL for the video
-proxy_url (str): An alternative URL for the video
-height (int): The height of the video
-width (int): The width of the video</p></div>
+<div class="desc"><p>Set embed video.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>The URL for the video</dd>
+<dt><strong><code>proxy_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>An alternative URL for the video</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>int</code></dt>
+<dd>The height of the video</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>int</code></dt>
+<dd>The width of the video</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.models.embed.Embed.to_dict"><code class="name flex">
 <span>def <span class="ident">to_dict</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Convert data to a valid dictionary</p></div>
+<div class="desc"><p>Convert object into a dictionary</p></div>
 </dd>
 </dl>
 </dd>
@@ -185,9 +247,7 @@ width (int): The width of the video</p></div>
 <ul class="two-column">
 <li><code><a title="pycordia.models.embed.Embed.add_field" href="#pycordia.models.embed.Embed.add_field">add_field</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.author" href="#pycordia.models.embed.Embed.author">author</a></code></li>
-<li><code><a title="pycordia.models.embed.Embed.color" href="#pycordia.models.embed.Embed.color">color</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.create" href="#pycordia.models.embed.Embed.create">create</a></code></li>
-<li><code><a title="pycordia.models.embed.Embed.embed_type" href="#pycordia.models.embed.Embed.embed_type">embed_type</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.footer" href="#pycordia.models.embed.Embed.footer">footer</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.image" href="#pycordia.models.embed.Embed.image">image</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.provider" href="#pycordia.models.embed.Embed.provider">provider</a></code></li>
@@ -198,7 +258,6 @@ width (int): The width of the video</p></div>
 <li><code><a title="pycordia.models.embed.Embed.set_thumbnail" href="#pycordia.models.embed.Embed.set_thumbnail">set_thumbnail</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.set_video" href="#pycordia.models.embed.Embed.set_video">set_video</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.thumbnail" href="#pycordia.models.embed.Embed.thumbnail">thumbnail</a></code></li>
-<li><code><a title="pycordia.models.embed.Embed.timestamp" href="#pycordia.models.embed.Embed.timestamp">timestamp</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.to_dict" href="#pycordia.models.embed.Embed.to_dict">to_dict</a></code></li>
 <li><code><a title="pycordia.models.embed.Embed.video" href="#pycordia.models.embed.Embed.video">video</a></code></li>
 </ul>
