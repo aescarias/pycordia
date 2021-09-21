@@ -33,20 +33,30 @@ class Intents(enum.Enum):
     direct_message_typing = 1 << 14
 
     @classmethod
-    def all(cls):
-        """Enables all registered intents, including privileged ones"""
-        return cls.merge_intents(cls)
-    
+    def all(cls, *, privileged: bool = True):
+        """Enables all registered intents, including privileged ones if enabled
+        
+        Parameters
+        ---
+            privileged: Whether or not to include privileged \
+                intents in the result
+        """
+        return cls.merge_intents(cls, privileged)
+
     @classmethod
-    def merge_intents(cls, intent_list):
+    def merge_intents(cls, intent_list, privileged: bool = False):
         """Convert a list of intents into a number
 
-        ---        
-        Parameters:
+        Parameters
+        ---
             intent_list: A list of intents
+            privileged: Whether or not to include privileged \
+                intents in the result
         """
         result = 0
         for value in intent_list:
+            if not privileged and (value in (
+                pycordia.Intents.guild_members, pycordia.Intents.guild_presences)): continue
             result |= value.value
         return result
 
@@ -154,6 +164,7 @@ class Client:
 
     @property
     async def guilds(self) -> typing.List[models.PartialGuild]:
+        """List the guilds the bot is in"""
         # Else, fetch it from the discord api
         async with aiohttp.ClientSession() as session:
             async with session.get(
@@ -174,15 +185,14 @@ class Client:
 
     @property
     async def user(self) -> models.User:
-        "Get user info for the bot"
+        """Get user information for the bot"""
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                    f"{pycordia.api_url}/users/@me",
-                    headers={
-                        "Authorization": f"Bot {self.__bot_token}"
-                    }
+                f"{pycordia.api_url}/users/@me",
+                headers={
+                    "Authorization": f"Bot {self.__bot_token}"
+                }
             ) as resp:
-
                 if not resp.ok:
                     content = await resp.text()
                     raise Exception(content)
