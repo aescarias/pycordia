@@ -9,7 +9,7 @@ A wrapper around the Discord HTTP API and WebSockets
 from .client import Intents, Client
 from . import websocket, errors, events, models
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 cdn_url = "https://cdn.discordapp.com"
