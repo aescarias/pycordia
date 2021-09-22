@@ -2,10 +2,12 @@ import typing
 from .models import Member, User, Message
 
 class ReadyEvent:
-    """Event called when the client is ready.
+    """
+    Event called when the client is ready.
+
+    ---
 
     Attributes:
-    ----------
         gateway_version: The version used for the WebSockets gateway
         user: The bot using the gateway
         guilds: A list of guild IDs the bot is in
