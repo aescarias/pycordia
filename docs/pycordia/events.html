@@ -52,14 +52,22 @@ cached_message: The message, if it was cached by Pycordia
 </code></dt>
 <dd>
 <div class="desc"><p>Event called when the client is ready.</p>
-<h2 id="attributes">Attributes:</h2>
-<pre><code>gateway_version: The version used for the WebSockets gateway
-user: The bot using the gateway
-guilds: A list of guild IDs the bot is in
-session_id: The session ID for the WebSockets session
-shard: The number of shards and their ID for this session
-partial_application: An Application object with an ID and flags
-</code></pre></div>
+<hr>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>gateway_version</code></strong></dt>
+<dd>The version used for the WebSockets gateway</dd>
+<dt><strong><code>user</code></strong></dt>
+<dd>The bot using the gateway</dd>
+<dt><strong><code>guilds</code></strong></dt>
+<dd>A list of guild IDs the bot is in</dd>
+<dt><strong><code>session_id</code></strong></dt>
+<dd>The session ID for the WebSockets session</dd>
+<dt><strong><code>shard</code></strong></dt>
+<dd>The number of shards and their ID for this session</dd>
+<dt><strong><code>partial_application</code></strong></dt>
+<dd>An Application object with an ID and flags</dd>
+</dl></div>
 </dd>
 <dt id="pycordia.events.TypingStartEvent"><code class="flex name class">
 <span>class <span class="ident">TypingStartEvent</span></span>
