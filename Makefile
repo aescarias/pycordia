@@ -1,3 +1,4 @@
 generate_docs:
 	echo "Generating Docs"
-	cd pycordia && pdoc --html --force --config show_source_code=False --output-dir ../docs .
+	cd docs && sphinx-apidoc -f -o source/ --module-first ../pycordia
+	cd docs && make html

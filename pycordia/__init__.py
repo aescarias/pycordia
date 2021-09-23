@@ -1,5 +1,6 @@
 """
-### PyCordia - The Discord bot framework
+PyCordia - The Discord bot framework
+------------------------------------
 
 Developed by Angel Carias and it's contributors. 2021.
 

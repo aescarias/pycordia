@@ -11,7 +11,6 @@ class Channel:
     """
     Channel model to mirror a Discord Channel
 
-    ---
 
     Operations:
         - str(x): Returns the channel name following a `#`
@@ -138,7 +137,6 @@ class ChannelMention:
     """
     Represents a channel mention i.e. <#channel_id>
 
-    ---
 
     Attributes:
         channel_id (str): ID of the channel

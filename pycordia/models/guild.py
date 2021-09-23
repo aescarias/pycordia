@@ -19,7 +19,6 @@ class Member:
         pending (bool): Whether the user has not yet passed the guild's membership requirements
         permissions (string): total permissions of the member in the channel, including overwrites
 
-    ---
 
     Operations:
         - x == y: Checks if two channels are the same.
@@ -81,8 +80,7 @@ class Role:
         permissions (str): Permissions granted to the role
         managed (bool): Whether the role is a managed role
         mentionable (bool): Whether users can mention the role
-    
-    ---
+
 
     Operations:
         - x == y: Checks if two roles are the same

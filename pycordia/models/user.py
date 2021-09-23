@@ -6,6 +6,7 @@ class User:
     """
     Model to mirror a Discord User
 
+
     Attributes:
         user_id (str): ID of the user
         username (str): Username
@@ -23,7 +24,6 @@ class User:
         premium_type (int): Nitro subscription type: 0 - None, 1 - Classic, 2 - Nitro
         public_flags (int): Public flags on a user's account
 
-    ---
 
     Operations:
         - str(x): Returns the username + discriminator

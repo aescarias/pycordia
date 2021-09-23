@@ -5,7 +5,6 @@ class ReadyEvent:
     """
     Event called when the client is ready.
 
-    ---
 
     Attributes:
         gateway_version: The version used for the WebSockets gateway
@@ -29,7 +28,6 @@ class MessageDeleteEvent:
     """Event called when message(s) deleted individually or in bulk
         
     Attributes:
-    ----------
         message_ids: The IDs of the message
         channel_id: The ID of the channel
         guild_id: The ID of the guild
@@ -53,7 +51,6 @@ class TypingStartEvent:
     """Event called when an user starts typing a message
 
     Attributes:
-    ----------
         timestamp: The ISO8601 timestamp for the message
         member: The member that started typing
         user_id: The ID of the member

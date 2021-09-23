@@ -39,9 +39,10 @@ class Intents(enum.Enum):
     
     @classmethod
     def merge_intents(cls, intent_list) -> int:
-        """Convert a list of intents into a number
+        """
+        Convert a list of intents into a number
 
-        ---        
+
         Args:
             intent_list: A list of intents
         """
@@ -55,7 +56,6 @@ class Client:
     """
     A WebSockets client for the Discord Gateway API
 
-    ---
 
     Attributes:
         cache_size (int): Maz size of user and message caches
