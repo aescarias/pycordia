@@ -8,6 +8,14 @@ from pycordia import models
 
 
 class Channel:
+    """
+    Channel model to mirror a Discord Channel
+
+
+    Operations:
+        - str(x): Returns the channel name following a `#`
+        - x == y: Checks if two channels are the same
+    """
     class ChannelType(enum.Enum):
         text = 0
         dm = 1
@@ -64,15 +72,31 @@ class Channel:
 
     def __repr__(self):
         return f"#{self.name}"
+    
+    def __eq__(self, channel) -> bool:
+        return self.guild_id == channel.guild_id and self.id == channel.id
 
     @property
-    def mention(self):
+    def mention(self) -> str:
+        """
+        Mention a channel
+
+        Returns: str
+        """
         return f"<#{self.id}>"
 
     @classmethod
     async def from_id(cls, client, channel_id: str):
-        """Get a channel object given the id"""
+        """
+        Fetch a channel object from it's ID.
 
+        Args:
+            client (pycordia.client.Client): Object's Client instance
+            channel_id (str): Channel's ID
+
+        Returns: `pycordia.models.channel.Channel`
+
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 f"{pycordia.api_url}/channels/{channel_id}",
@@ -87,7 +111,15 @@ class Channel:
                 return Channel(client, await resp.json())
 
     # TODO: Make this method support cache
-    async def query_message(self, message_id):
+    async def query_message(self, message_id: str):
+        """
+        Query a message from a channel
+
+        Args:
+            message_id (str): ID of message to fetch
+
+        Returns: `pycordia.models.message.Message`
+        """
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 f"{pycordia.api_url}/channels/{self.id}/messages/{message_id}",
@@ -100,8 +132,24 @@ class Channel:
 
                 return models.Message(self.__client, await resp.json())
 
+
 class ChannelMention:
+    """
+    Represents a channel mention i.e. <#channel_id>
+
+
+    Attributes:
+        channel_id (str): ID of the channel
+        guild_id (str): ID of the channel's guild
+        channel_type (str): Type of the channel
+        channel_name (str): Name of channel
+    """
     def __init__(self, client, data: dict):
+        """
+        Args:
+            client (pycordia.client.Client): Object's Client instance
+            data (dict): Dictionary containing raw data
+        """
         self.__client = client
 
         self.channel_id: Union[str, None] = data.get("id")
@@ -109,8 +157,10 @@ class ChannelMention:
         self.channel_type: Union[str, None] = data.get("type")
         self.channel_name: Union[str, None] = data.get("name")
 
-    def __repr__(self):
-        return f"<pycordia.models.ChannelMention - id={self.channel_id} name={self.channel_name}>"
+    async def get_channel(self) -> Channel:
+        """
+        Fetch the corresponding channel object.
 
-    async def get_channel(self):
+        Returns: `pycordia.models.channel.Channel`
+        """
         return await Channel.from_id(self.__client, self.channel_id)
