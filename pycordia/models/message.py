@@ -16,7 +16,13 @@ from pycordia import models
 
 
 class MessageActivity:
-    """A message activity object"""
+    """
+    Message Activity class
+
+    Attributes:
+        activity_type (`pycordia.models.message.MessageActivity.ActivityTypes`): Type of activity
+        party_id (str): ID of the party
+    """
 
     class ActivityTypes(enum.Enum):
         join = 1
@@ -37,6 +43,7 @@ class MessageActivity:
 
 
 class Application:
+    """Discord application model."""
     def __init__(self, data: dict):
         self.app_id: Union[str, None] = data.get("id")
         self.name: Union[str, None] = data.get("name")
@@ -68,27 +75,8 @@ class RoleTags:
         return f"<pycordia.models.RoleTags - id={self.bot_id}>"
 
 
-class Role:
-    def __init__(self, data: dict):
-        self.role_id: Union[str, None] = data.get("id")
-        self.role_name: Union[str, None] = data.get("name")
-
-        self.color: Union[int, None] = data.get("color")
-        self.colour = self.color
-
-        self.hoist: Union[bool, None] = data.get("hoist")
-        self.position: Union[int, None] = data.get("position")
-        self.permissions: Union[str, None] = data.get("permissions")
-        self.managed: Union[bool, None] = data.get("managed")
-        self.mentionable: Union[bool, None] = data.get("mentionable")
-
-        self.tags: Union[RoleTags, None] = data.get("tags")
-
-    def __repr__(self):
-        return f"<pycordia.models.Role - id={self.role_id} name={self.role_name}>"
-
-
 class Reaction:
+    """Reaction model, to represent reactions on a message."""
     def __init__(self, data: dict):
         self.count: Union[int, None] = data.get("count")
         self.was_me: Union[bool, None] = data.get("me")
@@ -101,6 +89,7 @@ class Reaction:
 
 
 class Emoji:
+    """Emoji model, to represent server specific emojis."""
     def __init__(self, data: dict):
         self.emoji_id = data.get("id")
         self.name = data.get("name")
@@ -116,6 +105,7 @@ class Emoji:
 
 
 class StickerItem:
+    """Sticker model, to represent discord stickers"""
     def __init__(self, data: dict):
         self.sticker_id = data.get("id")
         self.name = data.get("name")
@@ -126,19 +116,20 @@ class StickerItem:
 
 
 class Attachment:
-    def __init__(self, data: dict):
-        """An attachment for a message
+    """
+    An attachment for a message
 
-        Arguments:
-            attachment_id (int): The ID of the attachment
-            filename (str): The attachment's filename
-            content_type (str): The content type
-            size (int):
-            url (str):
-            proxy_url (str):
-            height (int):
-            width (int):
-        """
+    Attributes:
+        attachment_id (int): The ID of the attachment
+        filename (str): The attachment's filename
+        content_type (str): The content type
+        size (int): File size
+        url (str): URL to the file
+        proxy_url (str): Alternate URL to the file
+        height (int): Height of attachment (only applies to images)
+        width (int): Width of the attachment (only applies to images)
+    """
+    def __init__(self, data: dict):
         self.attachment_id: Union[str, None] = data.get("id")
         self.filename: Union[str, None] = data.get("filename")
         self.content_type: Union[str, None] = data.get("content_type")
@@ -149,6 +140,10 @@ class Attachment:
         self.width: Union[int, None] = data.get("width")
 
     def to_dict(self):
+        """
+        Return raw dictionary of object
+        Returns: dict
+        """
         return {
             "id": self.attachment_id,
             "filename": self.filename,
@@ -162,6 +157,15 @@ class Attachment:
 
 
 class Interaction:
+    """
+    Interaction model - represents discord interactions.
+
+    Attributes:
+        interaction_id (str): ID of the discord interaction
+        interaction_type (str): Type of the interaction (button, slash command, etc)
+        name (str): Name of the interaction
+        user (`pycordia.models.user.User`): Interaction's user
+    """
     def __init__(self, data: dict):
         self.interaction_id = data.get("id")
         self.interaction_type = data.get("type")
@@ -188,6 +192,7 @@ class MessageReference:
 
     @property
     def message(self):
+        """Fetch the referenced message"""
         return Message(self.__client, self.__msg_data or {})
 
     def to_dict(self):
@@ -197,9 +202,13 @@ class MessageReference:
             "guild_id": self.guild_id,
             "fail_if_not_exists": self.fail_if_not_exists,
         }
+    
+    def __eq__(self, other) -> bool:
+        return self.message_id == other.message_id
 
 
 class Message:
+    """Message model - represents a message sent in discord"""
     def __init__(self, client, data: dict):
         self.__data = data
         self.__client = client

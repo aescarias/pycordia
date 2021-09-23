@@ -2,10 +2,12 @@ import typing
 from .models import Member, User, Message
 
 class ReadyEvent:
-    """Event called when the client is ready.
+    """
+    Event called when the client is ready.
+
 
     Attributes:
-        gateway_version: The version used for the API
+        gateway_version: The version used for the WebSockets gateway
         user: The bot using the gateway
         guilds: A list of guild IDs the bot is in
         session_id: The session ID for the WebSockets session
@@ -25,7 +27,7 @@ class ReadyEvent:
 class MessageDeleteEvent:
     """Event called when message(s) deleted individually or in bulk
         
-    Attributes
+    Attributes:
         message_ids: The IDs of the message
         channel_id: The ID of the channel
         guild_id: The ID of the guild
@@ -46,16 +48,17 @@ class MessageDeleteEvent:
 
 
 class TypingStartEvent:
-    """Event called when an user starts typing a message"""
-    def __init__(self, data: dict):
-        """Attributes
-            timestamp: The ISO8601 timestamp for the message
-            member: The member that started typing
-            user_id: The ID of the member
-            channel_id: The ID of the channel where event was registered
-            guild_id: The ID of the guild where event was registered
-        """
+    """Event called when an user starts typing a message
 
+    Attributes:
+        timestamp: The ISO8601 timestamp for the message
+        member: The member that started typing
+        user_id: The ID of the member
+        channel_id: The ID of the channel where event was registered
+        guild_id: The ID of the guild where event was registered
+    """
+
+    def __init__(self, data: dict):
         self.timestamp = data["timestamp"]
 
         self.member = Member(data.get("member", {}))
