@@ -19,11 +19,6 @@ make generate_docs
 
 git config --global user.name "${GITHUB_ACTOR}"
 git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
- 
-docroot=`mktemp -d`
-rsync -av "docs/build/html/" "${docroot}/"
- 
-pushd "${docroot}"
 
 git init
 git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
