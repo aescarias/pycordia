@@ -1,8 +1,8 @@
 name: build-sphinx-to-gh-pages
 
 env:
-  GITHUB_ACTOR: tekgar
-  GITHUB_REPOSITORY: angelCarias/pycordia
+  GITHUB_ACTOR: Tekgar
+  GITHUB_REPOSITORY: classPythonAddike/pycordia
   GITHUB_TOKEN: ${{ secrets.CREATE_DEMO_SECRET }}
 
 on: 
