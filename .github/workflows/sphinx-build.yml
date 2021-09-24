@@ -30,6 +30,8 @@ jobs:
       
       - name: Install requirements
         run: |
+          apt-get update
+          apt-get -y install git rsync python3-sphinx
           python3 -m pip install Sphinx
           python3 -m pip install sphinx-press-theme
 
