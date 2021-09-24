@@ -25,15 +25,13 @@ jobs:
           set -x
           apt-get update
           apt-get install -y git
+          apt-get -y install git rsync python3-pip
           git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
         shell: bash
       
       - name: Install requirements
         run: |
-          apt-get update
-          apt-get -y install git rsync python3-sphinx python3-pip
-          python3 -m pip install Sphinx
-          python3 -m pip install sphinx-press-theme
+          python3 -m pip install -r requirements.txt
 
       - name: Run build script for Sphinx pages
         env:
