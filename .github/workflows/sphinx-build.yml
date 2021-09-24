@@ -20,7 +20,7 @@ jobs:
     
       - name: Get prerequisites and clone repository
         env:
-          GITHUB_TOKEN: ${{ secrets.CREATE_DEMO_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
           set -x
           apt-get update
