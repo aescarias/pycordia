@@ -30,8 +30,8 @@ jobs:
       
       - name: Install requirements
         run: |
-          pip install Sphinx
-          pip install sphinx-press-theme
+          python3 -m pip install Sphinx
+          python3 -m pip install sphinx-press-theme
 
       - name: Run build script for Sphinx pages
         env:
