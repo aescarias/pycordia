@@ -14,9 +14,7 @@ export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
  
 # Python Sphinx, configured with source/conf.py
 # See https://www.sphinx-doc.org/
-# sphinx-apidoc -f -o source/ --module-first ../pycordia
-cd docs
-make html
+make generate_docs
 
 #######################
 # Update GitHub Pages #

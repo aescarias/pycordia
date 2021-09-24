@@ -27,6 +27,11 @@ jobs:
           apt-get install -y git
           git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
         shell: bash
+      
+      - name: Install requirements
+        run: |
+          pip install Sphinx
+          pip install sphinx-press-theme
 
       - name: Run build script for Sphinx pages
         env:
