@@ -8,11 +8,11 @@
 
 A work-in-progress Discord API wrapper for Python with a simple gateway and some common events implemented.
 
-While there's currently no documentation available, use the examples for guidance. If you have any questions, feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
+If you have any questions, feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
 
-Our examples (and future documentation) assume you're at a level of Python where you can comfortably work with Discord bots.
+Our examples, and documentation assume you're at a level of Python where you can comfortably work with Discord bots.
 
-## :gear: Installation
+## ⚙️ Installation
 
 Pycordia has been well tested on Python 3.8, however, 3.7 and above are supported.
 
@@ -51,7 +51,7 @@ $ python3 -m pip install pycordia-....tar.gz    # Alternative; use on MacOS
 $ py -3 -m pip install pycordia-....tar.gz      # Alternative; use on Windows
 ```
 
-## :ping_pong: Example of a simple Ping-Pong Bot
+## 🏓 Example of a simple Ping-Pong Bot
 
 ```py
 from pycordia import events, models
@@ -91,12 +91,12 @@ client.run(os.getenv("DISCORD_TOKEN"))
 
 For all other undocumented events, you'll receive raw JSON data which you'll have to handle yourself.
 
-## :bookmark: Things to do
+## 🔖 Things to do
 
 - Improve currently available models
 - Add slash commands
 - Add all other event wrappers
 
-## :book: Contribute
+## 📖 Contribute
 
 Feel free to contribute any bug fixes, new features, or general improvements to the Pycordia project.

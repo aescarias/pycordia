@@ -36,7 +36,7 @@ jobs:
           make generate_docs
           rm .github examples pycordia -rf
           rm requirements.txt setup.py
-          cp docs/_build/html/* . -r
+          cp docs/_build/html . -r
         shell: bash
       
       - name: Initialise Git
