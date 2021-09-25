@@ -1,9 +1,9 @@
-name: build-sphinx-to-gh-pages
+name: Publish Documentation
 
 env:
   GITHUB_ACTOR: Tekgar
   GITHUB_REPOSITORY: classPythonAddike/pycordia
-  GITHUB_TOKEN: ${{ secrets.CREATE_DEMO_SECRET }}
+  GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
 on: 
   push:
@@ -18,9 +18,7 @@ jobs:
 
     steps:
     
-      - name: Get prerequisites and clone repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - name: Install packages and clone repo
         run: |
           set -x
           apt-get update
@@ -33,8 +31,28 @@ jobs:
         run: |
           python3 -m pip install -r requirements.txt
 
-      - name: Run build script for Sphinx pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: "chmod +x docs/build.sh && docs/build.sh"
+      - name: Build docs with Sphinx
+        run: |
+          make generate_docs
+          rm .github examples pycordia -rf
+          rm requirements.txt setup.py
+          cp docs/_build/html/* . -r
+        shell: bash
+      
+      - name: Initialise Git
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git init
+          git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git checkout -b gh-pages
+        shell: bash
+      
+      - name: Push Docs
+        run: |
+          touch .nojekyll
+          git add .
+          msg="Updating docs for commit ${GITHUB_SHA}"
+          git commit -am "${msg}"
+          git push deploy gh-pages --force
         shell: bash
