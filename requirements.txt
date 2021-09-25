@@ -16,7 +16,6 @@ markdown-it-py==1.1.0
 MarkupSafe==2.0.1
 mdit-py-plugins==0.2.8
 multidict==5.1.0
-myst-parser==0.15.2
 packaging==21.0
 Pygments==2.10.0
 pyparsing==2.4.7
