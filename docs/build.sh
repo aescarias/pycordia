@@ -37,12 +37,19 @@ Developed by Angel Carias and it's contributors. 2021.
 
 A wrapper around the Discord HTTP API and WebSockets
 EOF
+
+rm .github examples pycordia -rf
+rm requirements.txt setup.py
+
+# Move the html pages to the root directory
+
+cp docs/_build/html . -r
  
 # Copy the resulting html pages built from Sphinx to the gh-pages branch 
 git add .
  
 # Make a commit with changes and any new files
-msg="Updating Docs for commit ${GITHUB_SHA} made on `date -d"@${SOURCE_DATE_EPOCH}" --iso-8601=seconds` from ${GITHUB_REF} by ${GITHUB_ACTOR}"
+msg="Updating docs for commit ${GITHUB_SHA}"
 git commit -am "${msg}"
  
 # overwrite the contents of the gh-pages branch on our github.com repo
