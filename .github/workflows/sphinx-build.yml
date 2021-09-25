@@ -37,6 +37,8 @@ jobs:
           rm .github examples pycordia -rf
           rm requirements.txt setup.py
           cp docs/_build/html . -r
+          rm docs -rf
+          mv html docs
         shell: bash
       
       - name: Initialise Git
