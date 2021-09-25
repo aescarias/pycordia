@@ -3,6 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+PyCordia - The Discord bot framework
+------------------------------------
+
+Developed by Angel Carias and it's contributors. 2021.
+
+A wrapper around the Discord HTTP API and WebSockets
+
 .. toctree::
    :maxdepth: 10
    :caption: Contents:
