@@ -22,7 +22,6 @@ jobs:
         run: |
           set -x
           apt-get update
-          apt-get install -y git
           apt-get -y install git python3-pip
           git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
         shell: bash
