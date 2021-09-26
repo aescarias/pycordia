@@ -32,8 +32,10 @@ release = '0.1.2'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.napoleon'
+    'sphinx.ext.napoleon',
 ]
+
+source_suffix = ['.rst', '.md']
 
 napolean_numpy_docstring = False
 
