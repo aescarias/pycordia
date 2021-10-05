@@ -1,4 +1,4 @@
-# Pycordia v0.1.2 - The Discord bot framework
+# Pycordia v0.2.0 - The Discord bot framework
 # Developed by Angel Carias and it's contributors. 2021.
 
 # websocket.py
@@ -18,6 +18,7 @@ from aiohttp.http_websocket import WSMsgType
 import pycordia
 
 ZLIB_SUFFIX = b"\x00\x00\xff\xff"
+
 
 class DiscordWebSocket:
     """A WebSockets client for the Discord Gateway API"""

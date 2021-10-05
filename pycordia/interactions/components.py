@@ -121,13 +121,3 @@ class Button:
 #                 raise errors.ComponentError(
 #                     "An ActionRow cannot contain another ActionRow"
 #                 )
-
-import json
-            
-btn = Button.from_json({
-    "type": 2,
-    "label": "Click me!",
-    "style": 1,
-    "custom_id": "click_one"
-})
-print(json.dumps(btn.to_json(), indent=4))

@@ -9,6 +9,8 @@ with open('pycordia/__init__.py') as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE)
     if version:
         version = version.group(1)
+    else:
+        version = ""
 
 with open('README.md', "r", encoding="utf-8-sig") as f:
     readme = f.read()
@@ -19,7 +21,7 @@ setup(name='pycordia',
       version=version,
       packages=["pycordia", "pycordia/models"],
       license='MIT',
-      description='A wrapper around the Discord HTTP API and WebSockets',
+      description='The Discord bot framework for Python',
       long_description=readme,
       long_description_content_type="text/markdown",
       install_requires=requirements,

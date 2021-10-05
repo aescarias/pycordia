@@ -1,13 +1,20 @@
 import enum
+from pycordia import api
+from pycordia.utils import mutually_exclusive
 from typing import Dict, List, Union, Any
 
 import aiohttp
-
 import pycordia
-from pycordia import models
 
 
 class Channel:
+    """
+    Channel model to mirror a Discord Channel
+
+    Operations:
+        - str(x): Returns the channel name following a `#`
+        - x == y: Checks if two channels are the same
+    """
     class ChannelType(enum.Enum):
         text = 0
         dm = 1
@@ -21,8 +28,8 @@ class Channel:
         private_thread = 12
         stage_voice = 13
 
-    def __init__(self, client, data: dict):
-        self.__client = client
+    def __init__(self, data: dict):
+        self.__client = pycordia.models.active_client
 
         self.name: str = data.get("name")
         self.topic: str = data.get("topic")
@@ -64,53 +71,112 @@ class Channel:
 
     def __repr__(self):
         return f"#{self.name}"
+    
+    def __eq__(self, channel) -> bool:
+        return self.guild_id == channel.guild_id and self.id == channel.id
 
     @property
-    def mention(self):
+    def mention(self) -> str:
+        """
+        Mention a channel
+
+        Returns: str
+        """
         return f"<#{self.id}>"
 
     @classmethod
-    async def from_id(cls, client, channel_id: str):
-        """Get a channel object given the id"""
+    async def from_id(cls, channel_id: str):
+        """
+        Fetch a channel object from its ID.
 
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                f"{pycordia.api_url}/channels/{channel_id}",
-                headers={
-                    "Authorization": f"Bot {client._Client__bot_token}"
-                }
-            ) as resp:
+        Args:
+            channel_id (str): Channel's ID
 
-                if not resp.ok:
-                    return
-
-                return Channel(client, await resp.json())
+        Returns: `pycordia.models.channel.Channel`
+        """
+        return Channel(await api.request("GET", f"channels/{channel_id}"))
 
     # TODO: Make this method support cache
-    async def query_message(self, message_id):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                f"{pycordia.api_url}/channels/{self.id}/messages/{message_id}",
-                headers={
-                    "Authorization": f"Bot {self.__client._Client__bot_token}"
-                }
-            ) as resp:
-                if not resp.ok:
-                    return
+    async def get_message(self, message_id: str) -> 'pycordia.models.Message':
+        """ 
+        Get message by ID
 
-                return models.Message(self.__client, await resp.json())
+        Args:
+            message_id (str): The message ID as a string
+
+        Raises: `Exception` if no initialized client is found
+        Returns: A `pycordia.models.Message` object
+        """
+        return pycordia.models.Message(
+            await api.request("GET", f"channels/{self.id}/mesages/{message_id}")
+        )
+
+
+    @mutually_exclusive("before", "around", "after")
+    async def get_messages(self, limit: int = 50, *, 
+        before: str = None, around: str = None, after: str = None
+    ) -> List['pycordia.models.Message']:
+        """ 
+        Get the most recent messages, given a limit (by default 50)
+
+        Args:
+            limit (int): The amount of recent messages to get, \
+                can be between 1 and 100 (by default: 50)
+            before (str): Get messages before the message ID, as a string
+            around (str): Get messages around the message ID, as a string
+            after (str): Get messages after the message ID, as a string
+
+        Raises: `Exception` if no initialized client is found
+        Returns: A list of `pycordia.models.Message` objects
+        """
+        inf: Dict[str, 'int | str'] = {
+            "limit": limit,
+        }
+
+        if before: inf["before"] = before
+        if around: inf["around"] = around
+        if after: inf["after"] = after
+        
+        rs = await api.request("GET", f"channels/{self.id}/messages", json_data=inf)
+        return list(map(pycordia.models.Message, rs))
+
+    async def get_pinned_messages(self) -> List['pycordia.models.Message']:
+        """ 
+        Get the most recent messages, given a limit (by default 50)
+
+        Raises: `Exception` if no initialized client is found
+        Returns: A list of `pycordia.models.Message` objects
+        """
+        rs = await api.request("GET", f"channels/{self.id}/pins/")
+        return list(map(pycordia.models.Message, rs))
+
 
 class ChannelMention:
-    def __init__(self, client, data: dict):
-        self.__client = client
+    """
+    Represents a channel mention i.e. <#channel_id>
 
+
+    Attributes:
+        channel_id (str): ID of the channel
+        guild_id (str): ID of the channel's guild
+        channel_type (str): Type of the channel
+        channel_name (str): Name of channel
+    """
+    def __init__(self, data: dict):
+        """
+        Args:
+            data (dict): Dictionary containing raw data
+        """
         self.channel_id: Union[str, None] = data.get("id")
         self.guild_id: Union[str, None] = data.get("guild_id")
         self.channel_type: Union[str, None] = data.get("type")
         self.channel_name: Union[str, None] = data.get("name")
 
-    def __repr__(self):
-        return f"<pycordia.models.ChannelMention - id={self.channel_id} name={self.channel_name}>"
+    async def get_channel(self) -> Channel:
+        """
+        Fetch the corresponding channel object.
 
-    async def get_channel(self):
-        return await Channel.from_id(self.__client, self.channel_id)
+        Returns: `pycordia.models.channel.Channel`
+        """
+        return await Channel.from_id(self.channel_id)
+        

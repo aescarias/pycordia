@@ -2,6 +2,7 @@ from pycordia import events, models
 import pycordia
 import dotenv
 import os
+
 dotenv.load_dotenv()
 
 dotenv.load_dotenv()
@@ -18,25 +19,29 @@ async def on_ready(event: events.ReadyEvent):
 @client.event
 async def on_channel_create(channel: models.Channel):
     """Be the first to send a message in any channel!"""
-    await models.Message.create(client,
+    await models.Message.send(
+        channel.id,
         content=f"First to send a message in {channel.mention}!",
-    ).send(channel.id)
+    )
 
 
 @client.event
 async def on_channel_update(channel: models.Channel):
     """Notify people when a channel was updated"""
-    await models.Message.create(client,
+    await models.Message.send(
+        LOGS_CHANNEL,
         content=f"Whoops! It looks like someone updated {channel.mention}!\n"
                 + "Why don't you take a look at the audit logs to view the changes?"
-    ).send(LOGS_CHANNEL)
+    )
 
 
 @client.event
 async def on_channel_delete(channel: models.Channel):
-    await models.Message.create(client,
+    await models.Message.send(
+        LOGS_CHANNEL,
         content=f"A channel was deleted! - {channel}"
-    ).send(LOGS_CHANNEL)
+    )
+
 
 @client.event
 async def on_message_update(before: models.Message, after: models.Message):
@@ -46,9 +51,7 @@ async def on_message_update(before: models.Message, after: models.Message):
         description=f"**Before**: {before.content}\n**After**: {after.content}",
         color=0xFFAAAA
     )
-    await models.Message.create(client,
-        embeds=[embed]
-    ).send(LOGS_CHANNEL)
+    await models.Message.send(LOGS_CHANNEL, embeds=[embed])
 
 
 @client.event
@@ -59,9 +62,7 @@ async def on_message_delete(message: pycordia.events.MessageDeleteEvent):
         color=0xAA12DD
     )
 
-    await models.Message.create(client, 
-        embeds=[embed]
-    ).send(LOGS_CHANNEL)
+    await models.Message.send(LOGS_CHANNEL, embeds=[embed])
 
 
 client.run(os.getenv("DISCORD_TOKEN"))

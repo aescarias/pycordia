@@ -7,6 +7,7 @@ import os
 dotenv.load_dotenv()
 client = pycordia.Client(intents=pycordia.Intents.all())
 
+
 @client.event
 async def on_ready(event: events.ReadyEvent):
     """The bot is up and running! Yippee!"""
@@ -26,12 +27,12 @@ async def on_message_create(event: models.Message):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
-        await models.Message.create(client, embeds=[embed]).send(event.channel_id)
+        await models.Message.send(event.channel_id or "", embeds=[embed])
 
     # Get information about a user
     elif event.content.startswith(".user"):
         if len(event.content.split()) == 2:
-            user = await models.User.user_from_id(client, event.content.split()[1])
+            user = await models.User.from_id(event.content.split()[1])
 
             if user:
                 embed = models.Embed.create(
@@ -44,13 +45,13 @@ async def on_message_create(event: models.Message):
                     description="Please specify a valid user ID.",
                     color=0xFF123A
                 )
-            await models.Message.create(client, embeds=[embed]).send(event.channel_id)
+            await models.Message.send(event.channel_id or "", embeds=[embed])
         else:
             embed = models.Embed.create(
                 description="Please specify a user ID.",
                 color=0xFF123A
             )
-            await models.Message.create(client, embeds=[embed]).send( event.channel_id)
+            await models.Message.send(event.channel_id or "", embeds=[embed])
 
     # Get server information
     elif event.content.startswith(".servers"):
@@ -63,10 +64,7 @@ async def on_message_create(event: models.Message):
             ]
         )
 
-        await models.Message.create(client, content=str(guilds)).send(event.channel_id)
-    elif event.content.startswith(".makemewait"):
-        await models.Message.create(client, content="Aight").send(event.channel_id)
-        await asyncio.sleep(10)
+        await models.Message.send(event.channel_id or "", content=str(guilds))
     # Get information about the bot
     elif event.content.startswith(".botinfo"):
         user = await client.user
@@ -77,13 +75,13 @@ async def on_message_create(event: models.Message):
             color=user.accent_color,
         )
 
-        await models.Message.create(client, embeds=[embed]).send(event.channel_id)
+        await models.Message.send(event.channel_id or "", embeds=[embed])
 
     elif event.content.startswith(".pin"):
         split = event.content.split()
         if len(split) > 1:
             message_id = split[1]
-            msg = await models.Message.get_message(client, event.channel_id, message_id)
+            msg = await models.Message.from_id(event.channel_id or "", message_id)
             if msg:
                 await msg.pin()
             else:
@@ -91,13 +89,13 @@ async def on_message_create(event: models.Message):
                     description="Please specify a valid message ID. Make sure you're using this command in the correct channel.",
                     color=0xFF123A
                 )
-                await models.Message.create(client, embeds=[embed]).send(event.channel_id)
+                await models.Message.send(event.channel_id or "", embeds=[embed])
         else:
             embed = models.Embed.create(
                 description="Please specify a message ID.",
                 color=0xFF123A
             )
-            await models.Message.create(client, embeds=[embed]).send(event.channel_id)
+            await models.Message.send(event.channel_id or "", embeds=[embed])
  
 
 client.run(os.getenv("DISCORD_TOKEN"))

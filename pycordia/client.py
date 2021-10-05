@@ -1,10 +1,11 @@
-# Pycordia v0.1.2 - The Discord bot framework
+# Pycordia v0.2.0 - The Discord bot framework
 # Developed by Angel Carias and it's contributors. 2021.
 
 # client.py
 #   Handles bot creation
 
 
+from pycordia import api
 import aiohttp
 import asyncio
 import enum
@@ -38,7 +39,7 @@ class Intents(enum.Enum):
         
         Parameters
         ---
-            privileged: Whether or not to include privileged \
+            privileged (bool): Whether or not to include privileged \
                 intents in the result
         """
         return cls.merge_intents(cls, privileged)
@@ -50,7 +51,7 @@ class Intents(enum.Enum):
         Parameters
         ---
             intent_list: A list of intents
-            privileged: Whether or not to include privileged \
+            privileged (bool): Whether or not to include privileged \
                 intents in the result
         """
         result = 0
@@ -62,17 +63,48 @@ class Intents(enum.Enum):
 
 
 class Client:
-    """A WebSockets client for the Discord Gateway API"""
+    """
+    A WebSockets client for the Discord Gateway API
+
+    Attributes:
+        cache_size (int): Maz size of user and message caches
+        message_cache (Dict[str, Message]): Client's message cache - a dictionary of string - `pycordia.models.message.Message` mappings
+        user_cache (Dict[str, Message]): Client's user cache - a dictionary of string - `pycordia.models.user.User` mappings
+    """
 
     def event(self, fun):
-        self.events[fun.__name__] = fun
+        self.register_events(fun.__name__, fun)
 
         def wrapper():
             fun()
 
         return wrapper
 
-    def __init__(self, intents, cache_size: int = 1000):
+    def register_events(self, event_name: str, *callables: typing.Callable):
+        """Register a set of callableeves for an event
+        
+        Args:
+            event_name (str): The name of an event (example: `message_create` or `guild_create`)
+            callables: A set of callable objects to call when `event_name` is triggered
+        """
+        name = f"{'on_'*(not event_name.startswith('on_'))}{event_name}"
+
+        event = self.events.get(name)
+        
+        if event and isinstance(event, list):
+            event.extend(callables)
+        else:
+            self.events[name] = [*callables]
+
+
+    def __init__(self, intents: int, cache_size: int = 1000):
+        """
+        Args:
+            intents (int): The intents for the bot to authenticate with. \
+                Preferably obtained from `pycordia.Intents`
+            cache_size (int, optional): The amount of entries \
+                to store in cache at a time. Defaults to 1000.
+        """
         self.events = {}
         self.__bot_token: str = ""
         self.intents = intents
@@ -82,16 +114,22 @@ class Client:
         self.message_cache: typing.Dict[str, models.Message] = {}
 
     async def __create_ws(self, bot_token):        
+        if not bot_token:
+            bot_token = ""
+
         self.ws = websocket.DiscordWebSocket(self, bot_token, self.intents)
         await self.ws.listen()
 
     async def call_event_handler(self, event_name: str, event_data):
         func_name = f"on_{event_name.lower()}"
         
-        print(event_name)
+        def call_handlers(*args, **kwargs):
+            for event in self.events[func_name]:
+                asyncio.gather(event(*args, **kwargs))
+
         # --- Cached methods ---
         if event_name.lower() == "message_create":
-            message = models.Message(self, event_data)
+            message = models.Message(event_data)
 
             if len(self.message_cache.keys()) >= self.cache_size:
                 first_message = list(self.message_cache.keys())[0]
@@ -100,21 +138,24 @@ class Client:
             self.message_cache[message.message_id] = message
 
             if func_name in self.events:
-                asyncio.gather(self.events[func_name](message))                
+                call_handlers(message)
                 return
         elif event_name.lower() == "message_update":
-            after = models.Message(self, event_data)
-            print(self.message_cache, after.message_id)
+            after = models.Message(event_data)
+            
+            # print(self.message_cache, after.message_id)
+            
             before = self.message_cache.get(after.message_id, None)
 
             # Update the message cache
             if len(self.message_cache.keys()) >= self.cache_size:
                 first_message = list(self.message_cache.keys())[0]
                 del self.message_cache[first_message]
+            
             self.message_cache[after.message_id] = after
 
             if func_name in self.events:
-                asyncio.gather(self.events[func_name](before, after))                
+                call_handlers(before, after)               
                 return
 
         # --- Uncached methods ---
@@ -122,34 +163,41 @@ class Client:
             func = self.events[func_name]
 
             if event_name.lower() == "ready":
-                asyncio.gather(func(events.ReadyEvent(event_data)))
+                call_handlers(events.ReadyEvent(event_data))
 
             # ---- User Related Events ----
             elif event_name.lower() == "typing_start":
-                asyncio.gather(func(events.TypingStartEvent(event_data)))
+                call_handlers(events.TypingStartEvent(event_data))
 
             # ---- Message Related Events ----
             elif event_name.lower() == "message_delete":
-                asyncio.gather(func(
+                call_handlers(
                     events.MessageDeleteEvent(event_data, False, [self.message_cache[event_data["id"]]])
-                ))
+                )
             elif event_name.lower() == "message_delete_bulk":
                 ids = event_data.get("ids", [])
-                asyncio.gather(func(
+                call_handlers(
                     events.MessageDeleteEvent(event_data, True, 
                         list(filter(lambda key: key in ids, self.message_cache))
-                )))
+                ))
             
             # ---- Channel Related Events ----
             elif event_name.lower() in ("channel_create", "channel_update", "channel_delete"):
-                asyncio.gather(func(models.Channel(self, event_data)))
+                call_handlers(models.Channel(event_data))
 
             # ---- Unimplemented ----
             else:
-                asyncio.gather(func(event_data))
+                call_handlers(event_data)
 
-    def run(self, bot_token):
+    def run(self, bot_token: str):
+        """Log into Discord, and start the event loop.
+
+        ---        
+        Parameters:
+            bot_token (str): Discord token
+        """
         self.__bot_token = bot_token
+        pycordia.models.active_client = self
 
         loop = asyncio.get_event_loop()
         task = loop.create_task(self.__create_ws(bot_token))
@@ -164,42 +212,14 @@ class Client:
 
     @property
     async def guilds(self) -> typing.List[models.PartialGuild]:
-        """List the guilds the bot is in"""
-        # Else, fetch it from the discord api
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                    f"{pycordia.api_url}/users/@me/guilds",
-                    headers={
-                        "Authorization": f"Bot {self.__bot_token}"
-                    }
-            ) as resp:
-
-                if not resp.ok:
-                    content = await resp.text()
-                    raise Exception(content)
-
-                guilds = await resp.json()
-                guilds = list(map(models.PartialGuild, guilds))
-
-                return guilds
+        """List of guilds of which the bot is a member"""
+        rs = await api.request("GET", "users/@me/guilds")
+        return list(map(models.PartialGuild, rs))
 
     @property
     async def user(self) -> models.User:
-        """Get user information for the bot"""
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                f"{pycordia.api_url}/users/@me",
-                headers={
-                    "Authorization": f"Bot {self.__bot_token}"
-                }
-            ) as resp:
-                if not resp.ok:
-                    content = await resp.text()
-                    raise Exception(content)
+        """Bot's `pycordia.models.user.User` object"""
+        return models.User(await api.request("GET", "users/@me"))
 
-                return models.User(await resp.json())
-
-    # TODO: Modify current user
     # TODO: Create DM
-    # TODO: Leave Guild
     # TODO: Get User Connections

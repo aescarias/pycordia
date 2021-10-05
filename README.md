@@ -1,5 +1,10 @@
 # Pycordia
 
+![Discord](https://img.shields.io/discord/882843456999927849?style=flat-square)
+![GitHub](https://img.shields.io/github/license/angelcarias/pycordia?style=flat-square)
+![Lines of code](https://img.shields.io/tokei/lines/github/angelcarias/pycordia?style=flat-square)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/angelcarias/pycordia?include_prereleases&style=flat-square)
+
 > ⚠️ **Note!**
 > 
 > As of now, this package is under early development so functionalities are bound to change drastically.
@@ -8,17 +13,24 @@
 
 A work-in-progress Discord API wrapper for Python with a simple gateway and some common events implemented.
 
-While there's currently no documentation available, use the examples for guidance. If you have any questions, feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
+> :globe_with_meridians: **Website:** <https://angelcarias.github.io/pycordia>
+>
+> :memo: **Documentation:** <https://angelcarias.github.io/pycordia/docs>
+>  
+> :speech_balloon: **Discord server:** <https://discord.gg/h5JhXtGfXQ>
 
-Our examples (and future documentation) assume you're at a level of Python where you can comfortably work with Discord bots.
+If you have any questions, feel free to join our [Discord server](https://discord.gg/h5JhXtGfXQ) to follow the changes we make, as well as receive help and talk with others!
 
-## :gear: Installation
+Our examples, and documentation assume you're at a level of Python where you can comfortably work with Discord bots.
+
+## ⚙️ Installation
 
 Pycordia has been well tested on Python 3.8, however, 3.7 and above are supported.
 
 ### Installing from PIP
 
 The easiest way to get Pycordia on your system is by installing it through `pip`.
+
 ```sh
 $ pip install pycordia               # Should work everywhere
 $ pip3 install pycordia              # Should work on most *nix systems; use on MacOS
@@ -27,31 +39,7 @@ $ python3 -m pip install pycordia    # Alternative; use on MacOS
 $ py -3 -m pip install pycordia      # Alternative; use on Windows
 ```
 
-### Installing from Source
-
-If you prefer installing Pycordia from source, proceed with the following:
-
----
-
-First, clone this repository either through Git or Github.
-
-Next, proceed to run the `setup.py` file as in:
-```sh
-$ python setup.py sdist     # Should work everywhere
-$ python3 setup.py sdist    # Should work on most *nix systems; use on MacOS
-$ py -3 setup.py sdist      # Should work on Windows
-```
-
-`cd` into the new `dist` directory and run the created `.tar.gz` file.
-```sh
-$ pip install pycordia-<version>.tar.gz         # Should work everywhere
-$ pip3 install pycordia-<version>.tar.gz        # Should work on most *nix systems; use on MacOS
-$ python -m pip install pycordia-....tar.gz     # Alternative; should work everywhere
-$ python3 -m pip install pycordia-....tar.gz    # Alternative; use on MacOS
-$ py -3 -m pip install pycordia-....tar.gz      # Alternative; use on Windows
-```
-
-## :ping_pong: Example of a simple Ping-Pong Bot
+## 🏓 Example of a simple Ping-Pong Bot
 
 ```py
 from pycordia import events, models
@@ -75,7 +63,7 @@ async def on_message_create(msg: models.Message):
         embed = models.Embed.create(description=":ping_pong: Pong!")
         embed.color = 0xFF123A
 
-        await models.Message.create(client, embeds=[embed]).send(msg.channel_id)
+        await models.Message.send(msg.channel_id, embeds=[embed])
 
 client.run(os.getenv("DISCORD_TOKEN"))
 ```
@@ -91,12 +79,12 @@ client.run(os.getenv("DISCORD_TOKEN"))
 
 For all other undocumented events, you'll receive raw JSON data which you'll have to handle yourself.
 
-## :bookmark: Things to do
+## 🔖 Things to do
 
 - Improve currently available models
 - Add slash commands
 - Add all other event wrappers
 
-## :book: Contribute
+## 📖 Contribute
 
 Feel free to contribute any bug fixes, new features, or general improvements to the Pycordia project.

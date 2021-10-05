@@ -1,5 +1,6 @@
 """
-### PyCordia - The Discord bot framework
+Pycordia - The Discord bot framework
+------------------------------------
 
 Developed by Angel Carias and it's contributors. 2021.
 
@@ -7,11 +8,10 @@ A wrapper around the Discord HTTP API and WebSockets
 """
 
 from .client import Intents, Client
-from . import websocket, errors, events, models
+from . import websocket, errors, events, models, api
 
-__version__ = "0.1.2"
-
+__version__ = "0.2.0"
 
 cdn_url = "https://cdn.discordapp.com"
 ws_url = "wss://gateway.discord.gg"
-api_url = "https://discord.com/api"
+api_url = "https://discord.com/api/v9"
