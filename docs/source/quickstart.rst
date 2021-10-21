@@ -7,6 +7,12 @@ Quickstart
 
 Pycordia can be installed in two possible ways.
 
+Migrating from Discord.py (or its forks)
+----------------------------------------
+
+Pycordia is **__not__** a drop-in replacement for Discord.py, Pycordia has been built from scratch and shares a different codebase than the one from Discord.py. 
+Please note this before using our library. It's up to **you** to decide whether learning a different codebase is worth it for your current bot. Pycordia is still excellent if developing new bots.
+
 Virtual Environments
 ----------------------------------
 
