@@ -1,0 +1,1637 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="pycordia package" href="pycordia.html" />
+
+    <meta name="generator" content="sphinx-4.2.0, furo 2021.10.09"/>
+        <title>pycordia.models package - Pycordia 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=0254c309f5cadf746f1a613e7677379ac9c8cdcd" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.d53ab927f7bad3eaa42da95908504b10.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=16fb25fabf47304eee183a5e9af80b1ba98259b1" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Pycordia 0.2.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Pycordia 0.2.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="reference.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="pycordia.html">pycordia package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">pycordia.models package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/angelcarias/pycordia">Github repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/h5JhXtGfXQ">Discord server</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-pycordia.models">
+<span id="pycordia-models-package"></span><h1>pycordia.models package<a class="headerlink" href="#module-pycordia.models" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-pycordia.models.channel">
+<span id="pycordia-models-channel-module"></span><h2>pycordia.models.channel module<a class="headerlink" href="#module-pycordia.models.channel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.channel.</span></span><span class="sig-name descname"><span class="pre">Channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.channel.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Channel model to mirror a Discord Channel</p>
+<dl class="simple">
+<dt>Operations:</dt><dd><ul class="simple">
+<li><p>str(x): Returns the channel name following a <cite>#</cite></p></li>
+<li><p>x == y: Checks if two channels are the same</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ChannelType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.category">
+<span class="sig-name descname"><span class="pre">category</span></span><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.category" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.dm">
+<span class="sig-name descname"><span class="pre">dm</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.dm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.group_dm">
+<span class="sig-name descname"><span class="pre">group_dm</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.group_dm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.news">
+<span class="sig-name descname"><span class="pre">news</span></span><em class="property"> <span class="pre">=</span> <span class="pre">5</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.news" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.news_thread">
+<span class="sig-name descname"><span class="pre">news_thread</span></span><em class="property"> <span class="pre">=</span> <span class="pre">10</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.news_thread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.private_thread">
+<span class="sig-name descname"><span class="pre">private_thread</span></span><em class="property"> <span class="pre">=</span> <span class="pre">12</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.private_thread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.public_thread">
+<span class="sig-name descname"><span class="pre">public_thread</span></span><em class="property"> <span class="pre">=</span> <span class="pre">11</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.public_thread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.stage_voice">
+<span class="sig-name descname"><span class="pre">stage_voice</span></span><em class="property"> <span class="pre">=</span> <span class="pre">13</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.stage_voice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.store">
+<span class="sig-name descname"><span class="pre">store</span></span><em class="property"> <span class="pre">=</span> <span class="pre">6</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.store" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.text">
+<span class="sig-name descname"><span class="pre">text</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.ChannelType.voice">
+<span class="sig-name descname"><span class="pre">voice</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.ChannelType.voice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.from_id">
+<em class="property"><span class="pre">async</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.channel.Channel.from_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch a channel object from its ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>channel_id</strong> (<em>str</em>) – Channel’s ID</p>
+</dd>
+</dl>
+<p>Returns: <cite>pycordia.models.channel.Channel</cite></p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.get_message">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycordia.models.message.Message" title="pycordia.models.message.Message"><span class="pre">pycordia.models.message.Message</span></a></span></span><a class="headerlink" href="#pycordia.models.channel.Channel.get_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get message by ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>message_id</strong> (<em>str</em>) – The message ID as a string</p>
+</dd>
+</dl>
+<p>Raises: <cite>Exception</cite> if no initialized client is found
+Returns: A <cite>pycordia.models.Message</cite> object</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.get_messages">
+<span class="sig-name descname"><span class="pre">get_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.channel.Channel.get_messages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.get_pinned_messages">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">get_pinned_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pycordia.models.message.Message" title="pycordia.models.message.Message"><span class="pre">pycordia.models.message.Message</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycordia.models.channel.Channel.get_pinned_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the most recent messages, given a limit (by default 50)</p>
+<p>Raises: <cite>Exception</cite> if no initialized client is found
+Returns: A list of <cite>pycordia.models.Message</cite> objects</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.channel.Channel.mention">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mention</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pycordia.models.channel.Channel.mention" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mention a channel</p>
+<p>Returns: str</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.channel.ChannelMention">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.channel.</span></span><span class="sig-name descname"><span class="pre">ChannelMention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.channel.ChannelMention" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a channel mention i.e. &lt;#channel_id&gt;</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.ChannelMention.channel_id">
+<span class="sig-name descname"><span class="pre">channel_id</span></span><a class="headerlink" href="#pycordia.models.channel.ChannelMention.channel_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the channel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.ChannelMention.guild_id">
+<span class="sig-name descname"><span class="pre">guild_id</span></span><a class="headerlink" href="#pycordia.models.channel.ChannelMention.guild_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the channel’s guild</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.ChannelMention.channel_type">
+<span class="sig-name descname"><span class="pre">channel_type</span></span><a class="headerlink" href="#pycordia.models.channel.ChannelMention.channel_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of the channel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.channel.ChannelMention.channel_name">
+<span class="sig-name descname"><span class="pre">channel_name</span></span><a class="headerlink" href="#pycordia.models.channel.ChannelMention.channel_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of channel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.channel.ChannelMention.get_channel">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">get_channel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycordia.models.channel.Channel" title="pycordia.models.channel.Channel"><span class="pre">pycordia.models.channel.Channel</span></a></span></span><a class="headerlink" href="#pycordia.models.channel.ChannelMention.get_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the corresponding channel object.</p>
+<p>Returns: <cite>pycordia.models.channel.Channel</cite></p>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="module-pycordia.models.embed">
+<span id="pycordia-models-embed-module"></span><h2>pycordia.models.embed module<a class="headerlink" href="#module-pycordia.models.embed" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.embed.</span></span><span class="sig-name descname"><span class="pre">Embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A Discord embed.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.title">
+<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Title of the embed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.embed_type">
+<span class="sig-name descname"><span class="pre">embed_type</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.embed_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>An embed type (either ‘rich’, ‘image’, ‘video’, ‘gifv’, ‘article’, or ‘link’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed description</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL provided in embed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ISO8601-compliant timestamp string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.color">
+<span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color for the embed, better represented as a hexadecimal value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.colour">
+<span class="sig-name descname"><span class="pre">colour</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed colour</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed fields</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.add_field">
+<span class="sig-name descname"><span class="pre">add_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inline</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.add_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>dd a field object to the embed fields</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the embed field</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The contents/value of the field</p></li>
+<li><p><strong>inline</strong> (<em>bool</em>) – Indicates whether the field is placed either inline or in a new row.                 True by default</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.author">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">author</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.author" title="Permalink to this definition">¶</a></dt>
+<dd><p>Author of embed</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.create">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Embed object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – (Optional) Title of the embed</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – (Optional) Embed description</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – (Optional) URL provided in Embed</p></li>
+<li><p><strong>color</strong> (<em>int</em>) – (Optional) Color of embed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.footer">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">footer</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.footer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed footer</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.image">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">image</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed image</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.provider">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">provider</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.provider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed Provider</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.set_author">
+<span class="sig-name descname"><span class="pre">set_author</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icon_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.set_author" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the author of an embed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the author</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – An URL related to the author</p></li>
+<li><p><strong>icon_url</strong> (<em>str</em>) – An icon URL for the author</p></li>
+<li><p><strong>proxy_url</strong> (<em>str</em>) – A proxy URL for the author</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.set_footer">
+<span class="sig-name descname"><span class="pre">set_footer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icon_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.set_footer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set embed footer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text for the footer</p></li>
+<li><p><strong>icon_url</strong> (<em>str</em>) – An URL for the footer</p></li>
+<li><p><strong>proxy_url</strong> (<em>str</em>) – An alternative URL for the footer</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.set_image">
+<span class="sig-name descname"><span class="pre">set_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.set_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set embed image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The URL for the image</p></li>
+<li><p><strong>proxy_url</strong> (<em>str</em>) – An alternative URL for the image</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – The height of the image</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – The width of the image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.set_provider">
+<span class="sig-name descname"><span class="pre">set_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.set_provider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the provider of the embed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the provider</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – The URL of the provider</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.set_thumbnail">
+<span class="sig-name descname"><span class="pre">set_thumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.set_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a thumbnail to an embed object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The URL for the thumbnail</p></li>
+<li><p><strong>proxy_url</strong> (<em>str</em>) – An alternative URL for the thumbnail</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – The height of the thumbnail</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – The width of the thumbnail</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.set_video">
+<span class="sig-name descname"><span class="pre">set_video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.set_video" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set embed video.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The URL for the video</p></li>
+<li><p><strong>proxy_url</strong> (<em>str</em>) – An alternative URL for the video</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – The height of the video</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – The width of the video</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.thumbnail">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">thumbnail</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed thumbnail</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.embed.Embed.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert object into a dictionary</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.embed.Embed.video">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">video</span></span><a class="headerlink" href="#pycordia.models.embed.Embed.video" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed video</p>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="module-pycordia.models.guild">
+<span id="pycordia-models-guild-module"></span><h2>pycordia.models.guild module<a class="headerlink" href="#module-pycordia.models.guild" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.Emoji">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">Emoji</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.Emoji" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents server specific emojis.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.Guild">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">Guild</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.Guild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.guild.Guild.from_id">
+<em class="property"><span class="pre">async</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">guild_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_counts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycordia.models.guild.Guild" title="pycordia.models.guild.Guild"><span class="pre">pycordia.models.guild.Guild</span></a></span></span><a class="headerlink" href="#pycordia.models.guild.Guild.from_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a guild from an ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>guild_id</strong> (<em>str</em>) – A guild ID</p></li>
+<li><p><strong>with_counts</strong> (<em>bool</em>) – Whether or not to add approximate member and presence counts</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: <cite>Guild</cite></p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildExplicitContentFilter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">GuildExplicitContentFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.GuildExplicitContentFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildExplicitContentFilter.all_members">
+<span class="sig-name descname"><span class="pre">all_members</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pycordia.models.guild.GuildExplicitContentFilter.all_members" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildExplicitContentFilter.disabled">
+<span class="sig-name descname"><span class="pre">disabled</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pycordia.models.guild.GuildExplicitContentFilter.disabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildExplicitContentFilter.members_without_roles">
+<span class="sig-name descname"><span class="pre">members_without_roles</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.guild.GuildExplicitContentFilter.members_without_roles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildMFALevel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">GuildMFALevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.GuildMFALevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildMFALevel.elevated">
+<span class="sig-name descname"><span class="pre">elevated</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.guild.GuildMFALevel.elevated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildMFALevel.none">
+<span class="sig-name descname"><span class="pre">none</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pycordia.models.guild.GuildMFALevel.none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNSFWLevel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">GuildNSFWLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.GuildNSFWLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNSFWLevel.age_restricted">
+<span class="sig-name descname"><span class="pre">age_restricted</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pycordia.models.guild.GuildNSFWLevel.age_restricted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNSFWLevel.default">
+<span class="sig-name descname"><span class="pre">default</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pycordia.models.guild.GuildNSFWLevel.default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNSFWLevel.explicit">
+<span class="sig-name descname"><span class="pre">explicit</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.guild.GuildNSFWLevel.explicit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNSFWLevel.safe">
+<span class="sig-name descname"><span class="pre">safe</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pycordia.models.guild.GuildNSFWLevel.safe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNotificationLevel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">GuildNotificationLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.GuildNotificationLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNotificationLevel.all_messages">
+<span class="sig-name descname"><span class="pre">all_messages</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pycordia.models.guild.GuildNotificationLevel.all_messages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildNotificationLevel.only_mentions">
+<span class="sig-name descname"><span class="pre">only_mentions</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.guild.GuildNotificationLevel.only_mentions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildPremiumTier">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">GuildPremiumTier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.GuildPremiumTier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildPremiumTier.none">
+<span class="sig-name descname"><span class="pre">none</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pycordia.models.guild.GuildPremiumTier.none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildPremiumTier.tier_1">
+<span class="sig-name descname"><span class="pre">tier_1</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.guild.GuildPremiumTier.tier_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildPremiumTier.tier_2">
+<span class="sig-name descname"><span class="pre">tier_2</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pycordia.models.guild.GuildPremiumTier.tier_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildPremiumTier.tier_3">
+<span class="sig-name descname"><span class="pre">tier_3</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pycordia.models.guild.GuildPremiumTier.tier_3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildVerificationLevel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">GuildVerificationLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.GuildVerificationLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildVerificationLevel.high">
+<span class="sig-name descname"><span class="pre">high</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pycordia.models.guild.GuildVerificationLevel.high" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildVerificationLevel.low">
+<span class="sig-name descname"><span class="pre">low</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.guild.GuildVerificationLevel.low" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildVerificationLevel.medium">
+<span class="sig-name descname"><span class="pre">medium</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pycordia.models.guild.GuildVerificationLevel.medium" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildVerificationLevel.none">
+<span class="sig-name descname"><span class="pre">none</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#pycordia.models.guild.GuildVerificationLevel.none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.GuildVerificationLevel.very_high">
+<span class="sig-name descname"><span class="pre">very_high</span></span><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#pycordia.models.guild.GuildVerificationLevel.very_high" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">Member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.Member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Model to represent Discord guild user</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#pycordia.models.guild.Member.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <cite>pycordia.models.user.User</cite> instance of the member</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pycordia.models.user.User" title="pycordia.models.user.User">User</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.nick">
+<span class="sig-name descname"><span class="pre">nick</span></span><a class="headerlink" href="#pycordia.models.guild.Member.nick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nickname of the user. Can be <cite>None</cite> if no nickname has been set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.roles">
+<span class="sig-name descname"><span class="pre">roles</span></span><a class="headerlink" href="#pycordia.models.guild.Member.roles" title="Permalink to this definition">¶</a></dt>
+<dd><p>User’s roles, as a list of <cite>pycordia.models.guild.Role</cite> objects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#pycordia.models.guild.Role" title="pycordia.models.guild.Role">Role</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.joined_at">
+<span class="sig-name descname"><span class="pre">joined_at</span></span><a class="headerlink" href="#pycordia.models.guild.Member.joined_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ISO8601 timestamp of when the user joined</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.premium_since">
+<span class="sig-name descname"><span class="pre">premium_since</span></span><a class="headerlink" href="#pycordia.models.guild.Member.premium_since" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ISO8601 timestamp of when the user started boosting the server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.deaf">
+<span class="sig-name descname"><span class="pre">deaf</span></span><a class="headerlink" href="#pycordia.models.guild.Member.deaf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the user has been deafened in a voice channel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.mute">
+<span class="sig-name descname"><span class="pre">mute</span></span><a class="headerlink" href="#pycordia.models.guild.Member.mute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the user has been muted in a voice channel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.pending">
+<span class="sig-name descname"><span class="pre">pending</span></span><a class="headerlink" href="#pycordia.models.guild.Member.pending" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the user has not yet passed the guild’s membership requirements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Member.permissions">
+<span class="sig-name descname"><span class="pre">permissions</span></span><a class="headerlink" href="#pycordia.models.guild.Member.permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>total permissions of the member in the channel, including overwrites</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="simple">
+<dt>Operations:</dt><dd><ul class="simple">
+<li><p>x == y: Checks if two channels are the same.</p></li>
+<li><p>str(x): Return username with discriminator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.PartialGuild">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">PartialGuild</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.PartialGuild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a partial guild</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.PartialGuild.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#pycordia.models.guild.PartialGuild.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the guild.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.PartialGuild.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycordia.models.guild.PartialGuild.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the guild.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.PartialGuild.icon">
+<span class="sig-name descname"><span class="pre">icon</span></span><a class="headerlink" href="#pycordia.models.guild.PartialGuild.icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL to icon of the guild.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.PartialGuild.owner">
+<span class="sig-name descname"><span class="pre">owner</span></span><a class="headerlink" href="#pycordia.models.guild.PartialGuild.owner" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.PartialGuild.permissions_integer">
+<span class="sig-name descname"><span class="pre">permissions_integer</span></span><a class="headerlink" href="#pycordia.models.guild.PartialGuild.permissions_integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permissions integer of the guild.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.PartialGuild.features">
+<span class="sig-name descname"><span class="pre">features</span></span><a class="headerlink" href="#pycordia.models.guild.PartialGuild.features" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of features available to the guild.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">Role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.Role" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Model to represent a guild’s role.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#pycordia.models.guild.Role.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycordia.models.guild.Role.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.color">
+<span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#pycordia.models.guild.Role.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Role color</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.colour">
+<span class="sig-name descname"><span class="pre">colour</span></span><a class="headerlink" href="#pycordia.models.guild.Role.colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Role colour</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.hoist">
+<span class="sig-name descname"><span class="pre">hoist</span></span><a class="headerlink" href="#pycordia.models.guild.Role.hoist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the role is hoisted</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.icon_hash">
+<span class="sig-name descname"><span class="pre">icon_hash</span></span><a class="headerlink" href="#pycordia.models.guild.Role.icon_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>The icon hash for the icon</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.unicode_emoji">
+<span class="sig-name descname"><span class="pre">unicode_emoji</span></span><a class="headerlink" href="#pycordia.models.guild.Role.unicode_emoji" title="Permalink to this definition">¶</a></dt>
+<dd><p>The role’s unicode emoji if a default emoji</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.position">
+<span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#pycordia.models.guild.Role.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Role position in the hierarchy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.permissions">
+<span class="sig-name descname"><span class="pre">permissions</span></span><a class="headerlink" href="#pycordia.models.guild.Role.permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permissions granted to the role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.managed">
+<span class="sig-name descname"><span class="pre">managed</span></span><a class="headerlink" href="#pycordia.models.guild.Role.managed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the role is a managed role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.mentionable">
+<span class="sig-name descname"><span class="pre">mentionable</span></span><a class="headerlink" href="#pycordia.models.guild.Role.mentionable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether users can mention the role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.guild.Role.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#pycordia.models.guild.Role.tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tags for this role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#pycordia.models.guild.RoleTags" title="pycordia.models.guild.RoleTags">RoleTags</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="simple">
+<dt>Operations:</dt><dd><ul class="simple">
+<li><p>x == y: Checks if two roles are the same</p></li>
+<li><p>x &gt; y: Checks if role <cite>x</cite> is higher up than role <cite>y</cite></p></li>
+<li><p>x &lt; y: Checks if role <cite>y</cite> is higher up than role <cite>x</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.guild.RoleTags">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.guild.</span></span><span class="sig-name descname"><span class="pre">RoleTags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.guild.RoleTags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+</section>
+<section id="module-pycordia.models.message">
+<span id="pycordia-models-message-module"></span><h2>pycordia.models.message module<a class="headerlink" href="#module-pycordia.models.message" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.Application">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">Application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Discord application model.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">Attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Attachment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An attachment for a message</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.attachment_id">
+<span class="sig-name descname"><span class="pre">attachment_id</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.attachment_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the attachment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>The attachment’s filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.content_type">
+<span class="sig-name descname"><span class="pre">content_type</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The content type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>File size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.url">
+<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL to the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.proxy_url">
+<span class="sig-name descname"><span class="pre">proxy_url</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.proxy_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alternate URL to the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.height">
+<span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height of attachment (only applies to images)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.width">
+<span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#pycordia.models.message.Attachment.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of the attachment (only applies to images)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.Attachment.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Attachment.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return raw dictionary of object
+Returns: dict</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.Interaction">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">Interaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Interaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a Discord interaction</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Interaction.interaction_id">
+<span class="sig-name descname"><span class="pre">interaction_id</span></span><a class="headerlink" href="#pycordia.models.message.Interaction.interaction_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the discord interaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Interaction.interaction_type">
+<span class="sig-name descname"><span class="pre">interaction_type</span></span><a class="headerlink" href="#pycordia.models.message.Interaction.interaction_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of the interaction (button, slash command, etc)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Interaction.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycordia.models.message.Interaction.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the interaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.Interaction.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#pycordia.models.message.Interaction.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interaction’s user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><cite>pycordia.models.user.User</cite></p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.Message">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a message sent in Discord</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.Message.delete">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Message.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes this message. Note that this action cannot be undone.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.Message.edit">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">edit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pycordia.models.embed.Embed" title="pycordia.models.embed.Embed"><span class="pre">pycordia.models.embed.Embed</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allowed_mentions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Message.edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit this message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content</strong> (<em>str</em><em>, </em><em>optional</em>) – The new content of this message.</p></li>
+<li><p><strong>embeds</strong> (<em>typing.List</em><em>[</em><em>models.Embed</em><em>]</em><em>, </em><em>optional</em>) – A new list of <cite>embed.Embed</cite> objects</p></li>
+<li><p><strong>allowed_mentions</strong> (<em>dict</em><em>, </em><em>optional</em>) – A new dictionary of allowed mentions.                 Structure is the same as specified in <cite>pycordia.models.Message.send</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.Message.from_id">
+<em class="property"><span class="pre">async</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycordia.models.message.Message" title="pycordia.models.message.Message"><span class="pre">pycordia.models.message.Message</span></a></span></span><a class="headerlink" href="#pycordia.models.message.Message.from_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a message given a channel ID and a message ID</p>
+<p>Returns: <cite>pycordia.models.Message</cite></p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.Message.pin">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">pin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Message.pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pins a message to the channel it was sent in</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.Message.send">
+<em class="property"><span class="pre">async</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pycordia.models.embed.Embed" title="pycordia.models.embed.Embed"><span class="pre">pycordia.models.embed.Embed</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allowed_mentions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_tts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycordia.models.message.Message" title="pycordia.models.message.Message"><span class="pre">pycordia.models.message.Message</span></a></span></span><a class="headerlink" href="#pycordia.models.message.Message.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a Discord message to a channel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel_id</strong> (<em>str</em>) – The ID of the channel where the message will be sent</p></li>
+<li><p><strong>content</strong> (<em>str</em><em>, </em><em>optional</em>) – The content of the message.</p></li>
+<li><p><strong>embeds</strong> (<em>List</em><em>[</em><a class="reference internal" href="#pycordia.models.embed.Embed" title="pycordia.models.embed.Embed"><em>embed.Embed</em></a><em>]</em><em>, </em><em>optional</em>) – A list of <cite>pycordia.models.Embed</cite> objects.</p></li>
+<li><p><strong>allowed_mentions</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>A dictionary of allowed mentions. Dictionary keys are as follows,                     dictionary values are booleans:</p>
+<p>roles: Allow role mentions</p>
+<p>users: Allow user mentions</p>
+<p>everyone: Allow @everyone and @here mentions</p>
+</p></li>
+<li><p><strong>allow_tts</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicate if the message allows text-to-speech.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: <cite>pycordia.models.Message</cite></p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.Message.unpin">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">unpin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Message.unpin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpins a message from the channel it was sent in</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">MessageActivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.MessageActivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Message Activity class</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity.activity_type">
+<span class="sig-name descname"><span class="pre">activity_type</span></span><a class="headerlink" href="#pycordia.models.message.MessageActivity.activity_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of activity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><cite>pycordia.models.message.MessageActivity.ActivityTypes</cite></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity.party_id">
+<span class="sig-name descname"><span class="pre">party_id</span></span><a class="headerlink" href="#pycordia.models.message.MessageActivity.party_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the party</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity.ActivityTypes">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ActivityTypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.MessageActivity.ActivityTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity.ActivityTypes.join">
+<span class="sig-name descname"><span class="pre">join</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pycordia.models.message.MessageActivity.ActivityTypes.join" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity.ActivityTypes.join_request">
+<span class="sig-name descname"><span class="pre">join_request</span></span><em class="property"> <span class="pre">=</span> <span class="pre">5</span></em><a class="headerlink" href="#pycordia.models.message.MessageActivity.ActivityTypes.join_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity.ActivityTypes.listen">
+<span class="sig-name descname"><span class="pre">listen</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pycordia.models.message.MessageActivity.ActivityTypes.listen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageActivity.ActivityTypes.spectate">
+<span class="sig-name descname"><span class="pre">spectate</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pycordia.models.message.MessageActivity.ActivityTypes.spectate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageReference">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">MessageReference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.MessageReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageReference.message">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#pycordia.models.message.MessageReference.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the referenced message</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.message.MessageReference.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.MessageReference.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.Reaction">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">Reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.Reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents reactions in a message.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.message.StickerItem">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.message.</span></span><span class="sig-name descname"><span class="pre">StickerItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.message.StickerItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a Discord sticker item</p>
+</dd></dl>
+</section>
+<section id="module-pycordia.models.presence">
+<span id="pycordia-models-presence-module"></span><h2>pycordia.models.presence module<a class="headerlink" href="#module-pycordia.models.presence" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.presence.Presence">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.presence.</span></span><span class="sig-name descname"><span class="pre">Presence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">since</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">datetime.datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycordia.models.presence.StatusType" title="pycordia.models.presence.StatusType"><span class="pre">pycordia.models.presence.StatusType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">afk</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.presence.Presence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.presence.StatusType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.presence.</span></span><span class="sig-name descname"><span class="pre">StatusType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.presence.StatusType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.presence.StatusType.dnd">
+<span class="sig-name descname"><span class="pre">dnd</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'dnd'</span></em><a class="headerlink" href="#pycordia.models.presence.StatusType.dnd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.presence.StatusType.idle">
+<span class="sig-name descname"><span class="pre">idle</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'idle'</span></em><a class="headerlink" href="#pycordia.models.presence.StatusType.idle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.presence.StatusType.invisible">
+<span class="sig-name descname"><span class="pre">invisible</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'invisible'</span></em><a class="headerlink" href="#pycordia.models.presence.StatusType.invisible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.presence.StatusType.offline">
+<span class="sig-name descname"><span class="pre">offline</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'offline'</span></em><a class="headerlink" href="#pycordia.models.presence.StatusType.offline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.presence.StatusType.online">
+<span class="sig-name descname"><span class="pre">online</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'online'</span></em><a class="headerlink" href="#pycordia.models.presence.StatusType.online" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+</section>
+<section id="module-pycordia.models.user">
+<span id="pycordia-models-user-module"></span><h2>pycordia.models.user module<a class="headerlink" href="#module-pycordia.models.user" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycordia.models.user.User">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pycordia.models.user.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.user.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Model to mirror a Discord User</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#pycordia.models.user.User.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.username">
+<span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#pycordia.models.user.User.username" title="Permalink to this definition">¶</a></dt>
+<dd><p>Username</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.discriminator">
+<span class="sig-name descname"><span class="pre">discriminator</span></span><a class="headerlink" href="#pycordia.models.user.User.discriminator" title="Permalink to this definition">¶</a></dt>
+<dd><p>User’s discriminator - a # followed by 4 numbers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.avatar_hash">
+<span class="sig-name descname"><span class="pre">avatar_hash</span></span><a class="headerlink" href="#pycordia.models.user.User.avatar_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>User’s avatar hash</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.bot">
+<span class="sig-name descname"><span class="pre">bot</span></span><a class="headerlink" href="#pycordia.models.user.User.bot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the user is a bot or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.system">
+<span class="sig-name descname"><span class="pre">system</span></span><a class="headerlink" href="#pycordia.models.user.User.system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the user is an official Discord System User</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.mfa_enabled">
+<span class="sig-name descname"><span class="pre">mfa_enabled</span></span><a class="headerlink" href="#pycordia.models.user.User.mfa_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the user has 2FA enabled</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.banner">
+<span class="sig-name descname"><span class="pre">banner</span></span><a class="headerlink" href="#pycordia.models.user.User.banner" title="Permalink to this definition">¶</a></dt>
+<dd><p>User’s banner hash</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.accent_color">
+<span class="sig-name descname"><span class="pre">accent_color</span></span><a class="headerlink" href="#pycordia.models.user.User.accent_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>User’s banner color, in hex, encoded as an int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.locale">
+<span class="sig-name descname"><span class="pre">locale</span></span><a class="headerlink" href="#pycordia.models.user.User.locale" title="Permalink to this definition">¶</a></dt>
+<dd><p>User’s chosen language</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.verified">
+<span class="sig-name descname"><span class="pre">verified</span></span><a class="headerlink" href="#pycordia.models.user.User.verified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the user’s email has been verified. Can only be accessed from the email scope, in OAuth2 applications</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.email">
+<span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#pycordia.models.user.User.email" title="Permalink to this definition">¶</a></dt>
+<dd><p>User’s email. Can only be accessed from the email scope, in OAuth2 applications</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.flags">
+<span class="sig-name descname"><span class="pre">flags</span></span><a class="headerlink" href="#pycordia.models.user.User.flags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flags on user’s account</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.premium_type">
+<span class="sig-name descname"><span class="pre">premium_type</span></span><a class="headerlink" href="#pycordia.models.user.User.premium_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nitro subscription type: 0 - None, 1 - Classic, 2 - Nitro</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycordia.models.user.User.public_flags">
+<span class="sig-name descname"><span class="pre">public_flags</span></span><a class="headerlink" href="#pycordia.models.user.User.public_flags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Public flags on a user’s account</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="simple">
+<dt>Operations:</dt><dd><ul class="simple">
+<li><p>str(x): Returns the username + discriminator</p></li>
+<li><p>x == y: Checks if two users are the same (check by ID)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.user.User.avatar_url">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">avatar_url</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pycordia.models.user.User.avatar_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the avatar URL of a user</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycordia.models.user.User.from_id">
+<em class="property"><span class="pre">async</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycordia.models.user.User.from_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get user info, given the user ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>str</em>) – ID of the user to fetch</p></li>
+<li><p><strong>use_cache</strong> (<em>bool</em>) – Whether to check in cache first, or not</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: A <cite>pycordia.models.user.User</cite> object</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycordia.models.user.User.mention">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mention</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pycordia.models.user.User.mention" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mention a user</p>
+</dd></dl>
+</dd></dl>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="pycordia.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">pycordia package</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Angel Carias |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>. |
+            <a class="muted-link" href="../_sources/source/pycordia.models.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">pycordia.models package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pycordia.models.channel">pycordia.models.channel module</a></li>
+<li><a class="reference internal" href="#module-pycordia.models.embed">pycordia.models.embed module</a></li>
+<li><a class="reference internal" href="#module-pycordia.models.guild">pycordia.models.guild module</a></li>
+<li><a class="reference internal" href="#module-pycordia.models.message">pycordia.models.message module</a></li>
+<li><a class="reference internal" href="#module-pycordia.models.presence">pycordia.models.presence module</a></li>
+<li><a class="reference internal" href="#module-pycordia.models.user">pycordia.models.user module</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/main.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    </body>
+</html>

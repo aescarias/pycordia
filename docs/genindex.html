@@ -1,0 +1,1083 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+
+    <meta name="generator" content="sphinx-4.2.0, furo 2021.10.09"/><title>Index - Pycordia 0.2.0 documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=0254c309f5cadf746f1a613e7677379ac9c8cdcd" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.d53ab927f7bad3eaa42da95908504b10.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=16fb25fabf47304eee183a5e9af80b1ba98259b1" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Pycordia 0.2.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Pycordia 0.2.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/changelog.html">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="source/reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="source/pycordia.html">pycordia package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pycordia.models.html">pycordia.models package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/angelcarias/pycordia">Github repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/h5JhXtGfXQ">Discord server</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
+</section>
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.accent_color">accent_color (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity.activity_type">activity_type (pycordia.models.message.MessageActivity attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.add_field">add_field() (pycordia.models.embed.Embed method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNSFWLevel.age_restricted">age_restricted (pycordia.models.guild.GuildNSFWLevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.all">all() (pycordia.client.Intents class method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildExplicitContentFilter.all_members">all_members (pycordia.models.guild.GuildExplicitContentFilter attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNotificationLevel.all_messages">all_messages (pycordia.models.guild.GuildNotificationLevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Application">Application (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment">Attachment (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.attachment_id">attachment_id (pycordia.models.message.Attachment attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.author">author (pycordia.models.embed.Embed property)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.avatar_hash">avatar_hash (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.avatar_url">avatar_url (pycordia.models.user.User property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.banner">banner (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.bot">bot (pycordia.models.user.User attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.websocket.DiscordWebSocket.bot_token">bot_token (pycordia.websocket.DiscordWebSocket attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.MessageDeleteEvent.bulk">bulk (pycordia.events.MessageDeleteEvent attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.client.Client.cache_size">cache_size (pycordia.client.Client attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.MessageDeleteEvent.cached_message">cached_message (pycordia.events.MessageDeleteEvent attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client.call_event_handler">call_event_handler() (pycordia.client.Client method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.category">category (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel">Channel (class in pycordia.models.channel)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType">Channel.ChannelType (class in pycordia.models.channel)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.MessageDeleteEvent.channel_id">channel_id (pycordia.events.MessageDeleteEvent attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.html#pycordia.events.TypingStartEvent.channel_id">(pycordia.events.TypingStartEvent attribute)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.channel.ChannelMention.channel_id">(pycordia.models.channel.ChannelMention attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.ChannelMention.channel_name">channel_name (pycordia.models.channel.ChannelMention attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.ChannelMention.channel_type">channel_type (pycordia.models.channel.ChannelMention attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.ChannelMention">ChannelMention (class in pycordia.models.channel)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client">Client (class in pycordia.client)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.color">color (pycordia.models.embed.Embed attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.color">(pycordia.models.guild.Role attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.colour">colour (pycordia.models.embed.Embed attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.colour">(pycordia.models.guild.Role attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.html#pycordia.errors.ComponentError">ComponentError</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.content_type">content_type (pycordia.models.message.Attachment attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.create">create() (pycordia.models.embed.Embed class method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.deaf">deaf (pycordia.models.guild.Member attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNSFWLevel.default">default (pycordia.models.guild.GuildNSFWLevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Message.delete">delete() (pycordia.models.message.Message method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.description">description (pycordia.models.embed.Embed attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.direct_message_reactions">direct_message_reactions (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.direct_message_typing">direct_message_typing (pycordia.client.Intents attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.direct_messages">direct_messages (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildExplicitContentFilter.disabled">disabled (pycordia.models.guild.GuildExplicitContentFilter attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.websocket.DiscordWebSocket">DiscordWebSocket (class in pycordia.websocket)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.discriminator">discriminator (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.dm">dm (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.presence.StatusType.dnd">dnd (pycordia.models.presence.StatusType attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Message.edit">edit() (pycordia.models.message.Message method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildMFALevel.elevated">elevated (pycordia.models.guild.GuildMFALevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.email">email (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed">Embed (class in pycordia.models.embed)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.embed_type">embed_type (pycordia.models.embed.Embed attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Emoji">Emoji (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client.event">event() (pycordia.client.Client method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNSFWLevel.explicit">explicit (pycordia.models.guild.GuildNSFWLevel attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.PartialGuild.features">features (pycordia.models.guild.PartialGuild attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.fields">fields (pycordia.models.embed.Embed attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.filename">filename (pycordia.models.message.Attachment attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.flags">flags (pycordia.models.user.User attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.footer">footer (pycordia.models.embed.Embed property)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.from_id">from_id() (pycordia.models.channel.Channel class method)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.Guild.from_id">(pycordia.models.guild.Guild class method)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.message.Message.from_id">(pycordia.models.message.Message class method)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.user.User.from_id">(pycordia.models.user.User class method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.events.ReadyEvent.gateway_version">gateway_version (pycordia.events.ReadyEvent attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.errors.GatewayError">GatewayError</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.ChannelMention.get_channel">get_channel() (pycordia.models.channel.ChannelMention method)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.websocket.DiscordWebSocket.get_identify">get_identify() (pycordia.websocket.DiscordWebSocket method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.get_message">get_message() (pycordia.models.channel.Channel method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.get_messages">get_messages() (pycordia.models.channel.Channel method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.get_pinned_messages">get_pinned_messages() (pycordia.models.channel.Channel method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.group_dm">group_dm (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Guild">Guild (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_bans">guild_bans (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_emojis_and_stickers">guild_emojis_and_stickers (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.MessageDeleteEvent.guild_id">guild_id (pycordia.events.MessageDeleteEvent attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.html#pycordia.events.TypingStartEvent.guild_id">(pycordia.events.TypingStartEvent attribute)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.channel.ChannelMention.guild_id">(pycordia.models.channel.ChannelMention attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_integrations">guild_integrations (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_invites">guild_invites (pycordia.client.Intents attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_members">guild_members (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_message_reactions">guild_message_reactions (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_message_typing">guild_message_typing (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_messages">guild_messages (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_presences">guild_presences (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_voice_states">guild_voice_states (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.guild_webhooks">guild_webhooks (pycordia.client.Intents attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildExplicitContentFilter">GuildExplicitContentFilter (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildMFALevel">GuildMFALevel (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNotificationLevel">GuildNotificationLevel (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNSFWLevel">GuildNSFWLevel (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildPremiumTier">GuildPremiumTier (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client.guilds">guilds (pycordia.client.Client property)</a>
+
+        <ul>
+          <li><a href="source/pycordia.html#pycordia.client.Intents.guilds">(pycordia.client.Intents attribute)</a>
+</li>
+          <li><a href="source/pycordia.html#pycordia.events.ReadyEvent.guilds">(pycordia.events.ReadyEvent attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildVerificationLevel">GuildVerificationLevel (class in pycordia.models.guild)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.websocket.DiscordWebSocket.heartbeat_interval">heartbeat_interval (pycordia.websocket.DiscordWebSocket attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.height">height (pycordia.models.message.Attachment attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildVerificationLevel.high">high (pycordia.models.guild.GuildVerificationLevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.hoist">hoist (pycordia.models.guild.Role attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.PartialGuild.icon">icon (pycordia.models.guild.PartialGuild attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.icon_hash">icon_hash (pycordia.models.guild.Role attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.PartialGuild.id">id (pycordia.models.guild.PartialGuild attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.id">(pycordia.models.guild.Role attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.presence.StatusType.idle">idle (pycordia.models.presence.StatusType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.image">image (pycordia.models.embed.Embed property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.client.Intents">Intents (class in pycordia.client)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.websocket.DiscordWebSocket.intents">intents (pycordia.websocket.DiscordWebSocket attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Interaction">Interaction (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Interaction.interaction_id">interaction_id (pycordia.models.message.Interaction attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Interaction.interaction_type">interaction_type (pycordia.models.message.Interaction attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.presence.StatusType.invisible">invisible (pycordia.models.presence.StatusType attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="J" class="genindex-section">
+  <h2>J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity.ActivityTypes.join">join (pycordia.models.message.MessageActivity.ActivityTypes attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity.ActivityTypes.join_request">join_request (pycordia.models.message.MessageActivity.ActivityTypes attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.joined_at">joined_at (pycordia.models.guild.Member attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity.ActivityTypes.listen">listen (pycordia.models.message.MessageActivity.ActivityTypes attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.websocket.DiscordWebSocket.listen">listen() (pycordia.websocket.DiscordWebSocket method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.locale">locale (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildVerificationLevel.low">low (pycordia.models.guild.GuildVerificationLevel attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.utils.make_optional">make_optional() (in module pycordia.utils)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.managed">managed (pycordia.models.guild.Role attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildVerificationLevel.medium">medium (pycordia.models.guild.GuildVerificationLevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member">Member (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.TypingStartEvent.member">member (pycordia.events.TypingStartEvent attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildExplicitContentFilter.members_without_roles">members_without_roles (pycordia.models.guild.GuildExplicitContentFilter attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.mention">mention (pycordia.models.channel.Channel property)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.user.User.mention">(pycordia.models.user.User property)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.mentionable">mentionable (pycordia.models.guild.Role attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Intents.merge_intents">merge_intents() (pycordia.client.Intents class method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Message">Message (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageReference.message">message (pycordia.models.message.MessageReference property)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client.message_cache">message_cache (pycordia.client.Client attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.MessageDeleteEvent.message_ids">message_ids (pycordia.events.MessageDeleteEvent attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity">MessageActivity (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity.ActivityTypes">MessageActivity.ActivityTypes (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.MessageDeleteEvent">MessageDeleteEvent (class in pycordia.events)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageReference">MessageReference (class in pycordia.models.message)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.mfa_enabled">mfa_enabled (pycordia.models.user.User attribute)</a>
+</li>
+        <li>
+    module
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia">pycordia</a>
+</li>
+          <li><a href="source/pycordia.html#module-pycordia.api">pycordia.api</a>
+</li>
+          <li><a href="source/pycordia.html#module-pycordia.client">pycordia.client</a>
+</li>
+          <li><a href="source/pycordia.html#module-pycordia.errors">pycordia.errors</a>
+</li>
+          <li><a href="source/pycordia.html#module-pycordia.events">pycordia.events</a>
+</li>
+          <li><a href="source/pycordia.models.html#module-pycordia.models">pycordia.models</a>
+</li>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.channel">pycordia.models.channel</a>
+</li>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.embed">pycordia.models.embed</a>
+</li>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.guild">pycordia.models.guild</a>
+</li>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.message">pycordia.models.message</a>
+</li>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.presence">pycordia.models.presence</a>
+</li>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.user">pycordia.models.user</a>
+</li>
+          <li><a href="source/pycordia.html#module-pycordia.utils">pycordia.utils</a>
+</li>
+          <li><a href="source/pycordia.html#module-pycordia.websocket">pycordia.websocket</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.mute">mute (pycordia.models.guild.Member attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.utils.mutually_exclusive">mutually_exclusive() (in module pycordia.utils)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.errors.MutuallyExclusiveError">MutuallyExclusiveError</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.PartialGuild.name">name (pycordia.models.guild.PartialGuild attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.name">(pycordia.models.guild.Role attribute)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.message.Interaction.name">(pycordia.models.message.Interaction attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.news">news (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.news_thread">news_thread (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.nick">nick (pycordia.models.guild.Member attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildMFALevel.none">none (pycordia.models.guild.GuildMFALevel attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildPremiumTier.none">(pycordia.models.guild.GuildPremiumTier attribute)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildVerificationLevel.none">(pycordia.models.guild.GuildVerificationLevel attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.utils.obj_from_dict">obj_from_dict() (in module pycordia.utils)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.utils.obj_to_dict">obj_to_dict() (in module pycordia.utils)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.presence.StatusType.offline">offline (pycordia.models.presence.StatusType attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.presence.StatusType.online">online (pycordia.models.presence.StatusType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNotificationLevel.only_mentions">only_mentions (pycordia.models.guild.GuildNotificationLevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.websocket.DiscordWebSocket.opcodes">opcodes (pycordia.websocket.DiscordWebSocket attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.PartialGuild.owner">owner (pycordia.models.guild.PartialGuild attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.events.ReadyEvent.partial_application">partial_application (pycordia.events.ReadyEvent attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.PartialGuild">PartialGuild (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity.party_id">party_id (pycordia.models.message.MessageActivity attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.pending">pending (pycordia.models.guild.Member attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.permissions">permissions (pycordia.models.guild.Member attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.permissions">(pycordia.models.guild.Role attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.PartialGuild.permissions_integer">permissions_integer (pycordia.models.guild.PartialGuild attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Message.pin">pin() (pycordia.models.message.Message method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.position">position (pycordia.models.guild.Role attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.premium_since">premium_since (pycordia.models.guild.Member attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.premium_type">premium_type (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.presence.Presence">Presence (class in pycordia.models.presence)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.private_thread">private_thread (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.provider">provider (pycordia.models.embed.Embed property)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.proxy_url">proxy_url (pycordia.models.message.Attachment attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.public_flags">public_flags (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.public_thread">public_thread (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li>
+    pycordia
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.api
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia.api">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.client
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia.client">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    pycordia.errors
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia.errors">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.events
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia.events">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.models
+
+        <ul>
+          <li><a href="source/pycordia.models.html#module-pycordia.models">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.models.channel
+
+        <ul>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.channel">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.models.embed
+
+        <ul>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.embed">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.models.guild
+
+        <ul>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.guild">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.models.message
+
+        <ul>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.message">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.models.presence
+
+        <ul>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.presence">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.models.user
+
+        <ul>
+          <li><a href="source/pycordia.models.html#module-pycordia.models.user">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.utils
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia.utils">module</a>
+</li>
+        </ul></li>
+        <li>
+    pycordia.websocket
+
+        <ul>
+          <li><a href="source/pycordia.html#module-pycordia.websocket">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Q" class="genindex-section">
+  <h2>Q</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.errors.QueryError">QueryError</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Reaction">Reaction (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.ReadyEvent">ReadyEvent (class in pycordia.events)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client.register_events">register_events() (pycordia.client.Client method)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.api.request">request() (in module pycordia.api)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role">Role (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.roles">roles (pycordia.models.guild.Member attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.RoleTags">RoleTags (class in pycordia.models.guild)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client.run">run() (pycordia.client.Client method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildNSFWLevel.safe">safe (pycordia.models.guild.GuildNSFWLevel attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Message.send">send() (pycordia.models.message.Message class method)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.ReadyEvent.session_id">session_id (pycordia.events.ReadyEvent attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.set_author">set_author() (pycordia.models.embed.Embed method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.set_footer">set_footer() (pycordia.models.embed.Embed method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.set_image">set_image() (pycordia.models.embed.Embed method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.set_provider">set_provider() (pycordia.models.embed.Embed method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.set_thumbnail">set_thumbnail() (pycordia.models.embed.Embed method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.set_video">set_video() (pycordia.models.embed.Embed method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.events.ReadyEvent.shard">shard (pycordia.events.ReadyEvent attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.size">size (pycordia.models.message.Attachment attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.utils.snowflake_to_date">snowflake_to_date() (in module pycordia.utils)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.MessageActivity.ActivityTypes.spectate">spectate (pycordia.models.message.MessageActivity.ActivityTypes attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.stage_voice">stage_voice (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.presence.StatusType">StatusType (class in pycordia.models.presence)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.StickerItem">StickerItem (class in pycordia.models.message)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.store">store (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.system">system (pycordia.models.user.User attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.tags">tags (pycordia.models.guild.Role attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.text">text (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.thumbnail">thumbnail (pycordia.models.embed.Embed property)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildPremiumTier.tier_1">tier_1 (pycordia.models.guild.GuildPremiumTier attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildPremiumTier.tier_2">tier_2 (pycordia.models.guild.GuildPremiumTier attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildPremiumTier.tier_3">tier_3 (pycordia.models.guild.GuildPremiumTier attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.events.TypingStartEvent.timestamp">timestamp (pycordia.events.TypingStartEvent attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.timestamp">(pycordia.models.embed.Embed attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.title">title (pycordia.models.embed.Embed attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.to_dict">to_dict() (pycordia.models.embed.Embed method)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.to_dict">(pycordia.models.message.Attachment method)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.message.MessageReference.to_dict">(pycordia.models.message.MessageReference method)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.html#pycordia.events.TypingStartEvent">TypingStartEvent (class in pycordia.events)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.Role.unicode_emoji">unicode_emoji (pycordia.models.guild.Role attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Message.unpin">unpin() (pycordia.models.message.Message method)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.url">url (pycordia.models.embed.Embed attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.url">(pycordia.models.message.Attachment attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User">User (class in pycordia.models.user)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.client.Client.user">user (pycordia.client.Client property)</a>
+
+        <ul>
+          <li><a href="source/pycordia.html#pycordia.events.ReadyEvent.user">(pycordia.events.ReadyEvent attribute)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.guild.Member.user">(pycordia.models.guild.Member attribute)</a>
+</li>
+          <li><a href="source/pycordia.models.html#pycordia.models.message.Interaction.user">(pycordia.models.message.Interaction attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.html#pycordia.client.Client.user_cache">user_cache (pycordia.client.Client attribute)</a>
+</li>
+        <li><a href="source/pycordia.html#pycordia.events.TypingStartEvent.user_id">user_id (pycordia.events.TypingStartEvent attribute)</a>
+
+        <ul>
+          <li><a href="source/pycordia.models.html#pycordia.models.user.User.user_id">(pycordia.models.user.User attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.username">username (pycordia.models.user.User attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.user.User.verified">verified (pycordia.models.user.User attribute)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.guild.GuildVerificationLevel.very_high">very_high (pycordia.models.guild.GuildVerificationLevel attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.embed.Embed.video">video (pycordia.models.embed.Embed property)</a>
+</li>
+        <li><a href="source/pycordia.models.html#pycordia.models.channel.Channel.ChannelType.voice">voice (pycordia.models.channel.Channel.ChannelType attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="source/pycordia.models.html#pycordia.models.message.Attachment.width">width (pycordia.models.message.Attachment attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Angel Carias |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/main.js"></script>
+    <script src="_static/design-tabs.js"></script>
+    </body>
+</html>
