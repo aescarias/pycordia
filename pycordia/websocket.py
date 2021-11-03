@@ -1,10 +1,3 @@
-# Pycordia v0.2.0 - The Discord bot framework
-# Developed by Angel Carias and it's contributors. 2021.
-
-# websocket.py
-#   Handles communication with the Discord Gateway API
-
-
 import asyncio
 import json
 import platform

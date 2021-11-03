@@ -42,7 +42,7 @@ def obj_to_dict(obj: typing.Any, alias: dict = None):
 
 def mutually_exclusive(*argument_names):
     def factory(fun):
-        def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs):
             mutuals = []
             for kw in kwargs:
                 if kw in argument_names:
@@ -51,7 +51,7 @@ def mutually_exclusive(*argument_names):
             if len(mutuals) > 1:
                 raise Exception(f"Only one of this group {argument_names} can be provided at a time, found {len(mutuals)}.")
 
-            fun(*args, **kwargs)
+            return await fun(*args, **kwargs)
         return wrapper
     return factory
 
@@ -83,3 +83,7 @@ def make_optional(callable: typing.Callable, *args, **kwargs) -> typing.Optional
         any(bool(kwargs[kwarg]) for kwarg in kwargs):
         return callable(*args, **kwargs)
 
+def add_ext(hash_: str):
+    if hash_.startswith("a_"):
+        return f'{hash_}.gif'
+    return f'{hash_}.png'

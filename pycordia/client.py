@@ -1,10 +1,3 @@
-# Pycordia v0.2.0 - The Discord bot framework
-# Developed by Angel Carias and it's contributors. 2021.
-
-# client.py
-#   Handles bot creation
-
-
 from pycordia import api
 import aiohttp
 import asyncio
@@ -34,15 +27,14 @@ class Intents(enum.Enum):
     direct_message_typing = 1 << 14
 
     @classmethod
-    def all(cls, *, privileged: bool = True):
-        """Enables all registered intents, including privileged ones if enabled
-        
-        Parameters
-        ---
-            privileged (bool): Whether or not to include privileged \
-                intents in the result
-        """
-        return cls.merge_intents(cls, privileged)
+    def all(cls):
+        """All registered intents, including privileged ones"""
+        return cls.merge_intents(cls, True)
+
+    @classmethod
+    def standard(cls):
+        """All non-privileged intents"""
+        return cls.merge_intents(cls, False)
 
     @classmethod
     def merge_intents(cls, intent_list, privileged: bool = False):
@@ -80,6 +72,14 @@ class Client:
 
         return wrapper
 
+    def on(self, event_name):
+        def factory(fun):
+            self.register_events(event_name, fun)
+            def wrapper():
+                fun()
+            return wrapper
+        return factory
+
     def register_events(self, event_name: str, *callables: typing.Callable):
         """Register a set of callableeves for an event
         
@@ -97,7 +97,7 @@ class Client:
             self.events[name] = [*callables]
 
 
-    def __init__(self, intents: int, cache_size: int = 1000):
+    def __init__(self, *, intents: int, cache_size: int = 1000):
         """
         Args:
             intents (int): The intents for the bot to authenticate with. \
@@ -135,7 +135,7 @@ class Client:
                 first_message = list(self.message_cache.keys())[0]
                 del self.message_cache[first_message]
 
-            self.message_cache[message.message_id] = message
+            self.message_cache[message.id] = message
 
             if func_name in self.events:
                 call_handlers(message)
@@ -143,16 +143,16 @@ class Client:
         elif event_name.lower() == "message_update":
             after = models.Message(event_data)
             
-            # print(self.message_cache, after.message_id)
+            # print(self.message_cache, after.id)
             
-            before = self.message_cache.get(after.message_id, None)
+            before = self.message_cache.get(after.id, None)
 
             # Update the message cache
             if len(self.message_cache.keys()) >= self.cache_size:
                 first_message = list(self.message_cache.keys())[0]
                 del self.message_cache[first_message]
             
-            self.message_cache[after.message_id] = after
+            self.message_cache[after.id] = after
 
             if func_name in self.events:
                 call_handlers(before, after)               
@@ -171,8 +171,10 @@ class Client:
 
             # ---- Message Related Events ----
             elif event_name.lower() == "message_delete":
+                msg = self.message_cache.get(event_data["id"])
+
                 call_handlers(
-                    events.MessageDeleteEvent(event_data, False, [self.message_cache[event_data["id"]]])
+                    events.MessageDeleteEvent(event_data, False, [msg] if msg else [])
                 )
             elif event_name.lower() == "message_delete_bulk":
                 ids = event_data.get("ids", [])
@@ -209,6 +211,15 @@ class Client:
 
             if self.ws.sock:
                 loop.run_until_complete(self.ws.sock.close())
+
+    async def get_channel(self, channel_id: str) -> models.Channel:
+        return await models.Channel.from_id(channel_id)
+
+    async def get_user(self, user_id: str, *, use_cache: bool = True) -> models.User:
+        return await models.User.from_id(user_id, use_cache)
+
+    async def get_guild(self, guild_id: str, *, with_counts: bool = False) -> models.Guild:
+        return await models.Guild.from_id(guild_id, with_counts=with_counts)
 
     @property
     async def guilds(self) -> typing.List[models.PartialGuild]:
