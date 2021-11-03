@@ -52,7 +52,7 @@ jobs:
       - name: Push Docs
         run: |
           touch .nojekyll
-          git pull origin gh-pages
+          git pull deploy gh-pages
           git add .
           msg="Updating docs for commit ${GITHUB_SHA}"
           git commit -am "${msg}"
