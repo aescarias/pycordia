@@ -32,7 +32,6 @@ jobs:
 
       - name: Build docs with Sphinx
         run: |
-          git checkout gh-pages
           make generate_docs
           rm .github examples pycordia -rf
           rm requirements.txt setup.py
