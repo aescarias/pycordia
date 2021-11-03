@@ -32,7 +32,6 @@ jobs:
 
       - name: Build docs with Sphinx
         run: |
-          git checkout gh-pages
           make generate_docs
           rm .github examples pycordia -rf
           rm requirements.txt setup.py
@@ -57,5 +56,5 @@ jobs:
           git add .
           msg="Updating docs for commit ${GITHUB_SHA}"
           git commit -am "${msg}"
-          git push deploy gh-pages
+          git push deploy gh-pages --force
         shell: bash
