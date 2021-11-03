@@ -1,7 +1,7 @@
+from datetime import datetime
 import enum
-from pycordia import api
-from pycordia.utils import mutually_exclusive
-from typing import Dict, List, Union, Any
+from pycordia import api, utils
+from typing import Dict, List, Union, Any, Optional
 
 import aiohttp
 import pycordia
@@ -31,37 +31,40 @@ class Channel:
     def __init__(self, data: dict):
         self.__client = pycordia.models.active_client
 
-        self.name: str = data.get("name")
-        self.topic: str = data.get("topic")
-        self.id: str = data.get("id")
-        self.type: Channel.ChannelType = Channel.ChannelType(int(data.get("type", 0)))
-
-        self.nsfw: bool = data.get("nsfw")
-        self.guild_id: Union[str, None] = data.get("guild_id")
-        self.position: int = data.get("position")
+        self.id: str = data["id"]
+        self.type: Channel.ChannelType = Channel.ChannelType(data["type"])
+        self.guild_id: Optional[str] = data.get("guild_id")
+        self.position: Optional[int] = data.get("position")
 
         # TODO: Define overwrite model
-        self.permission_overwrites: List[Dict] = data.get("permission_overwrites")
+        self.permission_overwrites: List[Dict] = data.get("permission_overwrites", [])
 
-        self.permissions: str = data.get("permissions")
+        self.name: Optional[str] = data.get("name")
+        self.topic: Optional[str] = data.get("topic")
+        self.nsfw: Optional[bool] = data.get("nsfw")
+        self.last_message_id: Optional[str] = data.get("last_message_id")
+       
+        # -- Voice channel
+        self.bitrate: Optional[int] = data.get("bitrate")
+        self.user_limit: Optional[int] = data.get("user_limit")
+        self.rate_limit_per_user: Optional[int] = data.get("rate_limit_per_user")
 
-        # Voice channel attributes
-        self.bitrate: Union[int, None] = data.get("bitrate")
-        self.user_limit: Union[int, None] = data.get("user_limit")
-        self.rtc_region: Union[str, None] = data.get("rtc_region")
+        # -- DMs
+        self.recipients: list = data.get("recipients", [])
+        
+        self.icon_hash: Optional[str] = data.get("icon")
 
-        self.slowmode_count: Union[int, None] = data.get("rate_limit_per_user")
-        self.recipients: List = data.get("recipients")
-        self.icon: Union[str, None] = data.get("icon")
+        self.owner_id: Optional[str] = data.get("owner_id")
+        self.application_id: Optional[str] = data.get("application_id")
+        self.parent_id: Optional[str] = data.get("parent_id")
 
-        self.owner_id: Union[str, None] = data.get("owner_id")
-        self.application_id: Union[str, None] = data.get("application_id")
-        self.parent_id: Union[str, None] = data.get("parent_id")
-
-        self.last_pinned_at: str = data.get("last_pin_timestamp")
+        self.last_pin_timestamp: Optional[datetime] = utils.make_optional(datetime.fromisoformat, data.get("last_pin_timestamp"))
+        self.rtc_region: Optional[str] = data.get("rtc_region")
+        self.video_quality_mode: Optional[int] = data.get("video_quality_mode")
 
         self.message_count: int = data.get("message_count", -1)  # -1 if the count was not provided
         self.member_count: int = data.get("member_count", -1)
+
 
         # Thread specific stuff
         # TODO: Define models for these types
@@ -69,7 +72,12 @@ class Channel:
         self.thread_member: Dict[str, Any] = data.get("member", {})
         self.thread_default_auto_archive_duration: int = data.get("default_auto_archive_duration", -1)
 
+        self.permissions: Optional[str] = data.get("permissions")
+
     def __repr__(self):
+        return f"<Channel {self.type} id={self.id} name='{self.name}' topic='{self.topic}'>"
+
+    def __str__(self):
         return f"#{self.name}"
     
     def __eq__(self, channel) -> bool:
@@ -78,7 +86,7 @@ class Channel:
     @property
     def mention(self) -> str:
         """
-        Mention a channel
+        A channel mention
 
         Returns: str
         """
@@ -90,7 +98,7 @@ class Channel:
         Fetch a channel object from its ID.
 
         Args:
-            channel_id (str): Channel's ID
+            channel_id (str): Channel ID
 
         Returns: `pycordia.models.channel.Channel`
         """
@@ -108,11 +116,10 @@ class Channel:
         Returns: A `pycordia.models.Message` object
         """
         return pycordia.models.Message(
-            await api.request("GET", f"channels/{self.id}/mesages/{message_id}")
+            await api.request("GET", f"channels/{self.id}/messages/{message_id}")
         )
 
 
-    @mutually_exclusive("before", "around", "after")
     async def get_messages(self, limit: int = 50, *, 
         before: str = None, around: str = None, after: str = None
     ) -> List['pycordia.models.Message']:
@@ -129,15 +136,13 @@ class Channel:
         Raises: `Exception` if no initialized client is found
         Returns: A list of `pycordia.models.Message` objects
         """
-        inf: Dict[str, 'int | str'] = {
-            "limit": limit,
-        }
+        param_string = f"?limit={limit}"
 
-        if before: inf["before"] = before
-        if around: inf["around"] = around
-        if after: inf["after"] = after
+        if before: param_string += f"&before={before}"
+        if around: param_string += f"&around={around}"
+        if after:  param_string += f"&after={after}"
         
-        rs = await api.request("GET", f"channels/{self.id}/messages", json_data=inf)
+        rs = await api.request("GET", f"channels/{self.id}/messages{param_string}")
         return list(map(pycordia.models.Message, rs))
 
     async def get_pinned_messages(self) -> List['pycordia.models.Message']:
@@ -155,7 +160,6 @@ class ChannelMention:
     """
     Represents a channel mention i.e. <#channel_id>
 
-
     Attributes:
         channel_id (str): ID of the channel
         guild_id (str): ID of the channel's guild
@@ -163,15 +167,11 @@ class ChannelMention:
         channel_name (str): Name of channel
     """
     def __init__(self, data: dict):
-        """
-        Args:
-            data (dict): Dictionary containing raw data
-        """
-        self.channel_id: Union[str, None] = data.get("id")
-        self.guild_id: Union[str, None] = data.get("guild_id")
-        self.channel_type: Union[str, None] = data.get("type")
-        self.channel_name: Union[str, None] = data.get("name")
-
+        self.channel_id: str = data["id"]
+        self.guild_id: str = data["guild_id"]
+        self.channel_type: str = data["type"]
+        self.channel_name: str = data["name"]
+    
     async def get_channel(self) -> Channel:
         """
         Fetch the corresponding channel object.

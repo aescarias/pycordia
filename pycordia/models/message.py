@@ -1,22 +1,19 @@
 from __future__ import annotations
+from datetime import datetime
 
-from pycordia import api
-from typing import List, Union
+from pycordia import api, utils
+from typing import List, Optional, Union
 import typing
 import aiohttp
 import enum
+
+import pycordia
 
 from . import embed
 from .user import User
 from .guild import Member, Role, Emoji
 from .channel import ChannelMention
 from pycordia import models
-
-# class TextChannel:
-#     pass
-
-# class GuildMember:
-#     pass
 
 
 class MessageActivity:
@@ -40,7 +37,7 @@ class MessageActivity:
             None if (data.get("type") is None) else Activity(data.get("type"))
         )
 
-        self.party_id: Union[str, None] = data.get("party_id")
+        self.party_id: Optional[str] = data.get("party_id")
 
     def __repr__(self):
         return f"<MessageActivity id={self.party_id} activity={self.activity_type}>"
@@ -49,35 +46,47 @@ class MessageActivity:
 class Application:
     """Discord application model."""
     def __init__(self, data: dict):
-        self.app_id: Union[str, None] = data.get("id")
-        self.name: Union[str, None] = data.get("name")
-        self.icon: Union[str, None] = data.get("icon")
-        self.description: Union[str, None] = data.get("description")
+        self.id: str = data["id"]
+        self.name: str = data["name"]
+        self.icon_hash: Optional[str] = data.get("icon")
+        self.description: str = data["description"]
 
         self.rpc_origins: list = data.get("rpc_origins", [])
-        self.bot_public: Union[bool, None] = data.get("bot_public")
-        self.bot_require_code_grant: Union[bool, None] = data.get("bot_require")
+        self.bot_public: bool = data["bot_public"]
+        self.bot_require_code_grant: bool = data["bot_require_code_grant"]
 
-        self.terms_of_service_url: Union[str, None] = data.get("terms_of_service_url")
-        self.privacy_policy_url: Union[str, None] = data.get("privacy_policy_url")
-        self.owner: User = User(data.get("owner", {}))
+        self.terms_of_service_url: Optional[str] = data.get("terms_of_service_url")
+        self.privacy_policy_url: Optional[str] = data.get("privacy_policy_url")
+        self.owner: Optional[User] = utils.make_optional(User, data.get("owner", {}))
 
         self.cover_image_hash: Union[str, None] = data.get("cover_image")
         self.flags: Union[int, None] = data.get("flags")
 
     def __repr__(self):
-        return f"<Application id={self.app_id} name='{self.name}'>"
+        return f"<Application id={self.id} name='{self.name}'>"
+
+    @property
+    def icon_url(self) -> Optional[str]:
+        """The URL for this application's icon"""
+        if self.icon_hash:
+            return f"{pycordia.cdn_url}/app-icons/{self.id}/{self.icon_hash}.png"
+
+    @property
+    def cover_image_url(self) -> Optional[str]:
+        """The URL for this application's cover image"""
+        if self.cover_image_hash:
+            return f"{pycordia.cdn_url}/app-icons/{self.id}/{self.cover_image_hash}.png"
 
 
 class Reaction:
     """Represents reactions in a message."""
     def __init__(self, data: dict):
-        self.count: Union[int, None] = data.get("count")
-        self.was_me: Union[bool, None] = data.get("me")
-        self.emoji: Emoji = Emoji(data.get("emoji", {}))
+        self.count: Optional[int] = data.get("count")
+        self.me: Optional[bool] = data.get("me")
+        self.emoji: Optional[Emoji] = utils.make_optional(Emoji, data.get("emoji", {}))
 
     def __repr__(self):
-        return f"<Reaction emoji='{self.emoji.name}' count={self.count}>"
+        return f"<Reaction emoji={str(self.emoji)} count={self.count}"
 
 
 
@@ -107,14 +116,14 @@ class Attachment:
         width (int): Width of the attachment (only applies to images)
     """
     def __init__(self, data: dict):
-        self.attachment_id: Union[str, None] = data.get("id")
-        self.filename: Union[str, None] = data.get("filename")
-        self.content_type: Union[str, None] = data.get("content_type")
-        self.size: Union[int, None] = data.get("size")
-        self.url: Union[str, None] = data.get("url")
-        self.proxy_url: Union[str, None] = data.get("proxy_url")
-        self.height: Union[int, None] = data.get("height")
-        self.width: Union[int, None] = data.get("width")
+        self.id: str = data["id"]
+        self.filename: str = data["filename"]
+        self.content_type: Optional[str] = data.get("content_type")
+        self.size: Optional[int] = data.get("size")
+        self.url: Optional[str] = data.get("url")
+        self.proxy_url: Optional[str] = data.get("proxy_url")
+        self.height: Optional[int] = data.get("height")
+        self.width: Optional[int] = data.get("width")
 
     def to_dict(self):
         """
@@ -122,7 +131,7 @@ class Attachment:
         Returns: dict
         """
         return {
-            "id": self.attachment_id,
+            "id": self.id,
             "filename": self.filename,
             "content_type": self.content_type,
             "size": self.size,
@@ -155,10 +164,10 @@ class MessageReference:
         self.__msg_data = msg_data
 
         if ref_data:
-            self.message_id: Union[str, None] = ref_data.get("message_id")
-            self.channel_id: Union[str, None] = ref_data.get("channel_id")
-            self.guild_id: Union[str, None] = ref_data.get("guild_id")
-            self.fail_if_not_exists: Union[bool, None] = ref_data.get(
+            self.message_id: Optional[str] = ref_data.get("message_id")
+            self.channel_id: Optional[str] = ref_data.get("channel_id")
+            self.guild_id: Optional[str] = ref_data.get("guild_id")
+            self.fail_if_not_exists: Optional[bool] = ref_data.get(
                 "fail_if_not_exists"
             )
         else:
@@ -168,8 +177,8 @@ class MessageReference:
 
     @property
     def message(self):
-        """Fetch the referenced message"""
-        return Message(self.__msg_data or {})
+        """The referenced message"""
+        return utils.make_optional(Message, self.__msg_data)
 
     def to_dict(self):
         return {
@@ -184,55 +193,84 @@ class MessageReference:
 
 
 class Message:
-    """Represents a message sent in Discord"""
+    """Represents a message sent in Discord
+    
+    Attributes:
+        id (str): ID of the message
+        channel_id (str): ID of the channel the message was sent in
+        guild_id (str): ID of the guild the message was sent in
+        author (User): The author of this message
+        member (Member): The author of this message, including guild information
+        content (str): Content of the message
+        tiemstamp (datetime): The time the message was sent
+        edited_timestamp (datetime): The time the message was edited
+        tts (bool): Whether the message supports Text to Speech
+        mention_everyone (bool): Whether this message mentions everyone
+        mentions (List[User]): A list of users this message mentions
+        mention_roles (List[Role]): A list of roles this message mentions
+        mention_channels (List[ChannelMention]): A list of channels this message mentions
+        attachments (List[Attachment]): The attachments for this message
+        embeds (List[embed.Embed]): The embeds for this message
+        reactions (List[Reaction]): Reactions for this message
+        nonce (Union[str, int, None]): Used for message verification
+        pinned (bool): Whether this message is pinned
+        webhook_id (str): The ID Of the webhook that sent this message
+        type (int): Message type;
+        activity (str): The Rich-Presence chat embed if any
+        application (str): The application for the Rich-Presence chat embed
+        application_id (str): The ID of the application for the embed
+        message_reference (MessageReference): The message referred to
+        flags (int): Flags for this message
+        interaction (dict): An interaction for this message -- not implemented
+        thread (dict): The thread that was started from this message -- not implemented
+        components (dict): The list of components for this message -- not implemented
+        sticker_items (List[StickerItem]): Stickers sent in this message
+    """
     def __init__(self, data: dict):
         self.__data = data
 
-        self.message_id: Union[str, None] = data.get("id")
-        self.channel_id: Union[str, None] = data.get("channel_id")
-        self.guild_id: Union[str, None] = data.get("guild_id")
-        self.author: User = User(data.get("author", {}))
+        self.id: str = data["id"]
+        self.channel_id: str = data["channel_id"]
+        self.guild_id: Optional[str] = data.get("guild_id")
+        self.author: User = User(data["author"])
 
-        self.member: Member = Member(data.get("member", {}))
-        self.content: Union[str, None] = data.get("content")
-        self.timestamp: Union[str, None] = data.get("timestamp")
-        self.edited_timestamp: Union[str, None] = data.get("edited_timestamp")
-        self.tts: Union[bool, None] = data.get("tts")
+        self.member: Optional[Member] = utils.make_optional(Member, data.get("member", {}))
+        self.content: str = data["content"]
+        self.timestamp: datetime = datetime.fromisoformat(data["timestamp"])
+        self.edited_timestamp: Optional[datetime] = utils.make_optional(datetime.fromisoformat, data.get("edited_timestamp"))
+        self.tts: bool = data["tts"]
 
-        self.mention_everyone: Union[bool, None] = data.get("mention_everyone")
-        self.mentions: List[User] = [
-            User(mention) for mention in data.get("mentions", [])
-        ]
-        self.mention_roles: List[Role] = [
-            Role(role) for role in data.get("mention_roles", [])
-        ]
+        self.mention_everyone: bool = data["mention_everyone"]
 
-        self.mention_channels: List[ChannelMention] = [
-            ChannelMention(cm) for cm in data.get("mention_channels", [])
-        ]
+        self.mentions: List[User] = list(map(User, data.get("mentions", [])))
+        self.mention_roles: List[Role] = list(map(Role, data.get("mention_roles", [])))
+        self.mention_channels: List[ChannelMention] = list(
+            map(ChannelMention, data.get("mention_channels", []))
+        )
 
-        self.attachments: List[Attachment] = data.get("attachments") or []
-        self.embeds: List[embed.Embed] = data.get("embeds") or []
-        self.reactions: List[Reaction] = data.get("reactions") or []
+        self.attachments: List[Attachment] = list(map(Attachment, data.get("attachments", [])))
+        self.embeds: List[embed.Embed] = list(map(embed.Embed, data.get("embeds", [])))
+        self.reactions: List[Reaction] = list(map(Reaction, data.get("reactions", [])))
         self.nonce: Union[str, int, None] = data.get("nonce")
-        self.pinned: Union[bool, None] = data.get("pinned")
-        self.webhook_id: Union[str, None] = data.get("webhook_id")
-        self.message_type: Union[int, None] = data.get("type")
-        self.activity: MessageActivity = MessageActivity(data.get("activity", {}))
+        self.pinned: bool = data["pinned"]
+        self.webhook_id: Optional[str] = data.get("webhook_id")
+        self.type: int = data["type"]
+        self.activity: Optional[MessageActivity] = utils.make_optional(MessageActivity, data.get("activity", {}))
 
-        self.application: Application = Application(data.get("application", {}))
-        self.application_id: Union[str, None] = data.get("application_id")
+        self.application: Optional[Application] = utils.make_optional(Application, data.get("application", {}))
+        self.application_id: Optional[str] = data.get("application_id")
         self.message_reference: MessageReference = MessageReference(
             data.get("message_reference", {}), 
             data.get("referenced_message", {})
         )
 
-        self.interaction: Interaction = Interaction(data.get("interaction", {}))
-        self.thread = None
-        self.components = None
-        self.sticker_items: List[StickerItem] = [
-            StickerItem(stick) for stick in data.get("sticker_items", [])
-        ]
+        self.flags: Optional[int] = data.get("flags")
+
+        self.interaction: dict = data.get("interaction", {})
+        self.thread: dict = data.get("thread", {})
+        self.components: list = data.get("components", [])
+
+        self.sticker_items: List[StickerItem] = list(map(StickerItem, data.get("sticker_items", [])))
 
     @classmethod
     async def send(cls, channel_id: str, *,
@@ -282,7 +320,7 @@ class Message:
 
     async def delete(self):
         """Removes this message. Note that this action cannot be undone."""
-        await api.request("DELETE", f"channels/{self.channel_id}/messages/{self.message_id}")
+        await api.request("DELETE", f"channels/{self.channel_id}/messages/{self.id}")
 
     # TODO: Implement attachments and files
     async def edit(self, *, content: str = None, 
@@ -298,7 +336,7 @@ class Message:
                 Structure is the same as specified in `pycordia.models.Message.send`
         """
         await api.request("PATCH", 
-            f"channels/{self.channel_id}/messages/{self.message_id}", 
+            f"channels/{self.channel_id}/messages/{self.id}", 
             json_data={
                 "content": content or self.content,
                 "embeds": [embed.to_dict() for embed in (embeds or self.embeds)],
@@ -308,8 +346,8 @@ class Message:
 
     async def pin(self):
         """Pins a message to the channel it was sent in"""
-        await api.request("PUT", f"channels/{self.channel_id}/pins/{self.message_id}")
+        await api.request("PUT", f"channels/{self.channel_id}/pins/{self.id}")
     
     async def unpin(self):
         """Unpins a message from the channel it was sent in"""
-        await api.request("DELETE", f"channels/{self.channel_id}/pins/{self.message_id}")
+        await api.request("DELETE", f"channels/{self.channel_id}/pins/{self.id}")

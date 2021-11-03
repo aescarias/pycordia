@@ -1,23 +1,25 @@
 from __future__ import annotations
+from datetime import datetime
 import typing
-import aiohttp
 import enum
 from typing import List, Union, Optional
+
+import pycordia
 from .user import User
-from pycordia import api
+from pycordia import api, utils
 
 
 class Emoji:
     """Represents server specific emojis."""
     def __init__(self, data: dict):
-        self.emoji_id = data.get("id")
-        self.name = data.get("name")
-        self.roles = [Role(role) for role in data.get("roles", [])]
-        self.user = User(data.get("user", {}))
-        self.requires_colons = data.get("require_colons")
-        self.managed = data.get("managed")
-        self.animated = data.get("animated")
-        self.available = data.get("available")
+        self.emoji_id: Optional[str] = data.get("id")
+        self.name: Optional[str] = data.get("name")
+        self.roles: List[Role] = list(map(Role, data.get("roles", [])))
+        self.user: Optional[User] = utils.make_optional(User, data.get("user", {}))
+        self.requires_colons: Optional[bool] = data.get("require_colons")
+        self.managed: Optional[bool] = data.get("managed")
+        self.animated: Optional[bool] = data.get("animated")
+        self.available: Optional[bool] = data.get("available")
 
     def __repr__(self):
         return f"<Emoji id={self.emoji_id} name='{self.name}'>"
@@ -25,41 +27,45 @@ class Emoji:
 
 class Member:
     """
-    Model to represent Discord guild user
+    A Discord member part of a guild
 
     Attributes:
         user (User): The `pycordia.models.user.User` instance of the member
         nick (str): Nickname of the user. Can be `None` if no nickname has been set
-        roles (List[Role]): User's roles, as a list of `pycordia.models.guild.Role` objects
-        joined_at (str): An ISO8601 timestamp of when the user joined
-        premium_since (str): An ISO8601 timestamp of when the user started boosting the server
+        role_ids (List[Role]): The ID of the roles the user has
+        joined_at (datetime): The time the user joined
+        premium_since (datetime): The time the user started boosting the server
         deaf (bool): Whether the user has been deafened in a voice channel
         mute (bool): Whether the user has been muted in a voice channel
-        pending (bool): Whether the user has not yet passed the guild's membership requirements
-        permissions (string): total permissions of the member in the channel, including overwrites
+        pending (bool): Whether the user has not yet passed the guild's membership screening requirements
+        permissions (string): Total permissions of the member in the channel, including overwrites
 
     Operations:
-        - x == y: Checks if two channels are the same.
-        - str(x): Return username with discriminator
+        - x == y: Checks if two channels are the same; returns None if a user is not present
+        - repr(x): Returns a representation of this object
     """
     def __init__(self, data: dict):
-        self.user: User = User(data.get("user", {}))
-        self.nick: Union[str, None] = data.get("nick")
+        self.user: Optional[User] = utils.make_optional(User, data.get("user", {}))
+        self.nick: Optional[str] = data.get("nick")
+        self.guild_avatar_hash: Optional[str] = data.get("avatar")
+        self.role_ids: list = data.get("roles", [])
         # NOTE: Uncomment when Roles are properly implemented
         # self.roles: list = list(map(Role, data.get("roles", [])))
-        self.roles: list = data.get("roles", [])
-        self.joined_at: Union[str, None] = data.get("joined_at")
-        self.premium_since: Union[str, None] = data.get("premium_since")
-        self.deaf: Union[bool, None] = data.get("deaf")
-        self.mute: Union[bool, None] = data.get("mute")
-        self.pending: Union[bool, None] = data.get("pending")
-        self.permissions: Union[str, None] = data.get("permissions")
+        self.joined_at: datetime = datetime.fromisoformat(data["joined_at"])
+        self.premium_since: Optional[datetime] = utils.make_optional(datetime.fromisoformat, data.get("premium_since"))
+
+        self.deaf: bool = data["deaf"]
+        self.mute: bool = data["mute"]
+
+        self.pending: Optional[bool] = data.get("pending")
+        self.permissions: Optional[str] = data.get("permissions")
     
-    def __eq__(self, other) -> bool:
-        return self.user.user_id == other.user.user_id
+    def __eq__(self, other) -> Optional[bool]:
+        if self.user:
+            return self.user.id == other.user.id
 
     def __repr__(self):
-        return f"{self.user.username}#{self.user.discriminator}"
+        return f"<Member user={str(self.user)}{' deaf'*self.deaf}{' mute'*self.mute}>"
 
 
 class PartialGuild:
@@ -69,18 +75,17 @@ class PartialGuild:
     Attributes:
         id (str): ID of the guild.
         name (str): Name of the guild.
-        icon (str): URL to icon of the guild.
-        owner (bool): -
-        permissions_integer (Any): Permissions integer of the guild.
+        icon (str): Hash of the guild's icon.
+        owner (bool): Whether the connected user owns this guild.
         features (List[str]): List of features available to the guild.
     """
     def __init__(self, data: dict):
-        self.id: str = data.get("id")
-        self.name: str = data.get("name")
-        self.icon: str = data.get("icon")
-        self.owner: bool = bool(data.get("owner"))
-        self.permissions_integer = data.get("permissions")
-        self.features: typing.List[str] = data.get("features", [])
+        self.id: str = data["id"]
+        self.name: str = data["name"]
+        self.icon_hash: Optional[str] = data.get("icon")
+        self.owner: Optional[bool] = data.get("owner")
+        self.permissions: Optional[str] = data.get("permissions")
+        self.features: List[str] = data.get("features", [])
 
     def __repr__(self):
         return f"<PartialGuild id={self.id} name='{self.name}'>"
@@ -243,7 +248,7 @@ class Guild:
             guild_id (str): A guild ID
             with_counts (bool): Whether or not to add approximate member and presence counts
         
-        Returns: `Guild`
+        Returns: A `pycordia.models.guild.Guild` object
         """
         rs = await api.request("GET", f"guilds/{guild_id}{'?with_counts=true'*with_counts}")
         return Guild(rs)
