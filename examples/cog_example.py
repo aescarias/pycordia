@@ -14,7 +14,7 @@ async def on_ready(event: events.ReadyEvent):
     print(f"{event.user} ready to do stuff!", client.intents)
 
 
-
+@client.on("message_create")
 async def first_handle(message: models.Message):
     if message.author.bot or not message.content:
         return
@@ -26,7 +26,7 @@ async def first_handle(message: models.Message):
 
         await models.Message.send(message.channel_id or "", embeds=[embed])
 
-
+@client.on("message_create")
 async def second_handle(message: models.Message):
     if message.author.bot or not message.content:
         return
@@ -37,5 +37,4 @@ async def second_handle(message: models.Message):
 
         await models.Message.send(message.channel_id or "", embeds=[embed])
 
-client.register_events("message_create", first_handle, second_handle)
 client.run(os.getenv("DISCORD_TOKEN"))

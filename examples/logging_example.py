@@ -4,10 +4,8 @@ import dotenv
 import os
 
 dotenv.load_dotenv()
-
-dotenv.load_dotenv()
 client = pycordia.Client(intents=pycordia.Intents.all())
-LOGS_CHANNEL: str = os.getenv("LOG_CHANNEL")  # Change this to a suitable channel's ID
+LOGS_CHANNEL = os.getenv("LOG_CHANNEL")  # Change this to a suitable channel's ID
 
 
 @client.event
