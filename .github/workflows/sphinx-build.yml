@@ -47,6 +47,7 @@ jobs:
           git init
           git remote add deploy "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git checkout -b gh-pages
+          git pull origin gh-pages
         shell: bash
       
       - name: Push Docs
@@ -55,5 +56,5 @@ jobs:
           git add .
           msg="Updating docs for commit ${GITHUB_SHA}"
           git commit -am "${msg}"
-          git push deploy gh-pages --force
+          git push deploy gh-pages
         shell: bash
