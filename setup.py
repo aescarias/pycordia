@@ -19,7 +19,7 @@ setup(name='pycordia',
       author='Angel Carias',
       url='https://github.com/angelCarias/pycordia',
       version=version,
-      packages=["pycordia", "pycordia/models"],
+      packages=["pycordia", "pycordia/models", "pycordia/errors"],
       license='MIT',
       description='The Discord bot framework for Python',
       long_description=readme,
@@ -33,6 +33,7 @@ setup(name='pycordia',
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9"
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10"
       ]
 )
