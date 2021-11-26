@@ -1,11 +1,3 @@
-class QueryError(Exception):
-    """General error raised by the HTTP API"""
-    def __init__(self, code, message):
-        self.code = code
-        self.message = message
-        super().__init__(f"{message} (error code {code})")
-
-
 class GatewayError(Exception):
     """General error raised by the gateway"""
     def __init__(self, code, message) -> None:
@@ -34,11 +26,6 @@ class GatewayError(Exception):
             extra = "Make sure you have approved/enabled the use of the provided intents."
         
         super().__init__(f"{message} {extra} (error code {code})")
-    
-
-# NOTE: For future use
-class ComponentError(Exception):
-    pass
 
 
 class MutuallyExclusiveError(Exception):
@@ -48,3 +35,8 @@ class MutuallyExclusiveError(Exception):
             f"Only one of this group {args} "
             f"can be provided at a time, found {mutual_count}."    
         )
+
+class ClientSetupError(Exception):
+    """Raised when an initialized client is not found or is setup improperly"""
+    def __init__(self, message=None):
+        super().__init__(message or "No initialized client found")
