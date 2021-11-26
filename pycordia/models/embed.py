@@ -1,3 +1,7 @@
+from __future__ import annotations
+from pycordia import utils
+
+
 class Embed:
     """
     A Discord embed.
@@ -35,9 +39,10 @@ class Embed:
         self.__provider = {}
 
     @classmethod
-    def create(cls, *, title: str = None, description: str = None,
-               url: str = None, color: int = None
-               ):
+    def create(
+        cls, *, title: str = None, description: str = None,
+       url: str = None, color: int = None
+    ) -> Embed:
         """
         Create a new Embed object
 
@@ -57,7 +62,7 @@ class Embed:
 
     def add_field(self, name: str, value: str, inline: bool = True):
         """
-        dd a field object to the embed fields
+        Add a field object to the embed fields
         
         Args:
             name (str): The name of the embed field
@@ -71,6 +76,7 @@ class Embed:
             "value": value,
             "inline": inline
         })
+        return self
 
     def __make_image(self, url, proxy_url, height, width):
         return {
@@ -97,6 +103,7 @@ class Embed:
         """
 
         self.__thumbnail = self.__make_image(url, proxy_url, height, width)
+        return self
 
     @property
     def image(self):
@@ -115,6 +122,7 @@ class Embed:
         """
 
         self.__image = self.__make_image(url, proxy_url, height, width)
+        return self
 
     @property
     def video(self):
@@ -132,6 +140,7 @@ class Embed:
             width (int): The width of the video
         """
         self.__video = self.__make_image(url, proxy_url, height, width)
+        return self
 
     ##: Footer
     @property
@@ -154,6 +163,7 @@ class Embed:
             "icon_url": icon_url,
             "proxy_icon_url": proxy_url
         }
+        return self
 
     ##: Author
     @property
@@ -178,6 +188,7 @@ class Embed:
             "icon_url": icon_url,
             "proxy_icon_url": proxy_url
         }
+        return self
 
     @property
     def provider(self):
@@ -196,24 +207,15 @@ class Embed:
             "name": name,
             "url": url
         }
+        return self
 
     def to_dict(self):
         """Convert object into a dictionary"""
-        return {
-            "title": self.title,
-            "type": self.embed_type,
-            "description": self.description,
-            "url": self.url,
-            "timestamp": self.timestamp,
-            "color": self.color,
-            "fields": self.fields,
-            "thumbnail": self.thumbnail,
-            "image": self.image,
-            "video": self.video,
-            "footer": self.footer,
-            "author": self.author,
-            "provider": self.provider
-        }
+        return utils.obj_to_dict(
+            self, 
+            alias={"embed_type": "type"},
+            ignore_fields=["colour"]
+        )
 
     def __repr__(self):
         return f"<Embed title='{self.title}' description='{self.description}'>"
