@@ -80,23 +80,31 @@ proceed with the following:
       $ py -3 -m pip install git+https://github.com/angelcarias/pycordia.git
 
 
-Example
--------
-
 Verify Pycordia is properly installed by doing:
 
 .. code-block:: python
    
    import pycordia
 
-Try creating your first bot. 
-We assume you have setup a Discord application and have obtained 
-a bot token.
+
+Examples
+--------
+
+All the examples below assume:
+
+- you have setup a Discord application and have obtained a bot token
+- you are loading the token through a .env file loader like `python-dotenv`
+
+
+Basic event showcase
+----------------------
+
+A simple example showcasing events in Pycordia
 
 .. code-block:: python
 
    import pycordia
-   from pycordia import models
+   from pycordia import models, events
    import dotenv
    import os
 
@@ -105,11 +113,36 @@ a bot token.
    client = pycordia.Client(intents=pycordia.Intents.all())
    
    @client.event
-   async def on_ready(event):
+   async def on_ready(event: events.ReadyEvent):
       print(f"{client.user} active")
+
+   @client.event
+   async def on_message(message: models.Message):
+      print(f"A message with content '{message.content}' was sent by {message.author}.")
 
    client.run(os.getenv("DISCORD_TOKEN"))
 
-This example also assumes you're using `python-dotenv` or a .env file loader. We recommend 
-you use environment variables in .env files to run a lower risk of your Discord bot token leaking.
+HTTP-only client
+----------------
 
+Pycordia can also be used solely as an HTTP client for Discord's API.
+
+.. code-block:: python
+
+   import pycordia
+   from pycordia import models, events
+
+   import asyncio
+   import dotenv
+   import os
+
+   dotenv.load_dotenv()
+
+   client = pycordia.Client(intents=pycordia.Intents.all())
+
+   async def main():
+      await client.setup_http(os.getenv("DISCORD_TOKEN"))
+
+      await pycordia.models.Message.send("<channel_id>", content="Hello!")
+
+   asyncio.run(main())
