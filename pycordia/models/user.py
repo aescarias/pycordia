@@ -1,7 +1,8 @@
-from typing import Optional
-from pycordia import api, utils
+from typing import List, Optional
+from pycordia import utils
 from datetime import datetime
 import pycordia
+import enum
 
 
 class User:
@@ -43,9 +44,19 @@ class User:
         self.locale: Optional[str] = data.get("locale")
         self.verified: Optional[bool] = data.get("verified")
         self.email: Optional[str] = data.get("email")
-        self.flags: Optional[int] = data.get("flags")
-        self.premium_type: Optional[int] = data.get("premium_type")
-        self.public_flags: Optional[int] = data.get("public_flags")
+
+        self.flags: Optional[List[UserFlags]] = utils.make_optional(
+            lambda flags: utils.get_flag_list(UserFlags, flags),
+            data.get("flags")
+        )
+        self.premium_type: Optional[UserPremiumType] = utils.make_optional(
+            UserPremiumType, 
+            data.get("premium_type")
+        )
+        self.public_flags: Optional[List[UserFlags]] = utils.make_optional(
+            lambda flags: utils.get_flag_list(UserFlags, flags),
+            data.get("public_flags")
+        )
 
     def __str__(self):
         return f"{self.username}#{self.discriminator}"
@@ -75,6 +86,10 @@ class User:
         """The date and time the user was created on"""
         return utils.snowflake_to_date(int(self.id))
 
+    def is_premium(self) -> bool:
+        """Check if an user has any sort of premium subscription (Nitro)"""
+        return self.premium_type != UserPremiumType.none
+
     @classmethod
     async def from_id(cls, user_id: str, use_cache: bool = True):
         """
@@ -96,7 +111,7 @@ class User:
             return user
 
         # Otherwise, fetch directly from the API
-        rs = await api.request("GET", f"users/{user_id}")
+        rs = await client.http.request("GET", f"users/{user_id}")
         user = User(rs)
 
         # Add to cache
@@ -110,3 +125,45 @@ class User:
 
     def __eq__(self, other: 'User'):
         return self.id == other.id
+
+
+class UserPremiumType(enum.Enum):
+    none = 0
+    nitro_classic = 1
+    nitro = 2
+
+
+class UserFlags(enum.Enum):
+    none = 0
+    discord_employee = 1 << 0           # or staff
+    partner = 1 << 1
+    hypesquad_coordinator = 1 << 2      # or hypesquad
+    bug_hunter_level_1 = 1 << 3         
+    house_bravery_member = 1 << 6       # or hypesquad_online_house_1
+    house_brilliance_member = 1 << 7    # or hypesquad_online_house_2
+    house_balance_member = 1 << 8       # or hypesquad_online_house_3
+    early_premium_supporter = 1 << 9    # or premium_early_supporter
+    team = 1 << 10                      # or team_pseudo_user
+    bug_hunter_level_2 = 1 << 14
+    verified_bot = 1 << 16
+    verified_bot_developer = 1 << 17    # or verified_developer
+    certified_moderator = 1 << 18
+    bot_http_interactions = 1 << 19    
+
+
+class Connection:
+    def __init__(self, data: dict):
+        self.id: str = data["id"]
+        self.name: str = data["name"]
+        self.type: str = data["type"]
+        self.revoked: Optional[bool] = data.get("revoked")
+        self.integrations: Optional[List[dict]] = data.get("integrations")
+        self.verified: bool = data["verified"]
+        self.friend_sync: bool = data["friend_sync"]
+        self.show_activity: bool = data["show_activity"]
+        self.visibility: ConnectionVisibility = ConnectionVisibility(data["visibility"])
+
+
+class ConnectionVisibility(enum.Enum):
+    none = 0
+    everyone = 1

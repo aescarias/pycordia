@@ -1,42 +1,31 @@
 from __future__ import annotations
-from datetime import datetime
 
-from pycordia import api, utils
-from typing import List, Optional, Union
-import typing
-import aiohttp
 import enum
+import io
+from datetime import datetime
+from typing import List, Optional, Union
 
 import pycordia
+from pycordia import models, utils
 
-from . import embed
-from .user import User
-from .guild import Member, Role, Emoji
-from .channel import ChannelMention
-from pycordia import models
 
+class MessageActivityType(enum.Enum):
+    join = 1
+    spectate = 2
+    listen = 3
+    join_request = 5
 
 class MessageActivity:
     """
     Message Activity class
 
     Attributes:
-        activity_type (`pycordia.models.message.MessageActivity.ActivityTypes`): Type of activity
+        activity_type (`pycordia.models.message.MessageActivityType`): Type of activity
         party_id (str): ID of the party
     """
 
-    class ActivityTypes(enum.Enum):
-        join = 1
-        spectate = 2
-        listen = 3
-        join_request = 5
-
     def __init__(self, data: dict):
-        Activity = MessageActivity.ActivityTypes
-        self.activity_type = (
-            None if (data.get("type") is None) else Activity(data.get("type"))
-        )
-
+        self.activity_type = utils.make_optional(MessageActivityType, data.get("type"))
         self.party_id: Optional[str] = data.get("party_id")
 
     def __repr__(self):
@@ -57,10 +46,10 @@ class Application:
 
         self.terms_of_service_url: Optional[str] = data.get("terms_of_service_url")
         self.privacy_policy_url: Optional[str] = data.get("privacy_policy_url")
-        self.owner: Optional[User] = utils.make_optional(User, data.get("owner", {}))
+        self.owner: Optional[models.User] = utils.make_optional(models.User, data.get("owner", {}))
 
-        self.cover_image_hash: Union[str, None] = data.get("cover_image")
-        self.flags: Union[int, None] = data.get("flags")
+        self.cover_image_hash: Optional[str] = data.get("cover_image")
+        self.flags: Optional[int] = data.get("flags")
 
     def __repr__(self):
         return f"<Application id={self.id} name='{self.name}'>"
@@ -83,7 +72,7 @@ class Reaction:
     def __init__(self, data: dict):
         self.count: Optional[int] = data.get("count")
         self.me: Optional[bool] = data.get("me")
-        self.emoji: Optional[Emoji] = utils.make_optional(Emoji, data.get("emoji", {}))
+        self.emoji: Optional[models.Emoji] = utils.make_optional(models.Emoji, data.get("emoji", {}))
 
     def __repr__(self):
         return f"<Reaction emoji={str(self.emoji)} count={self.count}"
@@ -130,16 +119,21 @@ class Attachment:
         Return raw dictionary of object
         Returns: dict
         """
-        return {
-            "id": self.id,
-            "filename": self.filename,
-            "content_type": self.content_type,
-            "size": self.size,
-            "url": self.url,
-            "proxy_url": self.proxy_url,
-            "height": self.height,
-            "width": self.width,
-        }
+        return utils.obj_to_dict(self)
+
+
+class File:
+    """Represents a file, sent to Discord when sending an attachment
+    
+    Attributes
+        filename (str): The filename for the attachment
+        fp (io.BufferedIOBase): A file object for the attachment
+        description (str): A description of the attachment used as alt text
+    """
+    def __init__(self, *, filename: str, fp: io.BufferedIOBase, description: str = None):
+        self.filename = filename
+        self.fp = fp
+        self.description = description
 
 
 class Interaction:
@@ -156,7 +150,7 @@ class Interaction:
         self.interaction_id = data.get("id")
         self.interaction_type = data.get("type")
         self.name = data.get("name")
-        self.user = User(data.get("user", {}))
+        self.user = utils.make_optional(models.User, data.get("user", {}))
 
 
 class MessageReference:
@@ -181,12 +175,7 @@ class MessageReference:
         return utils.make_optional(Message, self.__msg_data)
 
     def to_dict(self):
-        return {
-            "message_id": self.message_id,
-            "channel_id": self.channel_id,
-            "guild_id": self.guild_id,
-            "fail_if_not_exists": self.fail_if_not_exists,
-        }
+        return utils.obj_to_dict(self)
     
     def __eq__(self, other) -> bool:
         return self.message_id == other.message_id
@@ -202,7 +191,7 @@ class Message:
         author (User): The author of this message
         member (Member): The author of this message, including guild information
         content (str): Content of the message
-        tiemstamp (datetime): The time the message was sent
+        timestamp (datetime): The time the message was sent
         edited_timestamp (datetime): The time the message was edited
         tts (bool): Whether the message supports Text to Speech
         mention_everyone (bool): Whether this message mentions everyone
@@ -232,9 +221,9 @@ class Message:
         self.id: str = data["id"]
         self.channel_id: str = data["channel_id"]
         self.guild_id: Optional[str] = data.get("guild_id")
-        self.author: User = User(data["author"])
+        self.author: models.User = models.User(data["author"])
 
-        self.member: Optional[Member] = utils.make_optional(Member, data.get("member", {}))
+        self.member: Optional[models.Member] = utils.make_optional(models.Member, data.get("member", {}))
         self.content: str = data["content"]
         self.timestamp: datetime = datetime.fromisoformat(data["timestamp"])
         self.edited_timestamp: Optional[datetime] = utils.make_optional(datetime.fromisoformat, data.get("edited_timestamp"))
@@ -242,14 +231,14 @@ class Message:
 
         self.mention_everyone: bool = data["mention_everyone"]
 
-        self.mentions: List[User] = list(map(User, data.get("mentions", [])))
-        self.mention_roles: List[Role] = list(map(Role, data.get("mention_roles", [])))
-        self.mention_channels: List[ChannelMention] = list(
-            map(ChannelMention, data.get("mention_channels", []))
+        self.mentions: List[models.User] = list(map(models.User, data.get("mentions", [])))
+        self.mention_roles: List[models.Role] = list(map(models.Role, data.get("mention_roles", [])))
+        self.mention_channels: List[models.ChannelMention] = list(
+            map(models.ChannelMention, data.get("mention_channels", []))
         )
 
         self.attachments: List[Attachment] = list(map(Attachment, data.get("attachments", [])))
-        self.embeds: List[embed.Embed] = list(map(embed.Embed, data.get("embeds", [])))
+        self.embeds: List[models.Embed] = list(map(models.Embed, data.get("embeds", [])))
         self.reactions: List[Reaction] = list(map(Reaction, data.get("reactions", [])))
         self.nonce: Union[str, int, None] = data.get("nonce")
         self.pinned: bool = data["pinned"]
@@ -275,7 +264,8 @@ class Message:
     @classmethod
     async def send(cls, channel_id: str, *,
         content: str = "", 
-        embeds: List[embed.Embed] = None,
+        embeds: List[models.Embed] = None,
+        files: List[File] = None,
         allowed_mentions: dict = {},
         allow_tts: bool = False
     ) -> Message:
@@ -284,7 +274,8 @@ class Message:
         Args:
             channel_id (str): The ID of the channel where the message will be sent
             content (str, optional): The content of the message.
-            embeds (List[embed.Embed], optional): A list of `pycordia.models.Embed` objects.
+            embeds (List[models.Embed], optional): A list of `pycordia.models.Embed` objects.
+            files (List[models.File], optional): A list of `pycordia.models.File` objects
             allowed_mentions (dict, optional): \
                 A dictionary of allowed mentions. Dictionary keys are as follows, \
                     dictionary values are booleans: \n
@@ -295,18 +286,24 @@ class Message:
 
         Returns: `pycordia.models.Message`
         """
-        # NOTE: Future use
-        # if reply_to:
-        #     reply = reply_to.to_dict()
-        # else:
-        #     reply = None
-        rs = await api.request("POST", f"channels/{channel_id}/messages", json_data={
-            "content": content or "",
-            "tts": allow_tts,
-            "allowed_mentions": allowed_mentions,
-            "embeds": [emb.to_dict() for emb in (embeds or [])],
-        })
-        return Message(rs)
+
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+        
+        rs = await client.http.request(
+            "POST",
+            f"channels/{channel_id}/messages",
+            payload_json={
+                "content": content or "",
+                "tts": allow_tts,
+                "allowed_mentions": allowed_mentions,
+                "embeds": [emb.to_dict() for emb in (embeds or [])]
+            },
+            files=files
+        )
+
+        return Message(await rs.json())
 
     @classmethod
     async def from_id(cls, channel_id: str, message_id: str) -> Message:
@@ -314,17 +311,23 @@ class Message:
         
         Returns: `pycordia.models.Message`
         """
-        return Message(
-            await api.request("GET", f"channels/{channel_id}/messages/{message_id}")
-        )
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+
+        rs = await client.http.request("GET", f"channels/{channel_id}/messages/{message_id}")
+        return Message(await rs.json())
 
     async def delete(self):
         """Removes this message. Note that this action cannot be undone."""
-        await api.request("DELETE", f"channels/{self.channel_id}/messages/{self.id}")
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
 
-    # TODO: Implement attachments and files
+        await client.http.request("DELETE", f"channels/{self.channel_id}/messages/{self.id}")
+
     async def edit(self, *, content: str = None, 
-        embeds: typing.List[models.Embed] = None,
+        embeds: List[models.Embed] = None,
         allowed_mentions: dict = None
     ):
         """Edit this message
@@ -335,9 +338,13 @@ class Message:
             allowed_mentions (dict, optional): A new dictionary of allowed mentions. \
                 Structure is the same as specified in `pycordia.models.Message.send`
         """
-        await api.request("PATCH", 
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+        
+        await client.http.request("PATCH", 
             f"channels/{self.channel_id}/messages/{self.id}", 
-            json_data={
+            payload_json={
                 "content": content or self.content,
                 "embeds": [embed.to_dict() for embed in (embeds or self.embeds)],
                 "allowed_mentions": allowed_mentions
@@ -346,8 +353,16 @@ class Message:
 
     async def pin(self):
         """Pins a message to the channel it was sent in"""
-        await api.request("PUT", f"channels/{self.channel_id}/pins/{self.id}")
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+
+        await client.http.request("PUT", f"channels/{self.channel_id}/pins/{self.id}")
     
     async def unpin(self):
         """Unpins a message from the channel it was sent in"""
-        await api.request("DELETE", f"channels/{self.channel_id}/pins/{self.id}")
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+        
+        await client.http.request("DELETE", f"channels/{self.channel_id}/pins/{self.id}")

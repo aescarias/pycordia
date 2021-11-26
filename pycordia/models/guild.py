@@ -1,12 +1,13 @@
 from __future__ import annotations
-from datetime import datetime
-import typing
+
 import enum
-from typing import List, Union, Optional
+from datetime import datetime
+from typing import List, Optional, Union
 
 import pycordia
+from pycordia import utils
+
 from .user import User
-from pycordia import api, utils
 
 
 class Emoji:
@@ -189,6 +190,7 @@ class GuildPremiumTier(enum.Enum):
     tier_3 = 3
 
 class Guild:
+    """A Discord guild"""
     def __init__(self, data: dict) -> None:
         self.id: str = data["id"]
         self.name: str = data["name"]
@@ -204,7 +206,7 @@ class Guild:
         self.has_widget_enabled: Optional[bool] = data.get("widget_enabled")
         self.widget_channel_id: Optional[str] = data.get("widget_channel_id")
         self.verification_level = GuildVerificationLevel(data["verification_level"])
-        self.message_notifcations_level = GuildNotificationLevel(data["default_message_notifications"])
+        self.message_notifications_level = GuildNotificationLevel(data["default_message_notifications"])
         self.explicit_content_filter = GuildExplicitContentFilter(data["explicit_content_filter"])
         self.roles: List[Role] = [Role(role) for role in data["roles"]]
         self.emojis: List[Emoji] = [Emoji(emoji) for emoji in data["emojis"]]
@@ -250,5 +252,15 @@ class Guild:
         
         Returns: A `pycordia.models.guild.Guild` object
         """
-        rs = await api.request("GET", f"guilds/{guild_id}{'?with_counts=true'*with_counts}")
-        return Guild(rs)
+        client = pycordia.models.active_client
+
+        if not client:
+            raise pycordia.errors.ClientSetupError
+        
+        rs = await client.http.request(
+            "GET", f"guilds/{guild_id}",
+            params={
+                "with_counts": with_counts
+            }
+        )
+        return Guild(await rs.json())
