@@ -8,9 +8,9 @@ A wrapper around the Discord HTTP API and WebSockets
 """
 
 from .client import Intents, Client
-from . import websocket, errors, events, models, api
+from . import websocket, errors, events, models, http
 
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 
 cdn_url = "https://cdn.discordapp.com"
 ws_url = "wss://gateway.discord.gg"
