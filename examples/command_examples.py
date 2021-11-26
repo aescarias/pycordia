@@ -24,7 +24,7 @@ async def on_message_create(event: models.Message):
 
     # A Ping command
     if event.content.startswith(".ping"):
-        embed = models.Embed.create(description=":ping_pong: Pong!")
+        embed = models.Embed.create(description=f":ping_pong: Pong with a latency of **{client.ws.latency}ms**!")
         embed.color = 0xFF123A
 
         await models.Message.send(event.channel_id or "", embeds=[embed])
@@ -37,7 +37,7 @@ async def on_message_create(event: models.Message):
             if user:
                 embed = models.Embed.create(
                     title=user.username + "#" + user.discriminator,
-                    description=f"{user.mention}\nID - {user.user_id}\nBot - {bool(user.bot)}",
+                    description=f"{user.mention}\nID - {user.id}\nBot - {bool(user.bot)}",
                     color=user.accent_color,
                 )
             else:
@@ -71,7 +71,7 @@ async def on_message_create(event: models.Message):
 
         embed = models.Embed.create(
             title=user.username + "#" + user.discriminator,
-            description=f"{user.mention}\nID - {user.user_id}\nBot - {bool(user.bot)}",
+            description=f"{user.mention}\nID - {user.id}\nBot - {bool(user.bot)}",
             color=user.accent_color,
         )
 
@@ -96,6 +96,5 @@ async def on_message_create(event: models.Message):
                 color=0xFF123A
             )
             await models.Message.send(event.channel_id or "", embeds=[embed])
- 
 
 client.run(os.getenv("DISCORD_TOKEN"))
