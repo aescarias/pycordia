@@ -77,7 +77,7 @@ proceed with the following:
 
       .. code-block:: sh
          
-      $ py -3 -m pip install git+https://github.com/angelcarias/pycordia.git
+         $ py -3 -m pip install git+https://github.com/angelcarias/pycordia.git
 
 
 Verify Pycordia is properly installed by doing:
