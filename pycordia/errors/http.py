@@ -20,9 +20,9 @@ class HTTPError(Exception):
     """General error raised by the HTTP client"""
     def __init__(self, data: dict):
         self.data = data 
-
+        
         self.code = self.data["code"]
-        self.errors = self.data.get("errors")
+        self.errors = self.data.get("errors", {})
         self.message = self.data["message"]
 
         self.error_message = f"{self.message} (code {self.code})\n\n"
@@ -33,8 +33,7 @@ class HTTPError(Exception):
             for error in value:
                 self.error_message += f"\t{error['message']} (code {error['code']})\n"
 
-
-        super().__init__(self.error_message)
+        super().__init__(self.error_message.strip())
 
     def _flatten_errors(self, errors, input_key: str = "") -> dict:
         items = []
