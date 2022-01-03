@@ -1,0 +1,26 @@
+pycordia.errors package
+=======================
+
+.. automodule:: pycordia.errors
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+pycordia.errors.general module
+------------------------------
+
+.. automodule:: pycordia.errors.general
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pycordia.errors.http module
+---------------------------
+
+.. automodule:: pycordia.errors.http
+   :members:
+   :undoc-members:
+   :show-inheritance:
