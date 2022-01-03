@@ -6,6 +6,7 @@ from typing import List, Optional, Union
 
 import pycordia
 from pycordia import utils
+from pycordia import models
 
 from .user import User
 
@@ -222,7 +223,7 @@ class Guild:
         self.member_count: int = data.get("member_count", -1)
         self.voice_states = data.get("voice_states")
         self.members: List[Member] = [Member(mem) for mem in data.get("members", [])]
-        self.channels = data.get("channels")
+        self.channels: List[models.Channel] = [models.Channel(ch) for ch in data.get("channels", [])]
         self.threads = data.get("threads")
         self.presences = data.get("presences")
         self.max_presences: Optional[int] = data.get("max_presences")
@@ -237,10 +238,15 @@ class Guild:
         self.max_video_channel_users: Optional[int] = data.get("max_video_channel_users")
         self.approximate_member_count: Optional[int] = data.get("approximate_member_count")
         self.approximate_presence_count: Optional[int] = data.get("approximate_presence_count")
-        self.welcome_screen = data.get("welcome_screen")
+        self.welcome_screen = data.get("welcome_screen")  # NOTE: unimplemented
         self.nsfw_level = GuildNSFWLevel(data["nsfw_level"])
+
+        # NOTE: unimplemented
         self.stage_instances = data.get("stage_instances")
         self.stickers = data.get("stickers")
+        self.scheduled_events = data.get("guild_scheduled_events")
+
+        self.premium_progress_bar_enabled = data.get("premium_progress_bar_enabled")
 
     @classmethod
     async def from_id(cls, guild_id: str, *, with_counts: bool = False) -> Guild:
@@ -264,3 +270,64 @@ class Guild:
             }
         )
         return Guild(await rs.json())
+
+    async def get_member(self, user_id: str) -> models.Member:
+        """Get a Discord member with guild-specific information
+
+        Arguments:
+            user_id (str): The ID (or snowflake) of the user
+        """
+        client = pycordia.models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+
+        rs = await client.http.request(
+            "GET", f"guilds/{self.id}/members/{user_id}"
+        )
+
+        return models.Member(await rs.json())
+
+    async def get_guild_members(self, *, limit: int = 10, after: Optional[str] = None):
+        """Get a list of all guild members given `limit` and `after` if provided.
+
+        Arguments:
+            limit (int, optional): The amount of guild members to query. \
+                Defaults to 10. Must be between 1 and 1000.
+
+            after (str, optional): Query all members after an user ID
+        """
+        client = pycordia.models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+        
+        rs = await client.http.request(
+            "GET", f"guilds/{self.id}/members",
+            params={
+                "limit": limit,
+                "after": after
+            }
+        )
+
+        return list(map(models.Member, await rs.json()))
+
+    async def search_guild_members(self, query: str, *, limit: int = 1):
+        """Get a list of guild members whose display name starts with `query`
+
+        Arguments:
+            query (str): The string to search for
+            limit (int, optional): Limit search results to an integer amount. \
+                Defaults to 1.
+        """
+        client = pycordia.models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+
+        rs = await client.http.request(
+            "GET", f"guilds/{self.id}/members/search",
+            params={
+                "query": query,
+                "limit": limit
+            }
+        )
+
+        return list(map(models.Member, await rs.json()))
