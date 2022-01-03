@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import pycordia
-from pycordia import utils
+from pycordia import utils, models
 
 
 class ChannelType(enum.Enum):
@@ -160,6 +160,29 @@ class Channel:
         )
         return list(map(pycordia.models.Message, await rs.json()))
 
+    async def send(self, *,
+        content: str = "", 
+        embeds: List[models.Embed] = None,
+        files: List[models.File] = None,
+        allowed_mentions: dict = {},
+        allow_tts: bool = False
+    ) -> models.Message:
+        """A shortcut coroutine that sends a message in this channel.
+        
+        Refer to the documentation for `Message.send` for information on arguments
+        """
+
+        if not self.__client:
+            raise pycordia.errors.ClientSetupError
+
+        return await models.Message.send(self.id, 
+            content=content, 
+            embeds=embeds, 
+            files=files, 
+            allowed_mentions=allowed_mentions,
+            allow_tts=allow_tts
+        )
+
     async def get_pinned_messages(self) -> List['pycordia.models.Message']:
         """ 
         Get all pinned messages in a Discord channel
@@ -171,6 +194,23 @@ class Channel:
         
         rs = await self.__client.http.request("GET", f"channels/{self.id}/pins/")
         return list(map(pycordia.models.Message, await rs.json()))
+
+    async def delete(self) -> None:
+        """Delete this channel. This action cannot be undone."""
+        if not self.__client:
+            raise pycordia.errors.ClientSetupError
+
+        await self.__client.http.request("DELETE", f"channels/{self.id}")
+    
+    async def trigger_typing(self) -> None:
+        """Trigger the typing indicator for this channel.
+
+        It will be maintained for 10 seconds or until a message is sent."""
+        if not self.__client:
+            raise pycordia.errors.ClientSetupError
+
+        await self.__client.http.request("POST", f"channels/{self.id}/typing")
+
 
 
 class ChannelMention:
