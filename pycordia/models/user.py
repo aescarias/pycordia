@@ -86,9 +86,18 @@ class User:
         """The date and time the user was created on"""
         return utils.snowflake_to_date(int(self.id))
 
-    def is_premium(self) -> bool:
-        """Check if an user has any sort of premium subscription (Nitro)"""
-        return self.premium_type != UserPremiumType.none
+    def is_premium(self) -> Optional[bool]:
+        """Check if this user has any sort of premium subscription (Nitro)
+
+        A None value will be returned if no premium type is available.
+        """
+
+        if self.premium_type is None:
+            return
+
+        # If the premium type IS available
+        # and if available, if the premium type is None        
+        return self.premium_type is not None and self.premium_type != UserPremiumType.none
 
     @classmethod
     async def from_id(cls, user_id: str, use_cache: bool = True):
@@ -112,7 +121,7 @@ class User:
 
         # Otherwise, fetch directly from the API
         rs = await client.http.request("GET", f"users/{user_id}")
-        user = User(rs)
+        user = User(await rs.json())
 
         # Add to cache
         if len(client.user_cache.keys()) >= client.cache_size:
