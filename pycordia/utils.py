@@ -2,6 +2,38 @@ import typing
 import inspect
 import datetime
 import enum
+import random
+
+
+class Color:
+    class BrandColor(enum.Enum):
+        blurple = 0x5865F2
+        green = 0x57F287
+        yellow = 0xFEE75C
+        fuchsia = 0xEB459E
+        red = 0xED4245
+        white = 0xFFFFFF
+        black = 0x000000
+
+    brand = BrandColor
+    
+    @classmethod
+    def random(cls):
+        """Generate random color as an integer for use with Discord"""
+        return random.randint(0, 0xFFFFFF)
+
+
+class BoolEnumKey:
+    def __init__(self, name: str, value: typing.Any, is_set: bool):
+        self.name = name
+        self.value = value
+        self.is_set = is_set
+
+    def __str__(self):
+        return str(self.value)
+    
+    def __repr__(self):
+        return f"<EnumKey{':set'*bool(self.is_set)} name='{self.name}' value={self.value}>"
 
 
 class BoolEnum:
@@ -9,20 +41,43 @@ class BoolEnum:
         # Get defined class attributes
 
         attribs = {}
-        
+
+        init = object.__new__(cls)
+       
+
         for name, value in inspect.getmembers(cls):
             # If member is not a routine (a function) and if it's not a dunder
             if not inspect.isroutine(value) and \
                 not (name.startswith("__") and name.endswith("__")):    
                 attribs[name] = value
-        
+
         for name, value in kwargs.items():
             if name not in attribs:
-                raise ValueError(f"'{name}' is Not a valid keyword argument")
+                raise ValueError(f"'{name}' is not a valid keyword argument")
             
-        init = object.__new__(cls)
+            if name in attribs and not isinstance(value, bool):
+                raise ValueError(f"Argument '{name}' value must be of boolean form")
+            
+        for name, value in attribs.items():
+            setattr(init, name, BoolEnumKey(name, value, kwargs.get(name, False)))
+
         return init
 
+    def __setattr__(self, name, value):
+        attr = getattr(self, name, None)
+        if attr and isinstance(attr, BoolEnumKey):
+            if isinstance(value, bool):
+                attr.is_set = value
+                return
+
+            raise ValueError(f"'{name}' must have a value of boolean form")
+
+        return object.__setattr__(self, name, value)
+
+    def __iter__(self) -> typing.Iterator[BoolEnumKey]:
+        return iter(value for _, value in inspect.getmembers(
+            self, predicate=lambda member: isinstance(member, BoolEnumKey)
+        ))
 
 
 def obj_from_dict(data: dict, obj: typing.Callable, alias: dict = None):
