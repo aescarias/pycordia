@@ -13,6 +13,8 @@ from aiohttp.http_websocket import WSMsgType
 
 import pycordia
 
+# NOTE: This suffix is used for handling decompression and thus
+#       should NOT be modified. (unless you know what you're doing)
 ZLIB_SUFFIX = b"\x00\x00\xff\xff"
 
 
@@ -20,8 +22,8 @@ class DiscordWebSocket:
     """A WebSockets client for the Discord Gateway API
 
     Attributes
-        client: A related client
-        bot_token (str): The bot_token used for the session
+        client: The client using this websocket
+        bot_token (str): The bot token used for the session
         intents (int): The intents used for the session
 
         gateway_url (str): The gateway URL used to communicate with Discord
@@ -30,8 +32,12 @@ class DiscordWebSocket:
         session_id: The ID for this session, provided by Discord
 
         heartbeat_interval: Interval between each heartbeat, in milliseconds
-        last_heartbeat: The last recorded heartbeat sent to Discord
-        latency: The time between the current time and the last heartbeat time, in milliseconds
+        last_heartbeat: The last recorded heartbeat sent to Discord, \
+            as a datetime object. This value will be None if \
+            the websocket was recently started.
+
+        latency: The time between the current time and the last heartbeat time, \
+            in milliseconds. This value is None if `last_heartbeat` is None.
     """
 
     opcodes = {
@@ -45,10 +51,10 @@ class DiscordWebSocket:
         "REQUEST_GUILD_MEMBERS": 8,
         "INVALID_SESSION": 9,
         "HELLO": 10,
-        "HEARTBEAT_ACK": 11,
+        "HEARTBEAT_ACK": 11
     }
 
-    def __init__(self, client, bot_token, intents):
+    def __init__(self, client: 'pycordia.Client', bot_token: str, intents: int):
         self.client = client
         self.bot_token = bot_token
         self.intents = intents
@@ -84,7 +90,6 @@ class DiscordWebSocket:
 
     async def __keep_alive(self):
         """Keeps the connection alive by sending periodic heartbeats to the Discord gateway"""
-        
         
         while self.sock:
             if self.heartbeat_interval:
