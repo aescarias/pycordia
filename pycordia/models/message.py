@@ -304,7 +304,7 @@ class Message:
         )
 
         return Message(await rs.json())
-
+    
     @classmethod
     async def from_id(cls, channel_id: str, message_id: str) -> Message:
         """Get a message given a channel ID and a message ID
@@ -317,6 +317,28 @@ class Message:
 
         rs = await client.http.request("GET", f"channels/{channel_id}/messages/{message_id}")
         return Message(await rs.json())
+
+    @classmethod
+    async def bulk_delete(cls, channel_id: str, *message_ids: List[str]) -> None:
+        """Bulk delete multiple messages (from 2 to 100)
+
+        Args:
+            channel_id: A channel ID to remove messages from
+            message_ids: A list of message IDS to delete
+
+        Note: Messages older than two weeks will not be affected. \
+            You'll receive an error if you attempt to do so.
+        """
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+        
+        await client.http.request(
+            "POST", 
+            f"/channels/{channel_id}/messages/bulk-delete", 
+            payload_json={ "messages": message_ids }
+        )
+
 
     async def delete(self):
         """Removes this message. Note that this action cannot be undone."""
@@ -366,3 +388,14 @@ class Message:
             raise pycordia.errors.ClientSetupError
         
         await client.http.request("DELETE", f"channels/{self.channel_id}/pins/{self.id}")
+    
+    async def crosspost(self):
+        """Crosspost this message to other following channels"""
+        client = models.active_client
+        if not client:
+            raise pycordia.errors.ClientSetupError
+
+        await client.http.request(
+            "POST", 
+            f"channels/{self.channel_id}/messages/{self.id}/crosspost"
+        )
