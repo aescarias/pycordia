@@ -5,6 +5,10 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/angelcarias/pycordia?style=flat-square)
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/angelcarias/pycordia?include_prereleases&style=flat-square)
 
+## NOTE: This project is now unmaintained
+> As of February 18, 2021, this project remains unmaintained and for the purposes of archival and study only.
+
+
 > ⚠️ **Note!**
 > 
 > As of now, this package is under early development so functionalities are bound to change drastically.
