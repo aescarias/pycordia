@@ -6,7 +6,7 @@
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/angelcarias/pycordia?include_prereleases&style=flat-square)
 
 ## NOTE: This project is now unmaintained
-> As of February 18, 2021, this project remains unmaintained and for the purposes of archival and study only.
+> As of February 18, 2022, this project remains unmaintained and for the purposes of archival and study only.
 
 
 > ⚠️ **Note!**
