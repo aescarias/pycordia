@@ -5,9 +5,7 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/angelcarias/pycordia?style=flat-square)
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/angelcarias/pycordia?include_prereleases&style=flat-square)
 
-## NOTE: This project is now unmaintained
-> As of February 18, 2022, this project remains unmaintained and for the purposes of archival and study only.
-
+> As of February 18, 2022, this project is unmaintained and has been replaced by the [Cedar](https://github.com/aescarias/cedar) project.
 
 > ⚠️ **Note!**
 > 
