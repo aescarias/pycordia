@@ -1,23 +1,24 @@
 # Pycordia
 
 ![Discord](https://img.shields.io/discord/882843456999927849?style=flat-square)
-![GitHub](https://img.shields.io/github/license/angelcarias/pycordia?style=flat-square)
-![Lines of code](https://img.shields.io/tokei/lines/github/angelcarias/pycordia?style=flat-square)
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/angelcarias/pycordia?include_prereleases&style=flat-square)
+![GitHub](https://img.shields.io/github/license/aescarias/pycordia?style=flat-square)
+![Lines of code](https://img.shields.io/tokei/lines/github/aescarias/pycordia?style=flat-square)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/aescarias/pycordia?include_prereleases&style=flat-square)
 
-> As of February 18, 2022, this project is unmaintained and has been replaced by the [Cedar](https://github.com/aescarias/cedar) project.
+> [!warning]
+> This project is unmaintained as of February 18, 2022.
 
 > ⚠️ **Note!**
 > 
 > As of now, this package is under early development so functionalities are bound to change drastically.
 > 
-> We **don't** recommend you currently use Pycordia in a production environment.
+> We **do not** recommend you currently use Pycordia in a production environment.
 
 A work-in-progress Discord API wrapper for Python with a simple gateway and some common events implemented.
 
-> :globe_with_meridians: **Website:** <https://angelcarias.github.io/pycordia>
+> :globe_with_meridians: **Website:** <https://aescarias.github.io/pycordia>
 >
-> :memo: **Documentation:** <https://angelcarias.github.io/pycordia/docs>
+> :memo: **Documentation:** <https://aescarias.github.io/pycordia/docs>
 >  
 > :speech_balloon: **Discord server:** <https://discord.gg/h5JhXtGfXQ>
 
